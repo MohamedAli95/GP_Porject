@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/searchzz"
+        android:icon="@drawable/search"
+        android:iconTint="@color/white"
+        android:title="Search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="ifRoom"></item>
+
+
+    <group>
+
+        <item android:title="offer 1"  android:id="@+id/o1" />
+        <item android:title="offer 2" android:id="@+id/o2" />
+        <item android:title="offer 3" android:id="@+id/o3" />
+
+    </group>
+
+</menu>

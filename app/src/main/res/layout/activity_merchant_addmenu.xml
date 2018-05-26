@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Merchant_addmenu">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tabl"
+        >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_marginTop="7dp"
+                android:text="Item"
+                android:textSize="22dp"
+                android:paddingLeft="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_marginTop="7dp"
+                android:text="Size"
+                android:textSize="22dp"
+                android:paddingLeft="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:layout_marginTop="7dp"
+                android:text="Price"
+                android:textSize="22dp"
+                android:paddingLeft="15dp"
+                android:layout_weight="1"/>
+        </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_marginTop="7dp"
+        android:text="Zinger Supreme"
+        android:textSize="18dp"
+        android:textColor="#703fb6"
+        android:paddingLeft="15dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_marginTop="7dp"
+        android:text="medium"
+        android:textSize="22dp"
+        android:textColor="#703fb6"
+        android:paddingLeft="15dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="3"
+        android:layout_marginTop="7dp"
+        android:text="42.60"
+        android:textSize="22dp"
+        android:textColor="#703fb6"
+        android:paddingLeft="15dp"
+        android:layout_weight="1"/>
+    </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#e7e7e7"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_marginTop="7dp"
+                android:text="Zinger Supreme"
+                android:textSize="18dp"
+                android:textColor="#703fb6"
+                android:paddingLeft="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_marginTop="7dp"
+                android:text="large"
+                android:textSize="22dp"
+                android:textColor="#703fb6"
+                android:paddingLeft="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:layout_marginTop="7dp"
+                android:text="42.60"
+                android:textSize="22dp"
+                android:textColor="#703fb6"
+                android:paddingLeft="15dp"
+                android:layout_weight="1"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_marginTop="7dp"
+                android:text="Zinger Supreme"
+                android:textSize="18dp"
+                android:textColor="#703fb6"
+                android:paddingLeft="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_marginTop="7dp"
+                android:text="large"
+                android:textSize="22dp"
+                android:textColor="#703fb6"
+                android:paddingLeft="15dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:layout_marginTop="7dp"
+                android:text="42.60"
+                android:textSize="22dp"
+                android:textColor="#703fb6"
+                android:paddingLeft="15dp"
+                android:layout_weight="1"/>
+        </TableRow>
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#e7e7e7"
+    android:layout_marginTop="10dp"
+    >
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:layout_column="1"
+        android:layout_marginLeft="15dp"
+        android:layout_weight="1"/>
+
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Size"
+        android:id="@+id/sp1"
+        android:layout_marginLeft="15dp"
+        android:layout_weight="1"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Price"
+        android:layout_column="3"
+        android:layout_marginLeft="15dp"
+        android:layout_weight="1"
+       />
+
+</TableRow>
+<TableRow
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+</TableRow>
+    </TableLayout>
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:text="Next Item"
+        android:background="@color/colorAccent"
+        android:textColor="@color/white"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/tabl"
+        android:id="@+id/ne"
+        android:padding="18dp"
+        android:layout_marginLeft="110dp"
+        />
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:background="@color/colorAccent"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/ne"
+        android:padding="18dp"
+        android:layout_marginLeft="110dp"
+        />
+</RelativeLayout>

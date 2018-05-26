@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+ <FrameLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     >
+
+<android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:gravity="center"
+    android:elevation="0dp"
+    android:id="@+id/appbarid"
+    android:background="@drawable/blu">
+</android.support.design.widget.AppBarLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_gravity="center"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/s3oody"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FFFFFF"
+        />
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Mohamed shika"
+        android:layout_gravity="center|bottom"
+
+         android:textColor="#FFFFFF"
+
+         />
+ </FrameLayout>
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        android:id="@+id/tablayout_id"
+        app:tabTextColor="#FFFFFF"
+        app:tabIndicatorColor="@color/colorAccent"
+        android:background="#674172"
+        app:tabSelectedTextColor="#49BEFF"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewpager_id"
+         />
+
+</LinearLayout>

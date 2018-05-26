@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:layout_marginTop="10dp">
+
+
+        <TextView
+            android:id="@+id/snapTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="64dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:text="Snap Center"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_red_border"
+           />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="110dp"
+            android:padding="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:text="more"
+            android:textColor="#26a69a"
+            android:background="@color/transparent"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:layout_marginTop="-8dp"
+        android:layout_marginBottom="10dp"
+        android:padding="4dp"/>
+</LinearLayout>
