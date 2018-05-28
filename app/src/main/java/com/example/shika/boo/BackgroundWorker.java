@@ -53,8 +53,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-        String login_url = "http://10.0.2.2:8090/offerall/login.php";
-        String registration_url = "http://10.0.2.2:8090/offerall/register.php";
+        String login_url = "http://gp.sendiancrm.com/offerall/login.php";
+        String registration_url = "http://gp.sendiancrm.com/offerall/register.php";
         if (type.equals("login")) {
             try {
                 type1=type;

@@ -343,8 +343,8 @@ public class BackgroundMapService extends Service implements LocationListener {
         @Override
         protected String doInBackground(String... params) {
             Log.e(TAG,"Save Location Started");
-            String login_url = "http://10.0.2.2:8090/offerall/UpdateUserLoction.php";
-            String getnearbyoffers = "http://10.0.2.2:8090/offerall/NearByOffers.php";
+            String login_url = "http://gp.sendiancrm.com/offerall/UpdateUserLoction.php";
+            String getnearbyoffers = "http://gp.sendiancrm.com/offerall/NearByOffers.php";
 
 
 
