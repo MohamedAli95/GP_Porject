@@ -23,10 +23,12 @@ import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.squareup.picasso.Picasso;
 
 import angtrim.com.fivestarslibrary.FiveStarsDialog;
 import angtrim.com.fivestarslibrary.NegativeReviewListener;
 import angtrim.com.fivestarslibrary.ReviewListener;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Myprof extends android.app.Fragment {
     private ViewPager viewPager;
@@ -40,6 +42,7 @@ public class Myprof extends android.app.Fragment {
     TextView phone;
     SharedPreferences sharedpreferences;
     CollapsingToolbarLayout collapsingToolbarLayout;
+    CircleImageView profile_pic;
 
 
 
@@ -78,6 +81,7 @@ public class Myprof extends android.app.Fragment {
         age = (TextView) vi.findViewById(R.id.agetext);
         gender = (TextView) vi.findViewById(R.id.gendertext);
         phone = (TextView) vi.findViewById(R.id.userphonetext);
+        profile_pic=(CircleImageView) vi.findViewById(R.id.profile_image);
         collapsingToolbarLayout = (CollapsingToolbarLayout) vi.findViewById(R.id.collapsing_toolbar);
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(vi.getContext());
         if (sharedpreferences.getBoolean("logged in", false)) {
@@ -89,6 +93,8 @@ public class Myprof extends android.app.Fragment {
             age.setText(Integer.toString(sharedpreferences.getInt("Age", 123)));
             gender.setText(sharedpreferences.getString("gender", "gender"));
             phone.setText(sharedpreferences.getString("phone", "phone"));
+            String profilepicurl = sharedpreferences.getString("profilepicture", null);
+            Picasso.with(vi.getContext()).load(profilepicurl).into(profile_pic);
         }
 
 
