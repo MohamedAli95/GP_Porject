@@ -314,6 +314,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.clear();
             editor.commit();
+            AppController.getInstance().ServiceStart();
             x = new Intent(this, SignIn.class);
             startActivity(x);}
         /*else if(id == R.id.pro){

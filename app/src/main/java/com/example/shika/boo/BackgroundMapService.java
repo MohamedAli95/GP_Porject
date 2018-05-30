@@ -70,6 +70,7 @@ public class BackgroundMapService extends Service implements LocationListener {
     Double longitude1=0.0; // longitude
     SharedPreferences sharedpreferences;
     int userid;
+    int startservice_flag;
     String type;
     ArrayList<nearbyoffers> nearoffers= new ArrayList<nearbyoffers>();
     ArrayList<nearbyoffers> ExistedOffers= new ArrayList<nearbyoffers>();
@@ -89,6 +90,7 @@ public class BackgroundMapService extends Service implements LocationListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "Service is On.....");
+        startservice_flag=1;
         scheduleSendLocation();
         schedulenearbyoffers();
         super.onStartCommand(intent, flags, startId);
@@ -97,6 +99,7 @@ public class BackgroundMapService extends Service implements LocationListener {
     }
 
     public void onCreate() {
+        startservice_flag=1;
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Log.e(TAG, "onCreate");
         if (sharedpreferences.getBoolean("logged in",false)) {
@@ -218,33 +221,44 @@ public class BackgroundMapService extends Service implements LocationListener {
     }
     public void scheduleSendLocation() {
         Log.e(TAG,"scheduleSendLocation");
-        handler.postDelayed(new Runnable() {
+        if(startservice_flag==1) {
 
-            public void run() {
-                getLocation();
-                if(latitude.equals(latitude1) && longitude.equals(longitude1) ){
-                    Log.e(TAG,"save location (network) about to start");
-                    new savelocation().execute();
+            handler.postDelayed(new Runnable() {
+
+                public void run() {
+                    getLocation();
+                    if (latitude.equals(latitude1) && longitude.equals(longitude1)) {
+                        Log.e(TAG, "save location (network) about to start");
+                        new savelocation().execute();
 
 
+                    }
+
+                    handler.postDelayed(this, 600 * 1000);
                 }
-
-                handler.postDelayed(this, 600* 1000);
-            }
-        }, 600 * 1000);
+            }, 600 * 1000);
+        }
+        else{
+            handler.removeCallbacksAndMessages(null);
+        }
     }
     public void schedulenearbyoffers() {
         Log.e(TAG,"schedulenearbyoffers");
-        handler.postDelayed(new Runnable() {
+        if(startservice_flag==1) {
+            handler.postDelayed(new Runnable() {
 
-            public void run() {
-                getLocation();
-                type = "get nearby offers";
-                new savelocation().execute(type);
+                public void run() {
+                    getLocation();
+                    type = "get nearby offers";
+                    new savelocation().execute(type);
 
-                handler.postDelayed(this, 60 * 1000);
-            }
-        }, 60 * 1000);
+                    handler.postDelayed(this, 60 * 1000);
+                }
+            }, 60 * 1000);
+        }
+        else{
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 
 
@@ -536,5 +550,12 @@ public class BackgroundMapService extends Service implements LocationListener {
 
 
         }
+    }
+    @Override
+    public void onDestroy() {
+        startservice_flag=0;
+        scheduleSendLocation();
+        schedulenearbyoffers();
+        Log.i(TAG,  "service stopped...");
     }
 }

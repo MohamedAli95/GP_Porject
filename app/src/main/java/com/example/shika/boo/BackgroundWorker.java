@@ -178,6 +178,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 if(sharedpreferences!=null) {
                     alertDialog.setMessage("Welcome"+"\t"+sharedpreferences.getString("Name", "error"));
                     alertDialog.show();
+                    AppController.getInstance().ServiceStart();
                     Intent too = new Intent(context, MapsActivity.class);
                     context.startActivity(too);
 
