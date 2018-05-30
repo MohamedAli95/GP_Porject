@@ -1,7 +1,9 @@
 package com.example.shika.boo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
@@ -10,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +22,15 @@ import android.widget.FrameLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import models.nearbyoffers;
 
 //import eu.long1.spacetablayout.SpaceTabLayout;
 
@@ -43,11 +55,13 @@ public class BaseActivity extends AppCompatActivity {
     TextView textview;
     Menu menuu;
     FrameLayout.LayoutParams layoutparams;
+    SharedPreferences sharedpreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-
+        sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 /*
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
@@ -171,19 +185,34 @@ public class BaseActivity extends AppCompatActivity {
                 this.finish();
                 return true;
             case R.id.action_dropdown:
+                ArrayList<Integer> Items_id= new ArrayList<Integer>();
                 View menuItemView = findViewById(R.id.action_dropdown);
                 PopupMenu popupMenu = new PopupMenu(this, menuItemView);
+                String json = sharedpreferences.getString("ExistedOffers", "");
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<nearbyoffers>>(){}.getType();
+                ArrayList<nearbyoffers> nearoffers= gson.fromJson(json, type);
+                for(int i=0;i<nearoffers.size();i++){
+                    Items_id.add(i);
+                    popupMenu.getMenu().add(0,nearoffers.get(i).getOffer_id(), Menu.NONE,nearoffers.get(i).getTitle());
+
+                }
+
+
                 popupMenu.getMenuInflater().inflate(R.menu.option_submenu,
                         popupMenu.getMenu());
                 popupMenu
                         .setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             public boolean onMenuItemClick(MenuItem item) {
-                             View vvv;
-                                switch (item.getItemId()) {
-                                    case R.id.action_home:
-                                        Intent nn = new Intent(BaseActivity.this,Offer_Page.class);
-                                        startActivity(nn);
-                                }
+
+
+
+                                Intent nn = new Intent(getApplicationContext(),Offer_Page.class);
+                                Log.e("item_id", String.valueOf(item.getItemId()));
+                                int item_id=item.getItemId();
+                                nn.putExtra("k", item_id);
+                                startActivity(nn);
+
                                 return true;
                             }
                         });
@@ -194,8 +223,6 @@ public class BaseActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
     private void setupBadge() {

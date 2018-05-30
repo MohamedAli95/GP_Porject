@@ -18,7 +18,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapsing_toolbar"
+                android:id="@+id/collapsing_toolbar1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -62,58 +62,70 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="65dp"
                     android:background="#f4f4f4"
-                   >
-              <LinearLayout
-                  android:layout_width="wrap_content"
-                  android:layout_height="70dp"
-                  android:orientation="vertical"
-                  android:layout_weight="2">
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Half Sleeve T-shirt"
-                      android:textStyle="bold"
-                      android:textSize="18dp"
-                      android:textColor="#000000"/>
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Limited Time"
-                      android:textSize="16dp"
-                      android:textColor="#868686"/>
-                  <LinearLayout
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal">
-                      <TextView
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="$45.99"
-                          android:textStyle="bold"
-                          android:textSize="19dp"
-                          android:textColor="#000000"/>
-                      <TextView
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:id="@+id/original"
-                          android:text="$69.99"
-                          android:textSize="16dp"
-                          android:textColor="#868686"/>
-                      <TextView
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="20% off"
-                          android:textStyle="bold"
-                          android:textSize="19dp"
-                          android:textColor="#CF000F"/>
-                  </LinearLayout>
-              </LinearLayout>
-                    <ImageButton
+                    >
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/shareof"
-                        android:background="#00000000"
-                        />
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Title"
+                            android:textColor="#000000"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/item_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Limited Time"
+                            android:textColor="#2F4F4F"
+                            android:textSize="17dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/item_startdate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="StartDate"
+                                android:textColor="#000000"
+                                android:textSize="19dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/item_enddate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="EndDate"
+                                android:textColor="#CF000F"
+                                android:textSize="19dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Number of Points :"
+                                android:textColor="#0000CD"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/no_of_points"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="No. OF Points"
+                                android:textColor="#000000"
+                                android:textSize="18dp" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,15 +135,16 @@
                     android:textSize="19dp"
                     android:textColor="#464545"
                     android:layout_marginTop="10dp"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hyper One, El Sheikh Zayed City"
                     android:drawableLeft="@drawable/lo"
-                    android:drawableTint="#6b6b6b"
                     android:drawablePadding="5dp"
-                    android:textSize="16dp"
-                    android:textColor="#868686"/>
+                    android:drawableTint="#6b6b6b"
+                    android:text="BranchName"
+                    android:textColor="#868686"
+                    android:textSize="16dp" />
 
                 <fragment
                     android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -139,22 +152,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginTop="5dp"
-                     />
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Related Offers"
-    android:background="#dcdcdc"
-    android:textColor="#aeaeae"
-    android:gravity="center"
-    android:textSize="18dp"
-    android:layout_marginTop="20dp"/>
-                <fragment
-                    android:id="@+id/fragment"
-                    android:name="com.example.shika.boo.FragmentB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
                     />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
@@ -175,16 +172,17 @@
 
 
         <com.github.siyamed.shapeimageview.RoundedImageView
+            android:id="@+id/Place_image_notf"
             android:layout_width="110dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
             android:src="@drawable/zrr"
-            app:siRadius="2dp"
-            app:siBorderWidth="4dp"
-            app:siBorderColor="#000000"
-            app:siSquare="true"
             app:layout_anchor="@id/app_bar_layout"
             app:layout_anchorGravity="bottom|left|end"
-            android:layout_marginLeft="20dp"/>
+            app:siBorderColor="#000000"
+            app:siBorderWidth="4dp"
+            app:siRadius="2dp"
+            app:siSquare="true" />
 
 
     </android.support.design.widget.CoordinatorLayout>

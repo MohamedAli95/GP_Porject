@@ -3,6 +3,8 @@ package com.example.shika.boo;
 
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +21,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -42,6 +45,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import models.nearbyoffers;
@@ -77,7 +81,7 @@ public class BackgroundMapService extends Service implements LocationListener {
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
-
+    NotificationCompat.Builder notfication;
 
     public BackgroundMapService() {
 
@@ -93,7 +97,7 @@ public class BackgroundMapService extends Service implements LocationListener {
     }
 
     public void onCreate() {
-        sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Log.e(TAG, "onCreate");
         if (sharedpreferences.getBoolean("logged in",false)) {
 
@@ -101,7 +105,13 @@ public class BackgroundMapService extends Service implements LocationListener {
             userid = sharedpreferences.getInt("Id", 0);
 
         }
+         notfication = new NotificationCompat.Builder(this);
+        notfication.setAutoCancel(true);
+       /* SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.remove("ExistedOffers");*//*
 
+
+        editor.commit();*/
 
         getLocation();
     }
@@ -452,6 +462,10 @@ public class BackgroundMapService extends Service implements LocationListener {
                             offer.setPlacename((String) offer_obj.get("PlaceName"));
                             offer.setLatitude(Double.parseDouble(offer_obj.get("latitude").toString()));
                             offer.setLongitude(Double.parseDouble(offer_obj.get("longitude").toString()));
+                            offer.setOffer_id(Integer.parseInt(offer_obj.get("Offer_id").toString()));
+                            offer.setStartdate((String) offer_obj.get("StartDate"));
+                            offer.setEnddate((String) offer_obj.get("EndDate"));
+                            offer.setNo_ofpoints(Integer.parseInt(offer_obj.get("points").toString()));
                             nearoffers.add(offer);
                         }
 
@@ -474,6 +488,7 @@ public class BackgroundMapService extends Service implements LocationListener {
             getLocation();
             Location templocation;
             Float distance;
+            ArrayList<nearbyoffers> newoffers= new ArrayList<nearbyoffers>();
             for(int i=0;i<nearoffers.size();i++)
             {
 
@@ -484,8 +499,28 @@ public class BackgroundMapService extends Service implements LocationListener {
                 if(distance<2000)
                 {
                     ExistedOffers.add(nearoffers.get(i));
+                    newoffers.add(nearoffers.get(i));
                 }
 
+            }
+
+            if(newoffers.size()!=0){
+                for(int i=0 ;i<newoffers.size();i++){
+                    Random rand = new Random();
+                    int  n = rand.nextInt(1000) + 1;
+                    notfication.setSmallIcon(R.drawable.ngm);
+                    notfication.setTicker("this is a ticker");
+                    notfication.setWhen(System.currentTimeMillis());
+                    notfication.setContentTitle(newoffers.get(i).getTitle());
+                    notfication.setContentText("you have an offer from"+" "+newoffers.get(i).getPlacename()+" "+"("+newoffers.get(i).getBranch_name()+")");
+                    int offer_id=newoffers.get(i).getOffer_id();
+                    Intent intent = new Intent(getApplicationContext(),Offer_Page.class);
+                    intent.putExtra("k", offer_id);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                    notfication.setContentIntent(pendingIntent);
+                    NotificationManager nm =(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    nm.notify(n,notfication.build());
+                }
             }
 
             Gson gson = new Gson();

@@ -303,12 +303,12 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
         else if(id == R.id.ctg){
             x = new Intent(this, MainActivity.class);
             startActivity(x);}
-        else if(id == R.id.likes){
+       /* else if(id == R.id.likes){
             x = new Intent(this, SavedOffersFragment.class);
             startActivity(x);}
         else if(id == R.id.prize){
             x = new Intent(this, RewardsActivity.class);
-            startActivity(x);}
+            startActivity(x);}*/
         else if(id == R.id.login){
             sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);;
             SharedPreferences.Editor editor = sharedpreferences.edit();

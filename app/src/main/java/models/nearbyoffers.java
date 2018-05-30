@@ -6,7 +6,43 @@ public class nearbyoffers {
     double latitude;
     double longitude;
     String placename;
+    Integer Offer_id;
+    String Startdate;
+    String Enddate;
+    Integer No_ofpoints;
+    public Integer getNo_ofpoints() {
+        return No_ofpoints;
+    }
 
+    public void setNo_ofpoints(Integer no_ofpoints) {
+        No_ofpoints = no_ofpoints;
+    }
+
+
+
+    public String getStartdate() {
+        return Startdate;
+    }
+
+    public void setStartdate(String startdate) {
+        Startdate = startdate;
+    }
+
+    public String getEnddate() {
+        return Enddate;
+    }
+
+    public void setEnddate(String enddate) {
+        Enddate = enddate;
+    }
+
+    public Integer getOffer_id() {
+        return Offer_id;
+    }
+
+    public void setOffer_id(Integer offer_id) {
+        Offer_id = offer_id;
+    }
     public String getTitle() {
         return title;
     }

@@ -14,7 +14,7 @@
     <item
         android:id="@+id/camaraItem"
         android:icon="@drawable/interest"
-        android:title="@string/camara" />
+        android:title="@string/intersts" />
 
 
     <item
