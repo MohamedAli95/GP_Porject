@@ -1,47 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Merchant_Reward_main"
-    >
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Merchant_After_menu">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Kindly choose a reward method"
+        android:text="Manage Your Rewards"
         android:background="#eaeaea"
         android:textSize="20dp"
         android:gravity="center"
         android:padding="10dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="-80dp">
-    <Button
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:text="Points System"
-        android:background="@drawable/roundedbutton"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:padding="20dp"
-        android:id="@+id/pts"
-        />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_button"
+            android:text="Add Points To Client"
+            android:textColor="#FF674172"
+            android:layout_marginTop="140dp"
+            android:layout_centerHorizontal="true"
+            />
+
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button4"
+            android:layout_centerInParent="true"
+            android:background="@drawable/border_button"
+            android:textColor="#FF674172"
+            android:layout_marginTop="30dp"
+            android:text="Add Reward"
+            />
 
     <Button
-        android:layout_marginTop="30dp"
-        android:layout_width="210dp"
+        android:id="@+id/button6"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Reward System"
-        android:background="@drawable/roundedbutton"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:padding="20dp"
-        android:id="@+id/rew"/>
-    </LinearLayout>
-</LinearLayout>
+        android:layout_below="@id/button5"
+        android:layout_centerInParent="true"
+        android:background="@drawable/border_button"
+        android:textColor="#FF674172"
+        android:layout_marginTop="30dp"
+        android:text="Edit / Delete Reward"
+        />
+    </RelativeLayout>

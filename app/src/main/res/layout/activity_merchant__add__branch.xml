@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Merchant_add_offer"
+
+
+    >
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:focusable="true"
+        android:layout_marginTop="10dp"
+        android:focusableInTouchMode="true">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Branch Name"
+        android:textSize="20dp"
+        android:textColor="@color/headings"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:inputType="text"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Branch password"
+        android:textSize="20dp"
+        android:textColor="@color/headings"
+        android:layout_marginTop="11dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="password"
+        android:inputType="textPassword"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Branch Location"
+            android:textSize="20dp"
+            android:textColor="@color/headings"
+            android:layout_marginTop="11dp"
+            android:layout_weight="2.4"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pickup_btn"
+            android:text="Pickup Location"
+            android:textColor="#FFFFFF"
+            android:padding="5dp"
+            android:layout_marginTop="11dp"
+            android:drawableLeft="@drawable/lo"
+            android:drawableTint="#FFFFFF"
+            android:background="@color/headings"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Branch Phone"
+        android:textSize="20dp"
+        android:textColor="@color/headings"
+        android:layout_marginTop="11dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="phone"
+        android:inputType="number"
+        />
+
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Reward system Availability"
+        android:id="@+id/sp1"
+        android:paddingLeft="5dp"
+        android:textColor="@color/headings"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="25dp"
+        />
+
+    <Button
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:background="@drawable/blue_radius"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        />
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

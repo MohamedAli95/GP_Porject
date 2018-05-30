@@ -7,6 +7,7 @@
         android:name="in.wptrafficanalyzer.locationingooglemapv2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="in.wptrafficanalyzer.locationingooglemapv2.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -62,8 +63,9 @@
             android:parentActivityName=".MapsActivity" />
 
         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBP53_cPyIpb-9Xk4sQp3Irpz-HRFeIJws" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCyJLc0AZK6iFsYqBIX2PrJvEQ90RHHkrU" />
+
 
         <activity android:name=".BaseActivity" />
         <activity android:name=".NavActivity" />
@@ -139,6 +141,64 @@
             android:parentActivityName=".Merchant_Reward_main"/>
         <activity android:name=".AfterBegin"></activity>
         <service android:name=".BackgroundMapService"  android:enabled="true"/>
+
+
+        <activity
+            android:name=".Merchant_After_menu"
+            android:label="Manage Menus"
+            android:parentActivityName=".Merchant_Home"/>
+        <activity android:name=".Merchant_Upload_menu" />
+        <activity
+            android:name=".MerchantMenu"
+            android:label="Your Menus"
+            android:parentActivityName=".Merchant_After_menu"/>
+        <activity
+            android:name=".Merchant_Profile"
+            android:label="Place Profile"
+            android:parentActivityName=".Merchant_Home"/>
+        <activity
+            android:name=".Merchant_Add_Branch"
+            android:label="Add Branch"
+            android:parentActivityName=".Merchant_Home"/>
+        <activity
+            android:name=".Merchant_Branch_Home"
+            android:label="Branch Home"
+            android:parentActivityName=".Merchant_Branches_list"/>
+        <activity
+            android:name=".Merchant_Add_Reward"
+            android:label="Add Reward"
+            android:parentActivityName=".Merchant_Reward_main"/>
+        <activity
+            android:name=".Merchant_Branch_Profile"
+            android:label="Branch Profile"
+            android:parentActivityName=".Merchant_Branch_Home"/>
+        <activity
+            android:name=".Merchant_Offers"
+            android:label="Offers"
+            android:parentActivityName=".Merchant_Branch_Home"/>
+        <activity
+            android:name=".Merchant_Branches_list"
+            android:label="Branches"
+            android:parentActivityName=".Merchant_Home"/>
+        <activity
+            android:name=".Merchant_Branch_Pass"
+            android:label="Branch Validate"
+            android:parentActivityName=".Merchant_Branches_list"/>
+        <activity
+            android:name=".Merchant_Branch_ManageOffer"
+            android:label="Manage Offers"
+            android:parentActivityName=".Merchant_Branch_Home"/>
+        <activity
+            android:name=".Merchant_Branch_AddPoints"
+            android:label="Add Points"
+            android:parentActivityName=".Merchant_Reward_main"/>
+        <activity
+            android:name=".Merchant_Rewards_list"
+            android:label="Rewards"
+            android:parentActivityName=".Merchant_Reward_main"/>
+        <activity android:name=".Branch_MapActivity"
+            android:label="Pickup Branch Location"
+            android:parentActivityName=".Merchant_Add_Branch"/>
     </application>
 
 </manifest>

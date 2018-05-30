@@ -1,7 +1,7 @@
 package com.example.shika.boo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 public class Merchant_points extends AppCompatActivity {
 

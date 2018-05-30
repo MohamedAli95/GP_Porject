@@ -1,10 +1,5 @@
 package com.example.shika.boo;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
@@ -15,6 +10,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class Merchant_add_offer extends AppCompatActivity implements OnClickListener {
 
@@ -77,7 +76,7 @@ public class Merchant_add_offer extends AppCompatActivity implements OnClickList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+    //    getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 

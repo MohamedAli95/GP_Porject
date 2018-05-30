@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/show_selected_location"
+        android:textSize="22dp"
+        android:textColor="#000000"
+        android:text="selected location will be show here"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/go_to_button"
+        android:text="Pickup Branch Location"
+        android:layout_below="@id/show_selected_location"
+        android:layout_marginTop="140dp"
+        android:background="@drawable/border_button"
+        android:padding="15dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"/>
+</RelativeLayout>
