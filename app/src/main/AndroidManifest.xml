@@ -199,6 +199,7 @@
         <activity android:name=".Branch_MapActivity"
             android:label="Pickup Branch Location"
             android:parentActivityName=".Merchant_Add_Branch"/>
+        <activity android:name="com.example.shika.boo.Branch_Report"/>
     </application>
 
 </manifest>
