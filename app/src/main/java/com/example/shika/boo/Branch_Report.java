@@ -1,11 +1,14 @@
 package com.example.shika.boo;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -13,7 +16,7 @@ public class Branch_Report extends AppCompatActivity {
 
     RatingBar ratingBar;
 
-    Button button;
+    TextView textView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -21,20 +24,31 @@ public class Branch_Report extends AppCompatActivity {
         setContentView(R.layout.branch_report);
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        button = (Button) findViewById(R.id.button);
+
+        ratingBar.setRating(Load());
+
+        textView = (TextView) findViewById(R.id.textview);
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                Toast.makeText(Branch_Report.this, "Stars : " + rating, Toast.LENGTH_SHORT).show();
-            }
-        });
+                textView.setText(""+rating);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(Branch_Report.this, "Stars : " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
+                Save(rating);
             }
         });
+    }
+
+    public void Save (float r){
+        SharedPreferences sharedPreferences = getSharedPreferences("rate",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putFloat("rating",r);
+        editor.commit();
+    }
+
+    public float Load (){
+        SharedPreferences sharedPreferences = getSharedPreferences("rate", MODE_PRIVATE);
+        float f = sharedPreferences.getFloat("rating", 0f);
+        return  f;
     }
 }

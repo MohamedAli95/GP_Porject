@@ -36,12 +36,12 @@
         android:textSize="30sp"
         android:layout_marginLeft="-350dp"/>
 
-    <Button
-        android:id="@+id/button"
+    <TextView
+        android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:text="Submit"
+        android:textSize="25dp"
         android:layout_marginTop="260dp"
-        android:layout_marginLeft="-30dp"/>
+        android:layout_marginLeft="-175dp"/>
 </LinearLayout>
