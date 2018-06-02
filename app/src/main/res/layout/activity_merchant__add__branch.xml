@@ -112,6 +112,7 @@
     <Button
         android:layout_width="240dp"
         android:layout_height="wrap_content"
+        android:id="@+id/btn_registerBranche"
         android:text="Submit"
         android:background="@drawable/blue_radius"
         android:textColor="@color/white"

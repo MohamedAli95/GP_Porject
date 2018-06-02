@@ -1,5 +1,6 @@
 package com.example.shika.boo;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,21 +9,72 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.format.Formatter;
+import android.util.Base64;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Merchant_Add_Branch extends AppCompatActivity {
+
     String[] Reward = {"UnAvailable","Available"};
-    private EditText ET_email ,ET_password, ET_BrandName ;
+
+    private EditText ET_password, ET_BrandName,ET_phone ;
+    Button btn_addBranch ;
     private RequestQueue requestQueue ;
     private StringRequest request ;
-    private static String registerPlaceURL = "http://gp.sendiancrm.com/offerall/registerPlace.php";
+    private int rewordSystem =1;
+    private static String registerBranchURL = "http://gp.sendiancrm.com/offerall/addBranch.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant__add__branch);
+
+        ET_BrandName = (EditText)findViewById(R.id.branchName);
+        ET_password =(EditText)findViewById(R.id.branchpassword);
+        ET_phone =(EditText)findViewById(R.id.branchPhone);
+        btn_addBranch = (Button) findViewById(R.id.btn_registerBranche);
+
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        btn_addBranch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewBranch();
+            }
+        });
 
         Button bu = (Button) findViewById(R.id.pickup_btn);
         bu.setOnClickListener(new View.OnClickListener() {
@@ -41,4 +93,49 @@ public class Merchant_Add_Branch extends AppCompatActivity {
 
 
     }
+
+   public  void addNewBranch(){
+
+        request = new StringRequest(Request.Method.POST, registerBranchURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.names().get(0).equals("success"))
+                    {
+                        Toast.makeText(getApplicationContext(), ""+jsonObject.get("success"),
+                                Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(),Merchant_Branches_list.class);
+                        startActivity(intent);
+                    }else if (jsonObject.names().get(0).equals("error"))
+                    {
+                        Toast.makeText(getApplicationContext(), ""+jsonObject.get("error"),
+                                Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap =new HashMap<>();
+                hashMap.put("branchName",ET_BrandName.getText().toString());
+                hashMap.put("branchPhone",ET_phone.getText().toString());
+                hashMap.put("password",ET_password.getText().toString());
+                hashMap.put("checkedRewordSystem", ""+rewordSystem);
+
+                return  hashMap;
+            }
+        };
+     requestQueue.add(request);
+   }
+
 }

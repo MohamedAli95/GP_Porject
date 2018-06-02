@@ -92,6 +92,15 @@ public class sign_in_merchant extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), ""+jsonObject.get("error"),
                                 Toast.LENGTH_LONG).show();
                     }
+                    if (jsonObject.names().get(0).equals("place")){
+
+                        JSONArray places=new JSONArray(response);
+                        JSONObject place = places.getJSONObject(0);
+                        String pLacename = place.getString("PLaceName");
+                        String place_logoPhoto = place.getString("Place_LogoPhoto");
+                        Toast.makeText(getApplicationContext(),pLacename , Toast.LENGTH_SHORT).show();
+
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
