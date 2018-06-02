@@ -49,7 +49,7 @@ public class Merchant_Branch_Home extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent ino = new Intent(Merchant_Branch_Home.this,Merchant_Branch_Profile.class);
+                Intent ino = new Intent(Merchant_Branch_Home.this,Branch_Report.class);
                 startActivity(ino);
             }
         });

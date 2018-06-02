@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 
 public class Branch_Report extends AppCompatActivity {
-    //hi
 
     RatingBar ratingBar;
 
