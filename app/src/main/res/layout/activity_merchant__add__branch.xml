@@ -32,6 +32,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/branchName"
         android:hint="Name"
         android:inputType="text"
         />
@@ -48,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="password"
+        android:id="@+id/branchpassword"
         android:inputType="textPassword"
         />
 
@@ -92,6 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="phone"
+        android:id="@+id/branchPhone"
         android:inputType="number"
         />
 
@@ -99,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Reward system Availability"
-        android:id="@+id/sp1"
+        android:id="@+id/spenner"
         android:paddingLeft="5dp"
         android:textColor="@color/headings"
         android:layout_marginTop="15dp"

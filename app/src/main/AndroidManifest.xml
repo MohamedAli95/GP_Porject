@@ -66,7 +66,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCyJLc0AZK6iFsYqBIX2PrJvEQ90RHHkrU" />
 
-
         <activity android:name=".BaseActivity" />
         <activity android:name=".NavActivity" />
         <activity
@@ -86,12 +85,14 @@
         <activity android:name=".TestActivity" />
         <activity android:name=".Merchant_signup" />
         <activity android:name=".Merchant_Home" />
-        <activity android:name=".Branches_merchant"
+        <activity
+            android:name=".Branches_merchant"
             android:label="Branches"
-            android:parentActivityName=".Merchant_Home"/>
-        <activity android:name=".Branch_details"
+            android:parentActivityName=".Merchant_Home" />
+        <activity
+            android:name=".Branch_details"
             android:label="Add Branch"
-            android:parentActivityName=".Branches_merchant"/>
+            android:parentActivityName=".Branches_merchant" />
         <activity
             android:name=".BeginActivity"
             android:noHistory="true">
@@ -124,82 +125,90 @@
             android:label="saved stores"
             android:parentActivityName=".MapsActivity" />
         <activity android:name=".MapssActivity" />
-        <activity android:name=".Merchant_addmenu"
+        <activity
+            android:name=".Merchant_addmenu"
             android:label="Menu Manage"
-            android:parentActivityName=".Merchant_Home"/>
-        <activity android:name=".Merchant_add_offer"
+            android:parentActivityName=".Merchant_Home" />
+        <activity
+            android:name=".Merchant_add_offer"
             android:label="Add Offer"
-            android:parentActivityName=".Merchant_Home"/>
-        <activity android:name=".Merchant_Reward_main"
+            android:parentActivityName=".Merchant_Home" />
+        <activity
+            android:name=".Merchant_Reward_main"
             android:label="Rewards System"
-            android:parentActivityName=".Merchant_Home"/>
-        <activity android:name=".Merchant_points"
+            android:parentActivityName=".Merchant_Home" />
+        <activity
+            android:name=".Merchant_points"
             android:label="Points System"
-            android:parentActivityName=".Merchant_Reward_main"/>
-        <activity android:name=".Merchant_RewardsSystem"
+            android:parentActivityName=".Merchant_Reward_main" />
+        <activity
+            android:name=".Merchant_RewardsSystem"
             android:label="Deals System"
-            android:parentActivityName=".Merchant_Reward_main"/>
-        <activity android:name=".AfterBegin"></activity>
-        <service android:name=".BackgroundMapService"  android:enabled="true"/>
+            android:parentActivityName=".Merchant_Reward_main" />
+        <activity android:name=".AfterBegin" />
 
+        <service
+            android:name=".BackgroundMapService"
+            android:enabled="true" />
 
         <activity
             android:name=".Merchant_After_menu"
             android:label="Manage Menus"
-            android:parentActivityName=".Merchant_Home"/>
+            android:parentActivityName=".Merchant_Home" />
         <activity android:name=".Merchant_Upload_menu" />
         <activity
             android:name=".MerchantMenu"
             android:label="Your Menus"
-            android:parentActivityName=".Merchant_After_menu"/>
+            android:parentActivityName=".Merchant_After_menu" />
         <activity
             android:name=".Merchant_Profile"
             android:label="Place Profile"
-            android:parentActivityName=".Merchant_Home"/>
+            android:parentActivityName=".Merchant_Home" />
         <activity
             android:name=".Merchant_Add_Branch"
             android:label="Add Branch"
-            android:parentActivityName=".Merchant_Home"/>
+            android:parentActivityName=".Merchant_Home" />
         <activity
             android:name=".Merchant_Branch_Home"
             android:label="Branch Home"
-            android:parentActivityName=".Merchant_Branches_list"/>
+            android:parentActivityName=".Merchant_Branches_list" />
         <activity
             android:name=".Merchant_Add_Reward"
             android:label="Add Reward"
-            android:parentActivityName=".Merchant_Reward_main"/>
+            android:parentActivityName=".Merchant_Reward_main" />
         <activity
             android:name=".Merchant_Branch_Profile"
             android:label="Branch Profile"
-            android:parentActivityName=".Merchant_Branch_Home"/>
+            android:parentActivityName=".Merchant_Branch_Home" />
         <activity
             android:name=".Merchant_Offers"
             android:label="Offers"
-            android:parentActivityName=".Merchant_Branch_Home"/>
+            android:parentActivityName=".Merchant_Branch_Home" />
         <activity
             android:name=".Merchant_Branches_list"
             android:label="Branches"
-            android:parentActivityName=".Merchant_Home"/>
+            android:parentActivityName=".Merchant_Home" />
         <activity
             android:name=".Merchant_Branch_Pass"
             android:label="Branch Validate"
-            android:parentActivityName=".Merchant_Branches_list"/>
+            android:parentActivityName=".Merchant_Branches_list" />
         <activity
             android:name=".Merchant_Branch_ManageOffer"
             android:label="Manage Offers"
-            android:parentActivityName=".Merchant_Branch_Home"/>
+            android:parentActivityName=".Merchant_Branch_Home" />
         <activity
             android:name=".Merchant_Branch_AddPoints"
             android:label="Add Points"
-            android:parentActivityName=".Merchant_Reward_main"/>
+            android:parentActivityName=".Merchant_Reward_main" />
         <activity
             android:name=".Merchant_Rewards_list"
             android:label="Rewards"
-            android:parentActivityName=".Merchant_Reward_main"/>
-        <activity android:name=".Branch_MapActivity"
+            android:parentActivityName=".Merchant_Reward_main" />
+        <activity
+            android:name=".Branch_MapActivity"
             android:label="Pickup Branch Location"
-            android:parentActivityName=".Merchant_Add_Branch"/>
-        <activity android:name="com.example.shika.boo.Branch_Report"/>
+            android:parentActivityName=".Merchant_Add_Branch" />
+        <activity android:name=".sign_in_merchant"></activity>
     </application>
 
 </manifest>

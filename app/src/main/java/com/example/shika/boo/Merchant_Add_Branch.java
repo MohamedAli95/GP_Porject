@@ -6,11 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 public class Merchant_Add_Branch extends AppCompatActivity {
     String[] Reward = {"UnAvailable","Available"};
+    private EditText ET_email ,ET_password, ET_BrandName ;
+    private RequestQueue requestQueue ;
+    private StringRequest request ;
+    private static String registerPlaceURL = "http://gp.sendiancrm.com/offerall/registerPlace.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +36,9 @@ public class Merchant_Add_Branch extends AppCompatActivity {
 
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,Reward);
-        MaterialBetterSpinner betterSpinner = (MaterialBetterSpinner) findViewById(R.id.sp1);
+        MaterialBetterSpinner betterSpinner = (MaterialBetterSpinner) findViewById(R.id.spenner);
         betterSpinner.setAdapter(arrayAdapter);
+
+
     }
 }

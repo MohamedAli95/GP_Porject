@@ -120,6 +120,8 @@ public class SignUp extends AppCompatActivity {
 
     }
 
+
+
     private class Encode_image extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
