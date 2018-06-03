@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -42,7 +44,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         App app = mApps.get(position);
-        holder.imageView.setImageResource(app.getDrawable());
+        Picasso.get().load(app.getPlaceimage()).into(holder.imageView);
         holder.nameTextView.setText(app.getName());
         holder.ratingTextView.setText(String.valueOf(app.getRating()));
 

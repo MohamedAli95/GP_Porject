@@ -1,6 +1,7 @@
 package com.example.shika.boo;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +19,28 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import models.categorypage;
+import models.nearbyoffers;
+import models.placeCategorypage;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,20 +55,32 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private Menu drawerMenu;
+    private cateogry catg;
+    private placecateogry placecatg;
+
+    String Type;
+    String Type1;
+    ArrayList<categorypage> catgorylist;
+    ArrayList<placeCategorypage> placecatgorylist;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        catgorylist= new ArrayList<categorypage>();
+        placecatgorylist=new ArrayList<placeCategorypage>();
 
+        catg=new cateogry();
+        placecatg= new placecateogry();
+        Type="CategoryData";
+        catg.execute(Type);
+        Type1="placedata";
+        placecatg.execute(Type1);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -60,53 +94,62 @@ public class MainActivity extends AppCompatActivity {
             mHorizontal = savedInstanceState.getBoolean(ORIENTATION);
         }
 
-        setupAdapter();
+
 
 
     }
 
-    public void card_trans(View view){
-        Intent ba = new Intent(this,Try.class);
+    public void card_trans(View view) {
+        Intent ba = new Intent(this, Try.class);
         startActivity(ba);
     }
 
 
-
-
-
-
-
     private void setupAdapter() {
-        List<App> apps = getApps();
+        ArrayList<ArrayList<App>> apps = getApps();
 
         SnapAdapter snapAdapter = new SnapAdapter();
         if (mHorizontal) {
-            snapAdapter.addSnap(new Snap(Gravity.CENTER_HORIZONTAL, "Restaurants", apps));
-            snapAdapter.addSnap(new Snap(Gravity.START, "Malls", apps));
-            snapAdapter.addSnap(new Snap(Gravity.END, "Shops", apps));
-            snapAdapter.addSnap(new Snap(Gravity.END, "Markets", apps));
+            for(int i=0 ;i<catgorylist.size();i++){
+                for(int j=0 ;j<apps.get(i).size();j++) {
+                    if(apps.get(i).get(j).getCategoryid()==catgorylist.get(i).getCategory_id()) {
+                        snapAdapter.addSnap(new Snap(Gravity.START, catgorylist.get(i).getCategorytitle(), apps.get(i)));
+
+                        break;
+
+                    }
+                }
+            }
+
+
         } else {
-            snapAdapter.addSnap(new Snap(Gravity.CENTER_VERTICAL, "Restaurants", apps));
-            snapAdapter.addSnap(new Snap(Gravity.TOP, "Snap top", apps));
-            snapAdapter.addSnap(new Snap(Gravity.BOTTOM, "Snap bottom", apps));
+
         }
 
         mRecyclerView.setAdapter(snapAdapter);
     }
 
-    private List<App> getApps() {
-        List<App> apps = new ArrayList<>();
-        apps.add(new App("Kentucky Fried Chicken", R.drawable.kfc, "4.6"));
-        apps.add(new App("Macdonald", R.drawable.mac, "4.6"));
-        apps.add(new App("Dominos pizza", R.drawable.domnos,"4.6"));
-        apps.add(new App("Burger King", R.drawable.burger_king_arabic_logo, "4.6"));
-        apps.add(new App("Pizza Hut", R.drawable.hut, "4.6"));
-        apps.add(new App("Adidas", R.drawable.c4, "4.6"));
-        apps.add(new App("H&M", R.drawable.c1, "4.6"));
-        apps.add(new App("ZARA", R.drawable.c2, "4.6"));
-        apps.add(new App("Lacoste", R.drawable.c7,"4.6"));
-        apps.add(new App("W.Degla", R.drawable.c2, "4.6"));
-        apps.add(new App("Zamalek SC", R.drawable.z1, "4.6"));
+    private ArrayList<ArrayList<App>> getApps() {
+
+
+        ArrayList<ArrayList<App>> apps = new ArrayList<ArrayList<App>>();
+        for(int i=0 ;i<catgorylist.size();i++) {
+            ArrayList<App> app = new ArrayList<App>();
+            for(int j=0 ;j<placecatgorylist.size();j++) {
+
+                if(catgorylist.get(i).getCategory_id()==placecatgorylist.get(j).getCategory_id()) {
+
+                    app.add(new App(placecatgorylist.get(j).getPlacename(),placecatgorylist.get(j).getLogoUrl() , String.valueOf(placecatgorylist.get(j).getRate()),placecatgorylist.get(j).getCategory_id()));
+
+
+                }
+
+            }
+            apps.add(app);
+
+
+        }
+
         return apps;
     }
 
@@ -115,4 +158,167 @@ public class MainActivity extends AppCompatActivity {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-}
+
+    private class cateogry extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            Log.e("cateogry", "cateogry Started");
+            String categoryurl = "http://gp.sendiancrm.com/offerall/category.php";
+
+
+
+            if (Type.equals("CategoryData")) {
+                try {
+
+
+                    URL url = new URL(categoryurl);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("GET");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                    String result = "";
+                    String line = "";
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+                    Log.e("CategoryResult", result);
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    return result;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return  null;
+        }
+        protected void onPostExecute(String result) {
+
+
+            JSONParser parser = new JSONParser();
+
+            if (Type.equals("CategoryData")) {
+                try {
+                    if(result.equals("Data not  found")){
+
+                    }
+                    else {
+
+                        Object obj = parser.parse(result);
+                        JSONArray array= (JSONArray) obj;
+                        JSONObject category_obj ;
+
+                        categorypage category;
+                        for (int i =0 ; i<array.size();i++)
+                        {
+                            category_obj= (JSONObject) array.get(i);
+                            category=new categorypage();
+                            category.setCategorytitle((String)category_obj.get("Name"));
+                            category.setCategory_id(Integer.valueOf((String)category_obj.get("Category_ID")));
+
+                            catgorylist.add(category);
+                        }
+
+
+
+
+                    }
+
+
+
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
+
+    }
+    private class placecateogry extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... params) {
+            Log.e("cateogry", "cateogry Started");
+            String placecategoryurl = "http://gp.sendiancrm.com/offerall/categoryPlaces.php";
+             if (Type1.equals("placedata")) {
+                try {
+
+
+                    URL url = new URL(placecategoryurl);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("GET");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                    String result = "";
+                    String line = "";
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+                    Log.e("placeCategoryResult", result);
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    return result;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+        protected void onPostExecute(String result) {
+            JSONParser parser = new JSONParser();
+              if (Type1.equals("placedata")) {
+                try {
+                    if(result.equals("Data not  found")){
+
+                    }
+                    else {
+
+                        Object obj = parser.parse(result);
+                        JSONArray array= (JSONArray) obj;
+                        JSONObject category_obj ;
+
+                        placeCategorypage PLacecategory;
+                        for (int i =0 ; i<array.size();i++)
+                        {
+                            category_obj= (JSONObject) array.get(i);
+                            PLacecategory=new placeCategorypage();
+                            PLacecategory.setCategory_id(Integer.valueOf((String)category_obj.get("Category_id")));
+                            PLacecategory.setLogoUrl((String)category_obj.get("Place_LogoPhoto"));
+                            PLacecategory.setPlacename((String)category_obj.get("PLaceName"));
+                            PLacecategory.setRate(Float.valueOf((String)category_obj.get("PLaceRate")));
+
+
+                            placecatgorylist.add(PLacecategory);
+                        }
+
+
+
+
+                    }
+
+
+
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            setupAdapter();
+        }
+
+        }
+        }
+
+
+

@@ -94,7 +94,7 @@ public class Myprof extends android.app.Fragment {
             gender.setText(sharedpreferences.getString("gender", "gender"));
             phone.setText(sharedpreferences.getString("phone", "phone"));
             String profilepicurl = sharedpreferences.getString("profilepicture", null);
-            Picasso.with(vi.getContext()).load(profilepicurl).into(profile_pic);
+            Picasso.get().load(profilepicurl).into(profile_pic);
         }
 
 

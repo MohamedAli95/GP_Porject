@@ -29,18 +29,6 @@
             android:background="@drawable/rounded_red_border"
            />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginLeft="110dp"
-            android:padding="2dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:text="more"
-            android:textColor="#26a69a"
-            android:background="@color/transparent"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

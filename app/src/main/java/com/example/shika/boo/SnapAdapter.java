@@ -23,9 +23,9 @@ import java.util.ArrayList;
 
 public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder>  {
 
-    public static final int VERTICAL = 0;
+
     public static final int HORIZONTAL = 1;
-    public static Button more ;
+
 
     private ArrayList<Snap> mSnaps;
     // Disable touch detection for parent recyclerView if we use vertical nested recyclerViews
@@ -50,32 +50,25 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder>  {
         Snap snap = mSnaps.get(position);
         switch (snap.getGravity()) {
             case Gravity.CENTER_VERTICAL:
-                return VERTICAL;
+                return HORIZONTAL;
             case Gravity.CENTER_HORIZONTAL:
                 return HORIZONTAL;
             case Gravity.START:
                 return HORIZONTAL;
             case Gravity.TOP:
-                return VERTICAL;
+                return HORIZONTAL;
             case Gravity.END:
                 return HORIZONTAL;
             case Gravity.BOTTOM:
-                return VERTICAL;
+                return HORIZONTAL;
         }
         return HORIZONTAL;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = viewType == VERTICAL ? LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_snap_vertical, parent, false)
-                : LayoutInflater.from(parent.getContext())
+        View view =  LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_snap, parent, false);
-        more = (Button) view.findViewById(R.id.button2);
-
-        if (viewType == VERTICAL) {
-            view.findViewById(R.id.recyclerView).setOnTouchListener(mTouchListener);
-        }
 
         return new ViewHolder(view);
 
@@ -104,7 +97,7 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder>  {
 
         } else { // Top / Bottom
             holder.recyclerView.setLayoutManager(new LinearLayoutManager(holder
-                    .recyclerView.getContext()));
+                    .recyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false));
             holder.recyclerView.setOnFlingListener(null);
         }
 
