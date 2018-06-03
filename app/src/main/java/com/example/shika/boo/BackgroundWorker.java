@@ -215,6 +215,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
+
+
     public  void UserSesionStart(User user){
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedpreferences.edit();
