@@ -36,7 +36,7 @@ public class Merchant_Home extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent ino = new Intent(Merchant_Home.this,Merchant_After_menu.class);
+                Intent ino = new Intent(Merchant_Home.this,Merchant_signin.class);
                 startActivity(ino);
             }
         });

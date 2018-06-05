@@ -5,45 +5,62 @@ import java.io.Serializable;
 public class YoutuberModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String name;
-    private String startdate;
-    private String enddate;
-    private int image;
+    private int id;
+    private String Title;
+    private String From_date;
+    private String To_date;
+    private String Reward_image;
 
     public YoutuberModel() {
     }
 
-    public YoutuberModel(String name, String sdate , String edate, int img) {
-        this.name = name;
-        this.startdate = sdate;
-        this.enddate = edate;
-        this.image = img;
+    public YoutuberModel(int id,String Title , String From_date , String To_date , String Reward_image) {
+        this.id = id;
+        this.Title = Title;
+this.From_date = From_date;
+this.To_date = To_date;
+this.Reward_image = Reward_image;
+    }
+
+     public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
-        return name;
+        return Title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String Title) {
+        this.Title = Title;
     }
 
-    public String getSdate() {
-        return startdate;
+
+     public String getSdate() {
+        return From_date;
     }
 
-    public void setsdate(String sdate) { this.startdate = sdate; }
-
-    public String getedate() {
-        return enddate;
+    public void setSdate(String From_date) {
+        this.From_date = From_date;
     }
 
-    public void setedate(String edate) { this.enddate = edate; }
-
-    public int getimage() {
-        return image;
+     public String getEdate() {
+        return To_date;
     }
 
-    public void setimage(int img) { this.image = img; }
+    public void setEdate(String To_date) {
+        this.To_date = To_date;
+    }
 
+
+     public String getImage() {
+        return Reward_image;
+    }
+
+    public void setImage(String Reward_image) {
+        this.Reward_image = Reward_image;
+    }
 }
