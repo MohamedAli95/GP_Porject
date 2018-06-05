@@ -62,7 +62,7 @@ public class Merchant_Upload_menu extends AppCompatActivity implements View.OnCl
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
        // strSavedMem1 = sharedPreferences.getString("Name", "");
-         strSavedMem1 = sharedPreferences.getInt("Id",0);
+         strSavedMem1 = sharedPreferences.getInt("PID",0);
         buttonChoose.setText(Integer.toString(strSavedMem1));
     }
 
