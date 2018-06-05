@@ -5,6 +5,17 @@ public class placeCategorypage {
     String logoUrl;
     String Placename;
     Integer category_id;
+    Integer place_id;
+
+    public Integer getPlace_id() {
+        return place_id;
+    }
+
+    public void setPlace_id(Integer place_id) {
+        this.place_id = place_id;
+    }
+
+
 
     public Integer getCategory_id() {
         return category_id;

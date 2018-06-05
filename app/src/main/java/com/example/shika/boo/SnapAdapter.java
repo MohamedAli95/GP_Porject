@@ -4,6 +4,7 @@ package com.example.shika.boo;
  * Created by delaroy on 2/10/17.
  */
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.PagerSnapHelper;
@@ -28,6 +29,7 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder>  {
 
 
     private ArrayList<Snap> mSnaps;
+    private Context context;
     // Disable touch detection for parent recyclerView if we use vertical nested recyclerViews
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
@@ -37,8 +39,9 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder>  {
         }
     };
 
-    public SnapAdapter() {
+    public SnapAdapter(Context context) {
         mSnaps = new ArrayList<>();
+        this.context=context;
     }
 
     public void addSnap(Snap snap) {
@@ -105,7 +108,7 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder>  {
         holder.recyclerView.setAdapter(new Adapter(snap.getGravity() == Gravity.START
                 || snap.getGravity() == Gravity.END
                 || snap.getGravity() == Gravity.CENTER_HORIZONTAL,
-                snap.getGravity() == Gravity.CENTER, snap.getApps()));
+                snap.getGravity() == Gravity.CENTER, snap.getApps(),context));
     }
 
     @Override

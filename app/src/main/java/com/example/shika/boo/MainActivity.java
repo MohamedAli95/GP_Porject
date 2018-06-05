@@ -99,16 +99,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void card_trans(View view) {
+    /*public void card_trans(View view) {
         Intent ba = new Intent(this, Try.class);
         startActivity(ba);
-    }
+    }*/
 
 
     private void setupAdapter() {
         ArrayList<ArrayList<App>> apps = getApps();
 
-        SnapAdapter snapAdapter = new SnapAdapter();
+        SnapAdapter snapAdapter = new SnapAdapter(this);
         if (mHorizontal) {
             for(int i=0 ;i<catgorylist.size();i++){
                 for(int j=0 ;j<apps.get(i).size();j++) {
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(catgorylist.get(i).getCategory_id()==placecatgorylist.get(j).getCategory_id()) {
 
-                    app.add(new App(placecatgorylist.get(j).getPlacename(),placecatgorylist.get(j).getLogoUrl() , String.valueOf(placecatgorylist.get(j).getRate()),placecatgorylist.get(j).getCategory_id()));
+                    app.add(new App(placecatgorylist.get(j).getPlacename(),placecatgorylist.get(j).getLogoUrl() , String.valueOf(placecatgorylist.get(j).getRate()),placecatgorylist.get(j).getCategory_id(),placecatgorylist.get(j).getPlace_id()));
 
 
                 }
@@ -296,6 +296,8 @@ public class MainActivity extends AppCompatActivity {
                             PLacecategory.setLogoUrl((String)category_obj.get("Place_LogoPhoto"));
                             PLacecategory.setPlacename((String)category_obj.get("PLaceName"));
                             PLacecategory.setRate(Float.valueOf((String)category_obj.get("PLaceRate")));
+                            PLacecategory.setPlace_id(Integer.valueOf((String)category_obj.get("Place_ID")));
+
 
 
                             placecatgorylist.add(PLacecategory);

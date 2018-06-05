@@ -64,7 +64,7 @@ public class Merchant_Profile extends AppCompatActivity {
     private void setupAdapter() {
         List<App> apps = getApps();
 
-        SnapAdapter snapAdapter = new SnapAdapter();
+        SnapAdapter snapAdapter = new SnapAdapter(this);
         if (mHorizontal) {
             snapAdapter.addSnap(new Snap(Gravity.CENTER, "", apps));
 

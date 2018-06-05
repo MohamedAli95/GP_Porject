@@ -18,6 +18,16 @@ public class App {
     private String mRating;
     private Integer categoryid;
 
+    public Integer getPlace_id() {
+        return Place_id;
+    }
+
+    public void setPlace_id(Integer place_id) {
+        Place_id = place_id;
+    }
+
+    private  Integer Place_id;
+
     public Integer getCategoryid() {
         return categoryid;
     }
@@ -28,8 +38,9 @@ public class App {
 
 
 
-    public App(String name, String  placeimage, String rating,Integer categoryid){
+    public App(String name, String  placeimage, String rating,Integer categoryid,Integer Place_id){
         mName = name;
+        this.Place_id=Place_id;
         this.placeimage = placeimage;
         mRating = rating;
         this.categoryid=categoryid;
