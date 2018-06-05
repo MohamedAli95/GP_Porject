@@ -1,11 +1,15 @@
 package com.example.shika.boo;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -19,11 +23,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private List<App> mApps;
     private boolean mHorizontal;
     private boolean mPager;
+    private Context context;
+    int place_id;
 
-    public Adapter(boolean horizontal, boolean pager, List<App> apps) {
+    public Adapter(boolean horizontal, boolean pager, List<App> apps,Context context) {
         mHorizontal = horizontal;
         mApps = apps;
         mPager = pager;
+        this.context=context;
     }
 
     @Override
@@ -40,9 +47,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        App app = mApps.get(position);
-        holder.imageView.setImageResource(app.getDrawable());
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+         App app = mApps.get(position);
+          place_id=app.getPlace_id();
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ba = new Intent(context, Try.class);
+                ba.putExtra("place_id",place_id);
+                context.startActivity(ba);
+
+            }
+        });
+        Picasso.get().load(app.getPlaceimage()).into(holder.imageView);
         holder.nameTextView.setText(app.getName());
         holder.ratingTextView.setText(String.valueOf(app.getRating()));
 

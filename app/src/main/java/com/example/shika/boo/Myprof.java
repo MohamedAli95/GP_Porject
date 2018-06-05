@@ -43,6 +43,7 @@ public class Myprof extends android.app.Fragment {
     SharedPreferences sharedpreferences;
     CollapsingToolbarLayout collapsingToolbarLayout;
     CircleImageView profile_pic;
+    ImageButton editprofile;
 
 
 
@@ -58,6 +59,14 @@ public class Myprof extends android.app.Fragment {
         CardView cardView = (CardView) vi.findViewById(R.id.car1);
         CardView cardView2 = (CardView) vi.findViewById(R.id.car2);
         CardView cardView3 = (CardView) vi.findViewById(R.id.car3);
+        editprofile= vi.findViewById(R.id.editProfile);
+        editprofile.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent in = new Intent(getActivity(),editprofile.class);
+                startActivity(in);
+
+            }
+        });
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +103,7 @@ public class Myprof extends android.app.Fragment {
             gender.setText(sharedpreferences.getString("gender", "gender"));
             phone.setText(sharedpreferences.getString("phone", "phone"));
             String profilepicurl = sharedpreferences.getString("profilepicture", null);
-            Picasso.with(vi.getContext()).load(profilepicurl).into(profile_pic);
+            Picasso.get().load(profilepicurl).into(profile_pic);
         }
 
 

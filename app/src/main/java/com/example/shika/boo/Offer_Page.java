@@ -89,7 +89,7 @@ public class Offer_Page extends AppCompatActivity implements OnMapReadyCallback 
             Title.setText(Theoffer.getTitle());
             No_ofpoints.setText(String.valueOf(Theoffer.getNo_ofpoints()));
             collapsingToolbarLayout.setTitle(Theoffer.getBranch_name());
-            Picasso.with(this).load("http://gp.sendiancrm.com/offerall/images/20180529084501.jpg").into(new Target() {
+            Picasso.get().load("http://gp.sendiancrm.com/offerall/images/20180529084501.jpg").into(new Target() {
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -97,16 +97,17 @@ public class Offer_Page extends AppCompatActivity implements OnMapReadyCallback 
                 }
 
                 @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
 
                 }
+
 
                 @Override
                 public void onPrepareLoad(Drawable placeHolderDrawable) {
 
                 }
             });
-            Picasso.with(this).load("http://gp.sendiancrm.com/offerall/images/20180529084501.jpg").into(placeimage);
+            Picasso.get().load("http://gp.sendiancrm.com/offerall/images/20180529084501.jpg").into(placeimage);
         }
 
 

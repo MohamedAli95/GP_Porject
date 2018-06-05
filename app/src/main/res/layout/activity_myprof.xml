@@ -73,12 +73,13 @@
                     android:id="@+id/edit">
 
                     <ImageButton
+                        android:id="@+id/editProfile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
                         android:layout_gravity="right"
-                        android:tint="@color/colorAccent"
-                        android:background="@null" />
+                        android:background="@null"
+                        android:src="@drawable/edit"
+                        android:tint="@color/colorAccent" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

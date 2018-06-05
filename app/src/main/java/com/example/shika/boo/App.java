@@ -5,18 +5,49 @@ package com.example.shika.boo;
  */
 public class App {
 
-    private int mDrawable;
+    public String getPlaceimage() {
+        return placeimage;
+    }
+
+    public void setPlaceimage(String placeimage) {
+        this.placeimage = placeimage;
+    }
+
+    private String  placeimage;
     private String mName;
     private String mRating;
+    private Integer categoryid;
 
-    public App(String name, int drawable, String rating){
+    public Integer getPlace_id() {
+        return Place_id;
+    }
+
+    public void setPlace_id(Integer place_id) {
+        Place_id = place_id;
+    }
+
+    private  Integer Place_id;
+
+    public Integer getCategoryid() {
+        return categoryid;
+    }
+
+    public void setCategoryid(Integer categoryid) {
+        this.categoryid = categoryid;
+    }
+
+
+
+    public App(String name, String  placeimage, String rating,Integer categoryid,Integer Place_id){
         mName = name;
-        mDrawable = drawable;
+        this.Place_id=Place_id;
+        this.placeimage = placeimage;
         mRating = rating;
+        this.categoryid=categoryid;
     }
 
     public String getRating(){ return mRating; }
-    public int getDrawable() { return mDrawable; }
+
     public String getName() { return mName; }
 
 }

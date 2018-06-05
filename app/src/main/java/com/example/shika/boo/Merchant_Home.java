@@ -22,21 +22,21 @@ public class Merchant_Home extends AppCompatActivity {
         Toast.makeText(this, pLogo, Toast.LENGTH_SHORT).show();*/
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.tomen);
-       // LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.toreward);
+        // LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.toreward);
         LinearLayout linearLayout2 = (LinearLayout) findViewById(R.id.topro);
         LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.tobranches);
         LinearLayout linearLayout3 = (LinearLayout) findViewById(R.id.toreport);
         LinearLayout linearLayoutLOGOUT = (LinearLayout) findViewById(R.id.toprof);
 
 
-       // LinearLayout linearLayout3 = (LinearLayout) findViewById(R.id.tomenu);
+        // LinearLayout linearLayout3 = (LinearLayout) findViewById(R.id.tomenu);
 
 
         linearLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent ino = new Intent(Merchant_Home.this,Merchant_After_menu.class);
+                Intent ino = new Intent(Merchant_Home.this,Merchant_Upload_menu.class);
                 startActivity(ino);
             }
         });

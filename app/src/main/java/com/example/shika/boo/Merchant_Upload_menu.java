@@ -1,271 +1,152 @@
 package com.example.shika.boo;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
+public class Merchant_Upload_menu extends AppCompatActivity implements View.OnClickListener {
 
-public class Merchant_Upload_menu extends AppCompatActivity {
+    public static final String UPLOAD_URL = "http://gp.sendiancrm.com/offerall/upload_menu.php";
+    public static final String UPLOAD_KEY = "image";
+    public static final String UPLOAD_KEY2 = "placid";
 
-    Bitmap bitmap;
+    int strSavedMem1;
 
-    boolean check = true;
+    private int PICK_IMAGE_REQUEST = 1;
 
-    Button SelectImageGallery, UploadImageServer;
+    private Button buttonChoose;
+    private Button buttonUpload;
+//    private Button buttonView;
 
-    ImageView imageView;
+    private ImageView imageView;
 
-    EditText imageName;
+    private Bitmap bitmap;
 
-    ProgressDialog progressDialog ;
-
-    String GetImageNameEditText;
-
-    String ImageName = "image_name" ;
-
-    String ImagePath = "image_path" ;
-
-    String ServerUploadPath ="http://gp.sendiancrm.com/offerall/img_upload_to_server.php" ;
+    private Uri filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant__upload_menu);
 
-        imageView = (ImageView)findViewById(R.id.imageView);
+        buttonChoose = (Button) findViewById(R.id.buttonChoose);
+        buttonUpload = (Button) findViewById(R.id.buttonUpload);
 
-        imageName = (EditText)findViewById(R.id.editTextImageName);
+        imageView = (ImageView) findViewById(R.id.imageView);
 
-        SelectImageGallery = (Button)findViewById(R.id.buttonSelect);
-
-        UploadImageServer = (Button)findViewById(R.id.buttonUpload);
-
-
-
-        SelectImageGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent();
-
-                intent.setType("image/*");
-
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-
-                startActivityForResult(Intent.createChooser(intent, "Select Image From Gallery"), 1);
-
-            }
-        });
+        buttonChoose.setOnClickListener(this);
+        buttonUpload.setOnClickListener(this);
 
 
-        UploadImageServer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                GetImageNameEditText = imageName.getText().toString();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+       // strSavedMem1 = sharedPreferences.getString("Name", "");
+         strSavedMem1 = sharedPreferences.getInt("PID",0);
+        buttonChoose.setText(Integer.toString(strSavedMem1));
+    }
 
-                ImageUploadToServerFunction();
-
-            }
-        });
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
     @Override
-    protected void onActivityResult(int RC, int RQC, Intent I) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        super.onActivityResult(RC, RQC, I);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
-        if (RC == 1 && RQC == RESULT_OK && I != null && I.getData() != null) {
-
-            Uri uri = I.getData();
-
+            filePath = data.getData();
             try {
-
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
-
             } catch (IOException e) {
-
                 e.printStackTrace();
             }
         }
     }
 
-    public void ImageUploadToServerFunction(){
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
 
-        ByteArrayOutputStream byteArrayOutputStreamObject ;
+    private void uploadImage(){
+        class UploadImage extends AsyncTask<Bitmap,Void,String>{
 
-        byteArrayOutputStreamObject = new ByteArrayOutputStream();
-
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStreamObject);
-
-        byte[] byteArrayVar = byteArrayOutputStreamObject.toByteArray();
-
-        final String ConvertImage = Base64.encodeToString(byteArrayVar, Base64.DEFAULT);
-
-        class AsyncTaskUploadClass extends AsyncTask<Void,Void,String> {
+            ProgressDialog loading;
+            RequestHandler rh = new RequestHandler();
 
             @Override
             protected void onPreExecute() {
-
                 super.onPreExecute();
-
-                progressDialog = ProgressDialog.show(Merchant_Upload_menu.this,"Image is Uploading","Please Wait",false,false);
+                loading = ProgressDialog.show(Merchant_Upload_menu.this, "Uploading...", null,true,true);
             }
 
             @Override
-            protected void onPostExecute(String string1) {
-
-                super.onPostExecute(string1);
-
-                // Dismiss the progress dialog after done uploading.
-                progressDialog.dismiss();
-
-                // Printing uploading success message coming from server on android app.
-                Toast.makeText(Merchant_Upload_menu.this,string1,Toast.LENGTH_LONG).show();
-
-                // Setting image as transparent after done uploading.
-                imageView.setImageResource(android.R.color.transparent);
-
-
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
             }
 
-            @Override
-            protected String doInBackground(Void... params) {
+            @Override           // de function el upload mohma gdn
+            protected String doInBackground(Bitmap... params) {
+                Bitmap bitmap = params[0];
+                String uploadImage = getStringImage(bitmap);
+               String vx = Integer.toString(strSavedMem1);
+                HashMap<String,String> data = new HashMap<>();
 
-                ImageProcessClass imageProcessClass = new ImageProcessClass();
+                data.put(UPLOAD_KEY, uploadImage);
+                data.put(UPLOAD_KEY2,vx);
+                String result = rh.sendPostRequest(UPLOAD_URL,data);
 
-                HashMap<String,String> HashMapParams = new HashMap<String,String>();
-
-                HashMapParams.put(ImageName, GetImageNameEditText);
-
-                HashMapParams.put(ImagePath, ConvertImage);
-
-                String FinalData = imageProcessClass.ImageHttpRequest(ServerUploadPath, HashMapParams);
-
-                return FinalData;
+                return result;
             }
         }
-        AsyncTaskUploadClass AsyncTaskUploadClassOBJ = new AsyncTaskUploadClass();
 
-        AsyncTaskUploadClassOBJ.execute();
+        UploadImage ui = new UploadImage();
+        ui.execute(bitmap);
     }
 
-    public class ImageProcessClass{
-
-        public String ImageHttpRequest(String requestURL,HashMap<String, String> PData) {
-
-            StringBuilder stringBuilder = new StringBuilder();
-
-            try {
-
-                URL url;
-                HttpURLConnection httpURLConnectionObject ;
-                OutputStream OutPutStream;
-                BufferedWriter bufferedWriterObject ;
-                BufferedReader bufferedReaderObject ;
-                int RC ;
-
-                url = new URL(requestURL);
-
-                httpURLConnectionObject = (HttpURLConnection) url.openConnection();
-
-                httpURLConnectionObject.setReadTimeout(19000);
-
-                httpURLConnectionObject.setConnectTimeout(19000);
-
-                httpURLConnectionObject.setRequestMethod("POST");
-
-                httpURLConnectionObject.setDoInput(true);
-
-                httpURLConnectionObject.setDoOutput(true);
-
-                OutPutStream = httpURLConnectionObject.getOutputStream();
-
-                bufferedWriterObject = new BufferedWriter(
-
-                        new OutputStreamWriter(OutPutStream, "UTF-8"));
-
-                bufferedWriterObject.write(bufferedWriterDataFN(PData));
-
-                bufferedWriterObject.flush();
-
-                bufferedWriterObject.close();
-
-                OutPutStream.close();
-
-                RC = httpURLConnectionObject.getResponseCode();
-
-                if (RC == HttpsURLConnection.HTTP_OK) {
-
-                    bufferedReaderObject = new BufferedReader(new InputStreamReader(httpURLConnectionObject.getInputStream()));
-
-                    stringBuilder = new StringBuilder();
-
-                    String RC2;
-
-                    while ((RC2 = bufferedReaderObject.readLine()) != null){
-
-                        stringBuilder.append(RC2);
-                    }
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return stringBuilder.toString();
+    @Override
+    public void onClick(View v) {
+        if (v == buttonChoose) {
+            showFileChooser();
         }
 
-        private String bufferedWriterDataFN(HashMap<String, String> HashMapParams) throws UnsupportedEncodingException {
-
-            StringBuilder stringBuilderObject;
-
-            stringBuilderObject = new StringBuilder();
-
-            for (Map.Entry<String, String> KEY : HashMapParams.entrySet()) {
-
-                if (check)
-
-                    check = false;
-                else
-                    stringBuilderObject.append("&");
-
-                stringBuilderObject.append(URLEncoder.encode(KEY.getKey(), "UTF-8"));
-
-                stringBuilderObject.append("=");
-
-                stringBuilderObject.append(URLEncoder.encode(KEY.getValue(), "UTF-8"));
-            }
-
-            return stringBuilderObject.toString();
+        if(v == buttonUpload){
+            uploadImage();
         }
+
 
     }
+
+
 }

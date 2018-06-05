@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -30,16 +31,23 @@ public class Try extends AppCompatActivity {
     List<App> apps;
     Toolbar toolbar;
 
+
     private FrameLayout view_stub; //This is the framelayout to keep your content view
     private NavigationView navigation_view; // The new navigation view from Android Design Library. Can inflate menu resources. Easy
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private Menu drawerMenu;
+    int place_id;
     TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_try);
+        Intent intent=getIntent();
+        Bundle extras = intent.getExtras();
+        place_id=extras.getInt("place_id");
+        place_id=extras.getInt("place_id");
+
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -67,7 +75,7 @@ public class Try extends AppCompatActivity {
     private void setupAdapter() {
         List<App> apps = getApps();
 
-        SnapAdapter snapAdapter = new SnapAdapter();
+        SnapAdapter snapAdapter = new SnapAdapter(this);
         if (mHorizontal) {
             snapAdapter.addSnap(new Snap(Gravity.CENTER, "Our Branches", apps));
 
@@ -82,11 +90,11 @@ public class Try extends AppCompatActivity {
 
     private List<App> getApps() {
         apps = new ArrayList<>();
-        apps.add(new App("Zara le merange", R.drawable.new1, "22 street ,EL Dokki   (Cairo)"));
+       /* apps.add(new App("Zara le merange", R.drawable.new1, "22 street ,EL Dokki   (Cairo)"));
         apps.add(new App("Zara do2do2", R.drawable.new2, "22 street ,EL Dokki   (Cairo)"));
         apps.add(new App("Modern zara", R.drawable.new3, "22 street ,EL Dokki   (Cairo)"));
         apps.add(new App("Zara females", R.drawable.new4, "22 street ,EL Dokki   (Cairo)"));
-        apps.add(new App("Zara community", R.drawable.new6, "22 street ,EL Dokki   (Cairo)"));
+        apps.add(new App("Zara community", R.drawable.new6, "22 street ,EL Dokki   (Cairo)"));*/
         return apps;
     }
 

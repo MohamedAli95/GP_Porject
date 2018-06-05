@@ -19,9 +19,9 @@ import java.util.ArrayList;
 public class SwipeRecyclerViewAdapter extends RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.SimpleViewHolder> {
 
     private Context mContext;
-    private ArrayList<YoutuberModel> studentList;
+    private java.util.List<YoutuberModel> studentList;
 
-    public SwipeRecyclerViewAdapter(Context context, ArrayList<YoutuberModel> objects) {
+    public SwipeRecyclerViewAdapter(Context context, java.util.List<YoutuberModel> objects) {
         this.mContext = context;
         this.studentList = objects;
     }
@@ -37,9 +37,12 @@ public class SwipeRecyclerViewAdapter extends RecyclerSwipeAdapter<SwipeRecycler
     public void onBindViewHolder(final SimpleViewHolder viewHolder, final int position) {
         final YoutuberModel item = studentList.get(position);
 
+        com.bumptech.glide.Glide.with(mContext)
+                .load(item.getImage())
+                .into(viewHolder.ig);
         viewHolder.Name.setText(item.getName() );
         viewHolder.Startdate.setText(item.getSdate());
-        viewHolder.Enddate.setText(item.getedate());
+        viewHolder.Enddate.setText(item.getEdate());
 
 
         viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);

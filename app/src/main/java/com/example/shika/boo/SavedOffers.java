@@ -41,7 +41,7 @@ public class SavedOffers extends AppCompatActivity {
 
 
         //adding some items to our list
-        productList.add(
+       productList.add(
                 new Product(
                         1,
                         "T-shirt for Men - Half sleeve",

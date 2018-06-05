@@ -37,7 +37,7 @@ public class MerchantMenu extends AppCompatActivity {
 
     String HTTP_JSON_URL = "http://gp.sendiancrm.com/offerall/ImageJsonData.php";
     String Image_Name_JSON = "image_name";
-    String Image_URL_JSON = "image_path";
+    String Image_URL_JSON = "image";
     JsonArrayRequest RequestOfJSonArray ;
     RequestQueue requestQueue ;
     View view ;
@@ -163,7 +163,7 @@ public class MerchantMenu extends AppCompatActivity {
 
 
                 // Adding image title name in array to display on RecyclerView click event.
-                ImageTitleNameArrayListForClick.add(json.getString(Image_Name_JSON));
+            //    ImageTitleNameArrayListForClick.add(json.getString(Image_Name_JSON));
 
                 GetDataAdapter2.setImageUrl(json.getString(Image_URL_JSON));
 

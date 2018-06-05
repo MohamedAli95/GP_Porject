@@ -62,7 +62,7 @@ public class RewardsActivity extends AppCompatActivity {
         SimpleAdapter(KRecyclerView kRecyclerView) {
             super(kRecyclerView);
             layoutInflater = LayoutInflater.from(RewardsActivity.this);
-            picasso = Picasso.with(RewardsActivity.this);
+            picasso = Picasso.get();
         }
 
         @Override
