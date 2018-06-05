@@ -295,7 +295,13 @@ public class MainActivity extends AppCompatActivity {
                             PLacecategory.setCategory_id(Integer.valueOf((String)category_obj.get("Category_id")));
                             PLacecategory.setLogoUrl((String)category_obj.get("Place_LogoPhoto"));
                             PLacecategory.setPlacename((String)category_obj.get("PLaceName"));
-                            PLacecategory.setRate(Float.valueOf((String)category_obj.get("PLaceRate")));
+
+                            if(category_obj.get("PLaceRate")==null){
+                                PLacecategory.setRate(0);
+                            }
+                            else
+                                PLacecategory.setRate(Float.valueOf((String)category_obj.get("PLaceRate")));
+
                             PLacecategory.setPlace_id(Integer.valueOf((String)category_obj.get("Place_ID")));
 
 

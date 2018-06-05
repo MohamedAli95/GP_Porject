@@ -1,7 +1,7 @@
 package models;
 
 public class placeCategorypage {
-    float Rate;
+    float Rate= 0 ;
     String logoUrl;
     String Placename;
     Integer category_id;
