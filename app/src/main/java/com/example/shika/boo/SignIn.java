@@ -37,6 +37,7 @@ public class SignIn extends AppCompatActivity {
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
+
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(sharedpreferences.getBoolean("logged in",false)) {
             Intent too = new Intent(this, MapsActivity.class);

@@ -11,12 +11,13 @@
     >
 
     <Button
-        android:id="@+id/addbran"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FF674172"
+        android:id="@+id/add"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="end"
         android:layout_marginBottom="20dp"
-        android:text="Add New Branch"/>
+        android:layout_marginRight="20dp"
+        />
 
 
 

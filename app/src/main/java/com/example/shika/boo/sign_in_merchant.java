@@ -43,7 +43,8 @@ public class sign_in_merchant extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-      /* sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+     /* sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(sharedPreferences.getBoolean("logged in",false)) {
             Intent too = new Intent(this, Merchant_Home.class);
             startActivity(too);
@@ -56,7 +57,6 @@ public class sign_in_merchant extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this) ;
         alertDialog = new AlertDialog.Builder(this).create();
 
-
     }
 
     public  Boolean validate(){
@@ -68,7 +68,7 @@ public class sign_in_merchant extends AppCompatActivity {
             valid = false ;
         }
 
-        if (ET_password.getText().toString().matches("")){
+        if (ET_password.getText().toString().matches("")){ // || ET_password.length()<8
             ET_password.setError("Enter Valid Password!");
             valid = false ;
         }
@@ -99,12 +99,10 @@ public class sign_in_merchant extends AppCompatActivity {
                 try {
                    JSONObject jsonObject = new JSONObject(response);
 
-                 /*   if (jsonObject.names().get(0).equals("success"))
-                    {
-                        Toast.makeText(getApplicationContext(), ""+jsonObject.get("success"),
-                                Toast.LENGTH_LONG).show();
-                    }
-                    else*/
+                 //if (jsonObject.names().get(0).equals("success")){
+                  //Toast.makeText(getApplicationContext(), ""+jsonObject.get("success"),
+                   //Toast.LENGTH_LONG).show();else
+
                  if (jsonObject.names().get(0).equals("error"))
                     {
                         Toast.makeText(getApplicationContext(), ""+jsonObject.get("error"),
@@ -123,7 +121,7 @@ public class sign_in_merchant extends AppCompatActivity {
                         placeClass.setPlaceCategoryId(Integer.parseInt((String) place.getString("Category_id")));
                         placeClass.setPlaceRating(Float.parseFloat((String) place.getString("PlaceRate")));
                         placeClass.setApprove(Boolean.parseBoolean((String) place.getString("approve")));
-                        UserSesionStart(placeClass);
+                        PlaceSesionStart(placeClass);
 
                      if(sharedPreferences!=null) {
 
@@ -147,6 +145,8 @@ public class sign_in_merchant extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), "Something went wrong",Toast.LENGTH_LONG).show();
+                alertDialog.setMessage("حدث خطأ بالاتصال بالشبكه؟" +"\n"+"يجب عليك فتح النت؟");
+                alertDialog.show();
                 error.printStackTrace();
 
             }
@@ -163,7 +163,7 @@ public class sign_in_merchant extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-public  void UserSesionStart(Place place)
+public  void PlaceSesionStart(Place place)
  {
 
      sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);

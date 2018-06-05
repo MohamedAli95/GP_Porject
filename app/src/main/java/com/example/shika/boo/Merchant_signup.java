@@ -1,5 +1,6 @@
 package com.example.shika.boo;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -52,15 +53,15 @@ public class Merchant_signup extends AppCompatActivity {
     private ImageView imageUpload,imageUploadedGane;
     private String encoded_ImageString ;
     private Bitmap bitmap ;
+    AlertDialog alertDialog;
 
-   // private float ratingPlace = (float) 7.5;
-   // private int approvePlace = 1 ;
-    private EditText ET_email ,ET_password, ET_BrandName ;
+    private EditText ET_email ,ET_password, ET_PlaceName ;
     private RequestQueue requestQueue ;
     private StringRequest request ;
-    private static String registerPlaceURL = "http://gp.sendiancrm.com/offerall/registerPlace.php";
+    private final static String registerPlaceURL = "http://gp.sendiancrm.com/offerall/registerPlace.php";
+    Button btn_register ;
 
-    private int spinner_position =1  ;
+    private int spinner_position=1   ;
     private MaterialBetterSpinner betterSpinner;
 
     String[] catogry = {"cloth and fashion", "sports and fitness", "supermarkets", "restaurants"};
@@ -73,29 +74,16 @@ public class Merchant_signup extends AppCompatActivity {
         betterSpinner = (MaterialBetterSpinner) findViewById(R.id.spinnerCat);
         ET_email = (EditText)findViewById(R.id.Pemail);
         ET_password =(EditText)findViewById(R.id.Ppassword);
-        ET_BrandName =(EditText)findViewById(R.id.PbrandName);
+        ET_PlaceName =(EditText)findViewById(R.id.PbrandName);
         imageUpload = (ImageView) findViewById(R.id.PickImage) ;
         imageUploadedGane = (ImageView) findViewById(R.id.showUploadedImage) ;
+        btn_register = (Button) findViewById(R.id.button_signup) ;
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
+        alertDialog = new AlertDialog.Builder(this).create();
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,catogry);
         betterSpinner.setAdapter(arrayAdapter);
-
-      /*  betterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinner_position = (int) parent.getSelectedItemPosition() +1;
-                Toast.makeText(getApplicationContext(),""+spinner_position, Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
 
 
         imageUpload.setOnClickListener(new View.OnClickListener() {
@@ -105,23 +93,40 @@ public class Merchant_signup extends AppCompatActivity {
                 Intent intent_uploadImage = new Intent();
                 intent_uploadImage.setType("image/*");
                 intent_uploadImage.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent_uploadImage,100);
+                startActivityForResult(intent_uploadImage,222);
 
             }
         });
 
+      /*  betterSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(Merchant_signup.this,""+parent.getItemIdAtPosition(position), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+*/
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validate())
+                {
+                    String pName = ET_PlaceName.getText().toString();
+                    String pEmail = ET_email.getText().toString();
+                    String ppassword = ET_password.getText().toString();
+                   //Toast.makeText(Merchant_signup.this, pName, Toast.LENGTH_SHORT).show();
+                   register_Place(pName,pEmail,ppassword);
+                }
 
 
-      //  ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, location);
-        //MaterialBetterSpinner betterSpinner2 = (MaterialBetterSpinner) findViewById(R.id.sp2);
-        //betterSpinner2.setAdapter(arrayAdapter2);
-
-      //  siup = (Button) findViewById(R.id.button_signup);
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if( requestCode== 100 && resultCode == RESULT_OK && data != null )
+        if( requestCode== 222 && resultCode == RESULT_OK && data != null )
         {
             Uri uri_path = data.getData();
             try {
@@ -140,69 +145,87 @@ public class Merchant_signup extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
         byte[] bytes_image = stream.toByteArray();
         encoded_ImageString = Base64.encodeToString(bytes_image,Base64.DEFAULT);
+        //Toast.makeText(this, encoded_ImageString, Toast.LENGTH_SHORT).show();
     }
 
 
 
 
-    public void registerPlace(View view) {
+    public void register_Place(final String pName, final String PEmail, final String Ppassword) {
+    request = new StringRequest(Request.Method.POST,registerPlaceURL, new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
 
-        request = new StringRequest(Request.Method.POST,registerPlaceURL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+            //Toast.makeText(Merchant_signup.this, response, Toast.LENGTH_SHORT).show();
 
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.names().get(0).equals("success"))
-                    {
-                        Toast.makeText(getApplicationContext(), ""+jsonObject.get("success"),
-                                Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(),sign_in_merchant.class);
-                        startActivity(intent);
-                    }else if (jsonObject.names().get(0).equals("error"))
-                    {
-                        Toast.makeText(getApplicationContext(), ""+jsonObject.get("error"),
-                                Toast.LENGTH_SHORT).show();
-                    }else if (jsonObject.names().get(0).equals("faild"))
-                    {
-                        Toast.makeText(getApplicationContext(), ""+jsonObject.get("faild"),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+            if (jsonObject.names().get(0).equals("success"))
+            {
+                Toast.makeText(getApplicationContext(), ""+jsonObject.get("success"),
+                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(),sign_in_merchant.class);
+                startActivity(intent);
+                alertDialog.setMessage("Now.you can Login!");
+                alertDialog.show();
+            }else if (jsonObject.names().get(0).equals("error"))
+            {
+                Toast.makeText(getApplicationContext(), ""+jsonObject.get("error"),
+                        Toast.LENGTH_SHORT).show();
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap =new HashMap<>();
-                String x1 =ET_email.getText().toString() ;
-                String x2 =ET_password.getText().toString() ;
-                String x3= ET_BrandName.getText().toString();
-                String x4 = ""+spinner_position ;
-                String x5 = encoded_ImageString ;
-                hashMap.put("email",ET_email.getText().toString());
-                hashMap.put("password",ET_password.getText().toString());
-                hashMap.put("placeName",ET_BrandName.getText().toString());
-                hashMap.put("category_id", ""+spinner_position);
-                hashMap.put("encoded_ImageString",encoded_ImageString);
 
-                return  hashMap;
-            }
-        };
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Toast.makeText(getApplicationContext(), "Something went wrong",Toast.LENGTH_LONG).show();
+            alertDialog.setMessage(" قد يكون حدث خطأ بالاتصال بالشبكه؟" +"\n"+"يجب عليك فتح النت؟");
+            alertDialog.show();
+            error.printStackTrace();
 
-        requestQueue.add(request);
+        }
+    }){
+        @Override
+        protected Map<String, String> getParams() throws AuthFailureError {
+            HashMap<String,String> hashMap = new HashMap<>();
+            hashMap.put("email",PEmail);
+            hashMap.put("password",Ppassword);
+            hashMap.put("placeName",pName);
+            hashMap.put("category_id", ""+spinner_position);
+            hashMap.put("encoded_ImageString",encoded_ImageString);
+            return hashMap;
+        }
+    };
+    requestQueue.add(request);
+
     }
 
+   public boolean validate() {
+       boolean valid = true;
+       if(ET_email.getText().toString().matches("")){
+               //||!android.util.Patterns.EMAIL_ADDRESS.matcher(ET_email.getText()).matches()){
+           ET_email.setError("Enter Valid Email Address");
+           valid=false;
+       }
+       if(ET_password.getText().toString().matches("")||ET_password.length()<8){
+           ET_password.setError("Enter password At Least 8 CharS");
+           valid=false;
+       }
+       if(ET_PlaceName.getText().toString().matches("")||ET_PlaceName.length()>32){
+           ET_PlaceName.setError("please enter Valid Name");
+           valid=false;
+       }
+
+       return valid;
+   }
 
 
-    //public void to_Home(View v) {
+
+        //public void to_Home(View v) {
     //    Intent next = new Intent(this, MainActivity.class);
     //    startActivity(next);
     //}

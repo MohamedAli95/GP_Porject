@@ -4,6 +4,7 @@
     <string name="close">close</string>
     <string name="title_activity_maps">Map</string>
     <string name="action_settings">Settings</string>
+    <string name="desc">Image</string>
     <string-array name="radius">
         <item>change your zone values ..</item>
         <item>Change Location</item>
@@ -32,6 +33,12 @@
     <string name="favoritos">Favorites</string>
     <string name="perfil">Profile</string>
 
+    <string-array name="testBranches">
+        <item>Alex</item>
+        <item>Cairo</item>
+        <item>Giza</item>
+        <item>Elbadrashen</item>
+    </string-array>
 
 
 </resources>

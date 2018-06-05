@@ -1,8 +1,11 @@
 package com.example.shika.boo;
 
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -55,6 +58,10 @@ public class Merchant_Add_Branch extends AppCompatActivity {
     private RequestQueue requestQueue ;
     private StringRequest request ;
     private int rewordSystem =1;
+    SharedPreferences sharedPreferences ;
+    AlertDialog alertDialog;
+    private  int placeId ;
+
     private static String registerBranchURL = "http://gp.sendiancrm.com/offerall/addBranch.php";
 
     @Override
@@ -68,11 +75,16 @@ public class Merchant_Add_Branch extends AppCompatActivity {
         btn_addBranch = (Button) findViewById(R.id.btn_registerBranche);
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
+        alertDialog = new AlertDialog.Builder(this).create();
 
         btn_addBranch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addNewBranch();
+                if(validate())
+                {
+                    addNewBranch();
+                }
+
             }
         });
 
@@ -91,6 +103,10 @@ public class Merchant_Add_Branch extends AppCompatActivity {
         MaterialBetterSpinner betterSpinner = (MaterialBetterSpinner) findViewById(R.id.spenner);
         betterSpinner.setAdapter(arrayAdapter);
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("logged in", false)) {
+            placeId = sharedPreferences.getInt("PID", Integer.parseInt("0"));
+        }
 
     }
 
@@ -106,7 +122,7 @@ public class Merchant_Add_Branch extends AppCompatActivity {
                     {
                         Toast.makeText(getApplicationContext(), ""+jsonObject.get("success"),
                                 Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(),Merchant_Branches_list.class);
+                        Intent intent = new Intent(getApplicationContext(),Merchant_Home.class);
                         startActivity(intent);
                     }else if (jsonObject.names().get(0).equals("error"))
                     {
@@ -121,6 +137,10 @@ public class Merchant_Add_Branch extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Something went wrong",Toast.LENGTH_LONG).show();
+                alertDialog.setMessage("حدث خطأ بالاتصال بالشبكه؟" +"\n"+"يجب عليك فتح النت؟");
+                alertDialog.show();
+                error.printStackTrace();
 
             }
         }){
@@ -131,11 +151,31 @@ public class Merchant_Add_Branch extends AppCompatActivity {
                 hashMap.put("branchPhone",ET_phone.getText().toString());
                 hashMap.put("password",ET_password.getText().toString());
                 hashMap.put("checkedRewordSystem", ""+rewordSystem);
+                hashMap.put("place_id",""+placeId);
 
                 return  hashMap;
             }
         };
      requestQueue.add(request);
    }
+
+    public boolean validate() {
+        boolean valid = true;
+        if(ET_BrandName.getText().toString().matches("")||ET_BrandName.length()>32){
+            ET_BrandName.setError("Please Enter Valid Name");
+            valid=false;
+        }
+        if(ET_password.getText().toString().matches("")||ET_password.length()<8){
+            ET_password.setError("Enter password At Least 8 CharS ");
+            valid=false;
+        }
+
+        if(ET_phone.getText().toString().matches("")){
+            ET_phone.setError("Enter Valid Phone");
+            valid=false;
+        }
+
+        return valid;
+    }
 
 }
