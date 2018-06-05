@@ -208,7 +208,8 @@
             android:name=".Branch_MapActivity"
             android:label="Pickup Branch Location"
             android:parentActivityName=".Merchant_Add_Branch" />
-        <activity android:name=".sign_in_merchant"></activity>
+        <activity android:name=".sign_in_merchant" />
+        <activity android:name=".editprofile"></activity>
     </application>
 
 </manifest>
