@@ -119,7 +119,7 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
 
                     if (sharedPreferences != null)
                     {
-                        Intent intent = new Intent(getApplicationContext(), Merchant_Branch_Profile.class);
+                        Intent intent = new Intent(getApplicationContext(), Merchant_Branch_Home.class);
                         startActivity(intent);
 
                         alertDialog.setMessage("Welcome: "+sharedPreferences.getString("BName",null)+" "+"Branch");

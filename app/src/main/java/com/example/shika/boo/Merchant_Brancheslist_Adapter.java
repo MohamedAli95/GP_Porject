@@ -40,10 +40,10 @@ public class Merchant_Brancheslist_Adapter extends RecyclerView.Adapter<Merchant
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         //getting the product of the specified position
-        Merchant_Branch_Model product = productList.get(position);
+        Merchant_Branch_Model branch = productList.get(position);
 
         //binding the data with the viewholder views
-        holder.textViewTitle.setText(product.getTitle());
+        holder.textViewTitle.setText(branch.getTitle());
     }
 
 

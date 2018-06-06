@@ -12,11 +12,16 @@
 
     <Button
         android:id="@+id/add"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_gravity="end"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Add New Branch"
+        android:textSize="17sp"
+        android:layout_marginLeft="20dp"
+        android:textColor="#ed49116c"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
+        android:background="@drawable/border_button"
         />
 
 

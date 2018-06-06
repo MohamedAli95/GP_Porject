@@ -31,8 +31,8 @@ public class AfterBegin extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent ino = new Intent(AfterBegin.this,sign_in_merchant.class);
-                startActivity(ino);
+                Intent i = new Intent(AfterBegin.this,sign_in_merchant.class);
+                startActivity(i);
             }
         });
     }

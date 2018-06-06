@@ -51,7 +51,7 @@ public class Merchant_RecyclerViewAdapter extends RecyclerView.Adapter<Merchant_
         imageLoader.get(dataAdapterOBJ.getImageUrl(),
                 ImageLoader.getImageListener(
                         Viewholder.VollyImageView,//Server Image
-                        R.mipmap.ic_launcher,//Before loading server image the default showing image.
+                        R.drawable.menuholder,//Before loading server image the default showing image.
                         android.R.drawable.ic_dialog_alert //Error image if requested image dose not found on server.
                 )
         );

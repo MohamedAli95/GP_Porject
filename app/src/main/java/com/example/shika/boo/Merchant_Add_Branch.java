@@ -1,35 +1,22 @@
 package com.example.shika.boo;
 
-import android.app.AlertDialog;
-import android.app.DownloadManager;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Toast;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
-
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.net.wifi.WifiManager;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.format.Formatter;
-import android.util.Base64;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,142 +27,232 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.HashMap;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+import android.widget.EditText;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Merchant_Add_Branch extends AppCompatActivity {
 
+    private final int REQUEST_CODE_PLACEPICKER = 1;
+    double  latitude,longitude  ;
+    // Creating EditText.
+    EditText FirstName, LastName, Email ;
+    MaterialBetterSpinner betterSpinner;
+    // Creating button;
+    Button InsertButton;
+    int strSavedMem1;
+    // Creating Volley RequestQueue.
+    RequestQueue requestQueue;
+
+    // Create string variable to hold the EditText Value.
+    String FirstNameHolder, LastNameHolder, EmailHolder , RewardHolder , lat , lon ;
     String[] Reward = {"UnAvailable","Available"};
+    // Creating Progress dialog.
+    ProgressDialog progressDialog;
 
-    private EditText ET_password, ET_BrandName,ET_phone ;
-    Button btn_addBranch ;
-    private RequestQueue requestQueue ;
-    private StringRequest request ;
-    private int rewordSystem =1;
-    SharedPreferences sharedPreferences ;
-    AlertDialog alertDialog;
-    private  int placeId ;
-
-    private static String registerBranchURL = "http://gp.sendiancrm.com/offerall/addBranch.php";
-
+    // Storing server url into String variable.
+    String HttpUrl = "http://gp.sendiancrm.com/offerall/Add_branch.php";
+    String  ses;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant__add__branch);
 
-        ET_BrandName = (EditText)findViewById(R.id.branchName);
-        ET_password =(EditText)findViewById(R.id.branchpassword);
-        ET_phone =(EditText)findViewById(R.id.branchPhone);
-        btn_addBranch = (Button) findViewById(R.id.btn_registerBranche);
+        // Assigning ID's to EditText.
+        FirstName = (EditText) findViewById(R.id.bname);
+        LastName = (EditText) findViewById(R.id.bpass);
+        Email = (EditText) findViewById(R.id.bphone);
 
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
-        alertDialog = new AlertDialog.Builder(this).create();
+        SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        // strSavedMem1 = sharedPreferences.getString("Name", "");
+        strSavedMem1 = sharedPreferences.getInt("PID",0);
+        ses = Integer.toString(strSavedMem1);
 
-        btn_addBranch.setOnClickListener(new View.OnClickListener() {
+
+        Button bu = (Button) findViewById(R.id.pickup_btn);
+        bu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startPlacePickerActivity();
+            }
+        });
+        bu.setText(Integer.toString(strSavedMem1));
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,Reward);
+        betterSpinner = (MaterialBetterSpinner) findViewById(R.id.sp1);
+        betterSpinner.setAdapter(arrayAdapter);
+
+        // Assigning ID's to Button.
+        InsertButton = (Button) findViewById(R.id.addbtn);
+
+        // Creating Volley newRequestQueue .
+        requestQueue = Volley.newRequestQueue(Merchant_Add_Branch.this);
+
+        progressDialog = new ProgressDialog(Merchant_Add_Branch.this);
+
+        // Adding click listener to button.
+        InsertButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                // Showing progress dialog at user registration time.
+              //  progressDialog.setMessage("Please Wait, We are Inserting Your Data on Server");
+               // progressDialog.show();
+
                 if(validate())
                 {
                     addNewBranch();
                 }
 
+                // Calling method to get value from EditText.
+
+
             }
         });
-
-        Button bu = (Button) findViewById(R.id.pickup_btn);
-        bu.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent ino = new Intent(Merchant_Add_Branch.this,Branch_MapActivity.class);
-                startActivity(ino);
-            }
-        });
-
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,Reward);
-        MaterialBetterSpinner betterSpinner = (MaterialBetterSpinner) findViewById(R.id.spenner);
-        betterSpinner.setAdapter(arrayAdapter);
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean("logged in", false)) {
-            placeId = sharedPreferences.getInt("PID", Integer.parseInt("0"));
-        }
 
     }
 
-   public  void addNewBranch(){
+    public void addNewBranch(){
+        GetValueFromEditText();
 
-        request = new StringRequest(Request.Method.POST, registerBranchURL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+        // Creating string request with post method.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String ServerResponse) {
 
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.names().get(0).equals("success"))
-                    {
-                        Toast.makeText(getApplicationContext(), ""+jsonObject.get("success"),
-                                Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(),Merchant_Home.class);
-                        startActivity(intent);
-                    }else if (jsonObject.names().get(0).equals("error"))
-                    {
-                        Toast.makeText(getApplicationContext(), ""+jsonObject.get("error"),
-                                Toast.LENGTH_LONG).show();
+                        // Hiding the progress dialog after all task complete.
+                        progressDialog.dismiss();
+
+                        // Showing response message coming from server.
+                        Toast.makeText(Merchant_Add_Branch.this, ServerResponse, Toast.LENGTH_LONG).show();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
 
-            }
-        }, new Response.ErrorListener() {
+                        // Hiding the progress dialog after all task complete.
+                        progressDialog.dismiss();
+
+                        // Showing error message if something goes wrong.
+                        Toast.makeText(Merchant_Add_Branch.this, volleyError.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Something went wrong",Toast.LENGTH_LONG).show();
-                alertDialog.setMessage("حدث خطأ بالاتصال بالشبكه؟" +"\n"+"يجب عليك فتح النت؟");
-                alertDialog.show();
-                error.printStackTrace();
+            protected Map<String, String> getParams() {
 
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap =new HashMap<>();
-                hashMap.put("branchName",ET_BrandName.getText().toString());
-                hashMap.put("branchPhone",ET_phone.getText().toString());
-                hashMap.put("password",ET_password.getText().toString());
-                hashMap.put("checkedRewordSystem", ""+rewordSystem);
-                hashMap.put("place_id",""+placeId);
+                // Creating Map String Params.
+                Map<String, String> params = new HashMap<String, String>();
 
-                return  hashMap;
+                // Adding All values to Params.
+
+                params.put("Branch_name", FirstNameHolder);
+                params.put("Branch_Password", LastNameHolder);
+                params.put("Branch_phone", EmailHolder);
+                params.put("RewardSystemAvailabilty", RewardHolder);
+                params.put("latitude", lat);
+                params.put("longitude", lon);
+                params.put("Place_id", ses);
+
+                return params;
             }
+
         };
-     requestQueue.add(request);
-   }
+
+        // Creating RequestQueue.
+        RequestQueue requestQueue = Volley.newRequestQueue(Merchant_Add_Branch.this);
+
+        // Adding the StringRequest object into requestQueue.
+        requestQueue.add(stringRequest);
+    }
+
+    // Creating method to get value from EditText.
+    public void GetValueFromEditText(){
+
+        FirstNameHolder = FirstName.getText().toString().trim();
+        LastNameHolder = LastName.getText().toString().trim();
+        EmailHolder = Email.getText().toString().trim();
+        RewardHolder =  betterSpinner.getText().toString();
+
+    }
+
+
+    private void startPlacePickerActivity() {
+        PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
+        // this would only work if you have your Google Places API working
+
+        try {
+            Intent intent = intentBuilder.build(this);
+            startActivityForResult(intent, REQUEST_CODE_PLACEPICKER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void displaySelectedPlaceFromPlacePicker(Intent data) {
+        Place placeSelected = PlacePicker.getPlace(data, this);
+
+        // String name = placeSelected.getName().toString();
+        String address = placeSelected.getAddress().toString();
+        latitude = placeSelected.getLatLng().latitude;
+        lat = String.valueOf(latitude);
+        longitude = placeSelected.getLatLng().longitude;
+        lon = String.valueOf(longitude);
+
+        android.widget.TextView enterCurrentLocation = (android.widget.TextView) findViewById(R.id.loctex);
+        enterCurrentLocation.setText("location:"+ address);
+    }
+
+    protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PLACEPICKER && resultCode == RESULT_OK) {
+            displaySelectedPlaceFromPlacePicker(data);
+        }
+    }
+
+
 
     public boolean validate() {
         boolean valid = true;
-        if(ET_BrandName.getText().toString().matches("")||ET_BrandName.length()>32){
-            ET_BrandName.setError("Please Enter Valid Name");
+        if(FirstName.getText().toString().matches("")||FirstName.length()>32){
+            FirstName.setError("Please Enter Valid Name");
             valid=false;
         }
-        if(ET_password.getText().toString().matches("")||ET_password.length()<8){
-            ET_password.setError("Enter password At Least 8 CharS ");
+        if(LastName.getText().toString().matches("")||LastName.length()<8){
+            LastName.setError("Enter password At Least 8 CharS ");
             valid=false;
         }
 
-        if(ET_phone.getText().toString().matches("")){
-            ET_phone.setError("Enter Valid Phone");
+        if(Email.getText().toString().matches("")){
+            Email.setError("Enter Valid Phone");
             valid=false;
         }
 
         return valid;
     }
-
 }
