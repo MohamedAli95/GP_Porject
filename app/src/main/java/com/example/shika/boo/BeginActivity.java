@@ -10,6 +10,7 @@ import me.wangyuwei.particleview.ParticleView;
 public class BeginActivity extends AppCompatActivity {
  private static int Splash_timeout = 4000;
  //hi
+
  ParticleView mParticleView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

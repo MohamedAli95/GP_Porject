@@ -55,7 +55,7 @@ public class Offer_Page extends AppCompatActivity implements OnMapReadyCallback 
     TextView Title;
     nearbyoffers Theoffer;
     int Item_id ;
-    CollapsingToolbarLayout collapsingToolbarLayout;
+    CollapsingToolbarLayout collapsingToolbarLayout; /*ht7tang de*/
     RoundedImageView placeimage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class Offer_Page extends AppCompatActivity implements OnMapReadyCallback 
         Enddate= (TextView)findViewById(R.id.item_enddate);
         Title =(TextView)findViewById(R.id.item_title);
         No_ofpoints=(TextView)findViewById(R.id.no_of_points);
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar1);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar1);// w de
         placeimage= (RoundedImageView) findViewById(R.id.Place_image_notf);
         Intent intent=getIntent();
         Bundle extras = intent.getExtras();
@@ -86,7 +86,7 @@ public class Offer_Page extends AppCompatActivity implements OnMapReadyCallback 
         if(Theoffer!=null){
             Startdate.setText(Theoffer.getStartdate());
             Enddate.setText(Theoffer.getEnddate());
-            Title.setText(Theoffer.getTitle());
+            Title.setText(Theoffer.getTitle()); // de 3shan el asm ex(zara brand)
             No_ofpoints.setText(String.valueOf(Theoffer.getNo_ofpoints()));
             collapsingToolbarLayout.setTitle(Theoffer.getBranch_name());
             Picasso.get().load("http://gp.sendiancrm.com/offerall/images/20180529084501.jpg").into(new Target() {
@@ -106,7 +106,7 @@ public class Offer_Page extends AppCompatActivity implements OnMapReadyCallback 
                 public void onPrepareLoad(Drawable placeHolderDrawable) {
 
                 }
-            });
+            }); // de 3shan el sora el back ground
             Picasso.get().load("http://gp.sendiancrm.com/offerall/images/20180529084501.jpg").into(placeimage);
         }
 
