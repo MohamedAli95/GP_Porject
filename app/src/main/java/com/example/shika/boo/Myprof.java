@@ -56,9 +56,7 @@ public class Myprof extends android.app.Fragment {
         MapsActivity.btn.setVisibility(View.GONE);
 
 
-        CardView cardView = (CardView) vi.findViewById(R.id.car1);
-        CardView cardView2 = (CardView) vi.findViewById(R.id.car2);
-        CardView cardView3 = (CardView) vi.findViewById(R.id.car3);
+
         editprofile= vi.findViewById(R.id.editProfile);
         editprofile.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -69,21 +67,7 @@ public class Myprof extends android.app.Fragment {
         });
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                Intent in = new Intent(getActivity(),SavedOffers.class);
-                startActivity(in);
 
-            }
-        });
-
-        cardView2.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                Intent in = new Intent(getActivity(),Saved_offActivity.class);
-                startActivity(in);
-
-            }
-        });
         username = (TextView) vi.findViewById(R.id.usernametext);
         email = (TextView) vi.findViewById(R.id.useremailtext);
 

@@ -30,7 +30,7 @@
                 android:background="@drawable/blu">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_image"
+                    android:id="@+id/changeprofile_image"
                     android:layout_width="96dp"
                     android:layout_height="96dp"
                     android:layout_gravity="center"
@@ -85,7 +85,16 @@
                         android:layout_height="wrap_content"
                         android:text="Name"
                         android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/nameview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="username"
+                        android:textColor="#000000"
+                        android:textSize="25dp"
+                        />
 
                     <EditText
                         android:id="@+id/changename"
@@ -114,7 +123,15 @@
                         android:layout_height="wrap_content"
                         android:text="Email"
                         android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/emailview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="useremail"
+                        android:textColor="#000000"
+                        android:textSize="25dp"/>
 
                     <EditText
                         android:id="@+id/changeemail"
@@ -123,6 +140,34 @@
                         android:ems="10"
                         android:hint="Email"
                         android:inputType="textPersonName" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/grey" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="password"
+                        android:textColor="@color/headings"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/changepassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Password"
+                        android:inputType="textPassword" />
 
                     <View
                         android:layout_width="match_parent"
@@ -143,7 +188,15 @@
                         android:layout_height="wrap_content"
                         android:text="Phone"
                         android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/phoneview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="userphone"
+                        android:textColor="#000000"
+                        android:textSize="25dp"/>
 
                     <EditText
                         android:id="@+id/changephone"
@@ -173,7 +226,15 @@
                         android:layout_height="wrap_content"
                         android:text="Age"
                         android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/ageview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="User age"
+                        android:textColor="#000000"
+                        android:textSize="25dp"/>
 
                     <EditText
                         android:id="@+id/changeage"
@@ -203,7 +264,15 @@
                         android:layout_height="wrap_content"
                         android:text="Gender"
                         android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/genderview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="gender"
+                        android:textColor="#000000"
+                        android:textSize="25dp"/>
 
                     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                         android:id="@+id/sp1"
@@ -227,7 +296,7 @@
                         android:layout_height="wrap_content"
                         android:text="Profile picture"
                         android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:textSize="18sp" />
 
 
                     <ImageButton
@@ -252,6 +321,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <Button
                         android:id="@+id/submitedit"
                         android:layout_width="match_parent"
@@ -262,7 +332,7 @@
                         android:layout_marginTop="30dp"
                         android:background="#FF6C1D8C"
                         android:fontFamily="sans-serif-medium"
-                        android:onClick="RegisterUser"
+                        android:onClick="editprofile"
                         android:text="Submit"
                         android:textColor="@color/white" />
 

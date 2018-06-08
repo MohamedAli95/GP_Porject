@@ -119,8 +119,8 @@ public class sign_in_merchant extends AppCompatActivity {
                         placeClass.setPlaceEmail((String) place.getString("PlaceEmail"));
                         placeClass.setPlacePassword((String) place.getString("PlacePassword"));
                         placeClass.setPlaceCategoryId(Integer.parseInt((String) place.getString("Category_id")));
-                        placeClass.setPlaceRating(Float.parseFloat((String) place.getString("PlaceRate")));
-                        placeClass.setApprove(Boolean.parseBoolean((String) place.getString("approve")));
+                        //placeClass.setPlaceRating(Float.parseFloat((String) place.getString("PlaceRate")));
+                        //placeClass.setApprove(Boolean.parseBoolean((String) place.getString("approve")));
                         PlaceSesionStart(placeClass);
 
                      if(sharedPreferences!=null) {

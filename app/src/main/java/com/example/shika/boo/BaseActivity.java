@@ -192,10 +192,12 @@ public class BaseActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 Type type = new TypeToken<List<nearbyoffers>>(){}.getType();
                 ArrayList<nearbyoffers> nearoffers= gson.fromJson(json, type);
-                for(int i=0;i<nearoffers.size();i++){
-                    Items_id.add(i);
-                    popupMenu.getMenu().add(0,nearoffers.get(i).getOffer_id(), Menu.NONE,nearoffers.get(i).getTitle());
+                if(nearoffers!=null) {
+                    for (int i = 0; i < nearoffers.size(); i++) {
+                        Items_id.add(i);
+                        popupMenu.getMenu().add(0, nearoffers.get(i).getOffer_id(), Menu.NONE, nearoffers.get(i).getTitle());
 
+                    }
                 }
 
 

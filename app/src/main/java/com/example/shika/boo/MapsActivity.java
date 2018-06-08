@@ -316,8 +316,9 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
             editor.commit();
             AppController.getInstance().ServiceStart();
             x = new Intent(this, AfterBegin.class);
+            x.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(x);
-            finish();
+
         }
 
         /*else if(id == R.id.pro){

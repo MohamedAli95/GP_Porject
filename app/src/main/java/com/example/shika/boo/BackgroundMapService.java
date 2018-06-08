@@ -23,6 +23,7 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -452,25 +453,26 @@ public class BackgroundMapService extends Service implements LocationListener {
         }
 
         protected void onPostExecute(String result) {
+            try {
+
+
 
             JSONParser parser = new JSONParser();
 
             if (type.equals("get nearby offers")) {
                 try {
-                    if(result.equals("no offers found")){
+                    if (result.equals("no offers found")) {
 
-                    }
-                    else {
+                    } else {
 
                         Object obj = parser.parse(result);
-                        JSONArray array= (JSONArray) obj;
-                        JSONObject offer_obj ;
+                        JSONArray array = (JSONArray) obj;
+                        JSONObject offer_obj;
                         nearoffers = new ArrayList<nearbyoffers>();
                         nearbyoffers offer;
-                        for (int i =0 ; i<array.size();i++)
-                        {
-                            offer_obj= (JSONObject) array.get(i);
-                            offer=new nearbyoffers();
+                        for (int i = 0; i < array.size(); i++) {
+                            offer_obj = (JSONObject) array.get(i);
+                            offer = new nearbyoffers();
                             offer.setBranch_name((String) offer_obj.get("Branch_name"));
                             offer.setTitle((String) offer_obj.get("Title"));
                             offer.setPlacename((String) offer_obj.get("PlaceName"));
@@ -489,11 +491,14 @@ public class BackgroundMapService extends Service implements LocationListener {
                     }
 
 
-
-
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+
+            }
+        }
+            catch (Exception e){
+                Toast.makeText(getApplication(),e.getMessage(), Toast.LENGTH_LONG).show();
 
             }
         }

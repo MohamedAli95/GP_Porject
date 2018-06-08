@@ -78,6 +78,10 @@
             android:name=".BranchActivity"
             android:label="Branch"
             android:parentActivityName=".Try" />
+        <activity
+            android:name=".editprofile"
+            android:label="EditProfile"
+             />
 
         <activity android:name=".Merchant_signup" />
         <activity android:name=".Merchant_Home" />

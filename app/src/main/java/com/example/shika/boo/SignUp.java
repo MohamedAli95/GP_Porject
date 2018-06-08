@@ -75,6 +75,7 @@ public class SignUp extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,Gender);
         betterSpinner = (MaterialBetterSpinner) findViewById(R.id.sp1);
         betterSpinner.setAdapter(arrayAdapter);
+        encoded_string="";
 
 
 

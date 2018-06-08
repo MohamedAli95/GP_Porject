@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Base64;
+import android.widget.Toast;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -148,14 +149,16 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
+        try {
+
+
 
         JSONParser parser = new JSONParser();
         if (type1.equals("login")) {
             try {
-                if(result.equals("login not success")){
+                if (result.equals("login not success")) {
                     alertDialog.setMessage("Wrong UserName Or Password");
-                }
-                else {
+                } else {
 
                     Object obj = parser.parse(result);
                     JSONArray array = (JSONArray) obj;
@@ -175,15 +178,14 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                     UserSesionStart(user);
                 }
 
-                if(sharedpreferences!=null) {
-                    alertDialog.setMessage("Welcome"+"\t"+sharedpreferences.getString("Name", "error"));
+                if (sharedpreferences != null) {
+                    alertDialog.setMessage("Welcome" + "\t" + sharedpreferences.getString("Name", "error"));
                     alertDialog.show();
                     AppController.getInstance().ServiceStart();
                     Intent too = new Intent(context, MapsActivity.class);
                     context.startActivity(too);
 
-                }
-                else{
+                } else {
                     alertDialog.setMessage("Wrong UserName Or Password");
                     alertDialog.show();
                 }
@@ -199,16 +201,20 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
 
 
         } else if (type1.equals("register")) {
-            if(result.equals("insert succ")){
+            if (result.equals("insert succ")) {
                 Intent too = new Intent(context, SignIn.class);
                 context.startActivity(too);
-            }
-            else{
+            } else {
                 alertDialog.setMessage(result);
             }
 
             alertDialog.show();
         }
+    }
+    catch (Exception e){
+        Toast.makeText(context,e.getMessage(), Toast.LENGTH_LONG).show();
+
+    }
     }
 
     @Override
