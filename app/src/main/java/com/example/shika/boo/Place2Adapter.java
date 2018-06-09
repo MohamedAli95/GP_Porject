@@ -16,10 +16,15 @@ public class Place2Adapter extends RecyclerView.Adapter<Place2Adapter.Place2View
 
     private Context mCtx;
     private List<Place2> place2list;
+    private OnItemClicked onClick;
 
     public Place2Adapter(Context mCtx, List<Place2> place2list) {
         this.mCtx = mCtx;
         this.place2list = place2list;
+    }
+    public interface OnItemClicked {
+        void onItemClick(int position,int branchid);
+
     }
 
     @NonNull
@@ -32,8 +37,16 @@ public class Place2Adapter extends RecyclerView.Adapter<Place2Adapter.Place2View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Place2Adapter.Place2ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Place2Adapter.Place2ViewHolder holder, final int position) {
      Place2 place2 =place2list.get(position);
+     final int branchid = place2.getBranch_id();
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick.onItemClick(position,branchid);
+
+            }
+        });
 
      holder.textViewTitle.setText(place2.getBranch_name());
     }
@@ -52,5 +65,9 @@ public class Place2Adapter extends RecyclerView.Adapter<Place2Adapter.Place2View
 
             textViewTitle =itemView.findViewById(R.id.textViewTitle);
         }
+    }
+    public void setOnClick(OnItemClicked onClick)
+    {
+        this.onClick=onClick;
     }
 }

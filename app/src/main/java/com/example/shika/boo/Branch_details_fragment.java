@@ -38,7 +38,7 @@ public class Branch_details_fragment extends Fragment{
     private MapView mapView;
     private boolean mapsSupported = true;
 
-    @Override
+    /*@Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         super.onCreate(savedInstanceState);
@@ -48,9 +48,9 @@ public class Branch_details_fragment extends Fragment{
             mapView.onCreate(savedInstanceState);
         }
         initializeMap();
-    }
+    }*/
 
-    private void initializeMap() {
+    /*private void initializeMap() {
         if (googleMap == null && mapsSupported) {
             mapView = (MapView) getActivity().findViewById(R.id.map);
             //googleMap = mapView.getMap();
@@ -63,7 +63,7 @@ public class Branch_details_fragment extends Fragment{
                     .build();                   // Creates a CameraPosition from the builder
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
-    }
+    }*/
 
 
 
@@ -94,12 +94,12 @@ View vx;
         mapView.onSaveInstanceState(outState);
     }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         mapView.onResume();
-        initializeMap();
-    }
+        *//*initializeMap();*//*
+    }*/
 
     @Override
     public void onPause() {

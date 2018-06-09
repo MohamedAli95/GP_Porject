@@ -240,6 +240,17 @@ public class Try extends AppCompatActivity {
 
                             adapter2 =new Place2Adapter(Try.this ,place2list);
                             place2recycleView.setAdapter(adapter2);
+                            adapter2.setOnClick(new Place2Adapter.OnItemClicked(){
+                                @Override
+                                public void onItemClick(int position,int branchid) {
+                                    Intent intent = new Intent(getApplicationContext(),BranchActivity.class);
+                                    intent.putExtra("branchid",branchid);
+                                    startActivity(intent);
+                                }
+                            });
+
+
+
 
 
                         } catch (JSONException e) {
@@ -355,6 +366,7 @@ public class Try extends AppCompatActivity {
         apps.add(new App("Zara community", R.drawable.new6, "22 street ,EL Dokki   (Cairo)"));*/
         return apps;
     }
+
 
 
 }
