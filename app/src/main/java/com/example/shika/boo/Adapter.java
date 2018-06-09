@@ -25,6 +25,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private boolean mPager;
     private Context context;
     int place_id;
+    private OnItemClicked onClick;
+
+
+    public interface OnItemClicked {
+        void onItemClick(int position,int placeid);
+
+    }
+
 
     public Adapter(boolean horizontal, boolean pager, List<App> apps,Context context) {
         mHorizontal = horizontal;
@@ -47,18 +55,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
          App app = mApps.get(position);
           place_id=app.getPlace_id();
+        final int placeid =place_id;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ba = new Intent(context, Try.class);
-                ba.putExtra("place_id",place_id);
-                context.startActivity(ba);
+                onClick.onItemClick(position,placeid);
 
             }
         });
+
         Picasso.get().load(app.getPlaceimage()).into(holder.imageView);
         holder.nameTextView.setText(app.getName());
         holder.ratingTextView.setText(String.valueOf(app.getRating()));
@@ -88,6 +96,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             ratingTextView = (TextView) itemView.findViewById(R.id.ratingTextView);
         }
 
+    }
+    public void setOnClick(OnItemClicked onClick)
+    {
+        this.onClick=onClick;
     }
 
 }

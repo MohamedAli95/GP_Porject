@@ -18,6 +18,16 @@ public class App {
     private String mRating;
     private Integer categoryid;
 
+    public int getPostion() {
+        return postion;
+    }
+
+    public void setPostion(int postion) {
+        this.postion = postion;
+    }
+
+    private int postion;
+
     public Integer getPlace_id() {
         return Place_id;
     }

@@ -10,7 +10,20 @@ public class Snap {
     private int mGravity;
     private String mText;
     private List<App> mApps;
+    private  int postion;
 
+    public int getPostion() {
+        return postion;
+    }
+
+    public void setPostion(int postion) {
+        this.postion = postion;
+    }
+
+
+    public Snap(){
+
+    }
     public Snap(int gravity, String text, List<App> apps){
         mGravity = gravity;
         mText = text;

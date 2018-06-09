@@ -5,6 +5,7 @@ package com.example.shika.boo;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.PagerSnapHelper;
@@ -21,8 +22,9 @@ import android.widget.TextView;
 import com.chahinem.pageindicator.PageIndicator;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder>  {
+public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder> implements Adapter.OnItemClicked {
 
 
     public static final int HORIZONTAL = 1;
@@ -30,14 +32,9 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder>  {
 
     private ArrayList<Snap> mSnaps;
     private Context context;
+    Adapter adapter;
     // Disable touch detection for parent recyclerView if we use vertical nested recyclerViews
-    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            v.getParent().requestDisallowInterceptTouchEvent(true);
-            return false;
-        }
-    };
+
 
     public SnapAdapter(Context context) {
         mSnaps = new ArrayList<>();
@@ -80,6 +77,7 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder>  {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Snap snap = mSnaps.get(position);
+
         holder.snapTextView.setText(snap.getText());
 
         if (snap.getGravity() == Gravity.START || snap.getGravity() == Gravity.END) {
@@ -105,11 +103,21 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder>  {
         }
 
 
-        holder.recyclerView.setAdapter(new Adapter(snap.getGravity() == Gravity.START
+         adapter=new Adapter(snap.getGravity() == Gravity.START
                 || snap.getGravity() == Gravity.END
                 || snap.getGravity() == Gravity.CENTER_HORIZONTAL,
-                snap.getGravity() == Gravity.CENTER, snap.getApps(),context));
+                snap.getGravity() == Gravity.CENTER, snap.getApps(),context);
+
+
+
+
+
+
+        holder.recyclerView.setAdapter(adapter);
+        adapter.setOnClick(this);
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -118,6 +126,16 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder>  {
 
     public void onSnap(int position) {
         Log.d("Snapped: ", position + "");
+    }
+
+    @Override
+    public void onItemClick(int position,int placeid) {
+
+        Intent intent = new Intent(context,Try.class);
+        intent.putExtra("place_id",placeid);
+        context.startActivity(intent);
+
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

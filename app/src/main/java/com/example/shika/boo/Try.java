@@ -18,6 +18,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -145,6 +146,8 @@ public class Try extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            Log.e("response22",response);
+                            Log.e("useridbta3elplace",String.valueOf(user_id));
                             JSONArray places1 =new JSONArray(response);
 
                             String Place_LogoPhoto="" ;
@@ -158,7 +161,9 @@ public class Try extends AppCompatActivity {
                                 Place_LogoPhoto =place3object.getString("Place_LogoPhoto");
                                 PLaceName=place3object.getString("PLaceName");
                                 Name=place3object.getString("Name");
-                                No_OF_points=Integer.valueOf(place3object.getString("No_OF_points"));
+                                if(place3object.has("No_OF_points")) {
+                                    No_OF_points = Integer.valueOf(place3object.getString("No_OF_points"));
+                                }
 
                                 //Place1 place1 =new Place1(Place_LogoPhoto,PLaceName,Name,No_OF_points);
                                 //place1list.add(place1);
