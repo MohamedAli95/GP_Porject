@@ -40,8 +40,7 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="300"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="14sp"/>
         </LinearLayout>
         </android.support.v7.widget.CardView>
         </LinearLayout>

@@ -156,17 +156,16 @@ public class Try extends AppCompatActivity {
                             int No_OF_points=0;
 
                             for(int i=0; i<places1.length();i++){
-                                JSONObject place3object = places1.getJSONObject(i);
+                                JSONObject place1object = places1.getJSONObject(i);
 
-                                Place_LogoPhoto =place3object.getString("Place_LogoPhoto");
-                                PLaceName=place3object.getString("PLaceName");
-                                Name=place3object.getString("Name");
-                                if(place3object.has("No_OF_points")) {
-                                    No_OF_points = Integer.valueOf(place3object.getString("No_OF_points"));
+                                Place_LogoPhoto =place1object.getString("Place_LogoPhoto");
+                                PLaceName=place1object.getString("PLaceName");
+                                Name=place1object.getString("Name");
+                                if(place1object.has("No_OF_points")) {
+                                    No_OF_points = Integer.valueOf(place1object.getString("No_OF_points"));
                                 }
 
-                                //Place1 place1 =new Place1(Place_LogoPhoto,PLaceName,Name,No_OF_points);
-                                //place1list.add(place1);
+
 
                             }
                             userPoint.setText(String.valueOf(No_OF_points));
@@ -244,7 +243,7 @@ public class Try extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(int position,int branchid) {
                                     Intent intent = new Intent(getApplicationContext(),BranchActivity.class);
-                                    intent.putExtra("branchid",branchid);
+                                    intent.putExtra("Branch_id",branchid);
                                     startActivity(intent);
                                 }
                             });

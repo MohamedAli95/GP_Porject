@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -18,15 +19,15 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapsing_toolbar"
+                android:id="@+id/collapsing_toolbar99"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginStart="48dp"
                 app:expandedTitleMarginEnd="32dp"
-                app:title="Zara Brand"
-                android:background="@drawable/zar">
+                app:title="max dokki"
+                android:background="@drawable/zrr">
 
 
 
@@ -51,78 +52,109 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="15dp"
-                    android:layout_gravity="left">
-
-                    <Button
-                        android:layout_width="100dp"
-                        android:layout_height="40dp"
-                        android:text="Share"
-                        android:background="@drawable/border_button"
-                        android:drawableLeft="@drawable/shrr"
-                        android:drawableTint="#674172"
-                        android:layout_marginRight="15dp"
-                        android:textColor="#674172"
-                        android:paddingLeft="5dp"
-                        android:layout_weight="1"
-                        android:id="@+id/share_btn"/>
-
-                    <Button
-                        android:layout_width="100dp"
-                        android:layout_height="40dp"
-                        android:text="Call"
-                        android:drawableLeft="@drawable/cll"
-                        android:textColor="#674172"
-                        android:drawableTint="#674172"
-                        android:background="@drawable/border_button"
-                        android:paddingLeft="5dp"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-                <RelativeLayout
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/direction_card_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:id="@+id/cont"
-                    >
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    card_view:cardElevation="5dp"
+                    card_view:cardUseCompatPadding="true">
 
-                </RelativeLayout>
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <TextView
+                                android:padding="10dp"
+                                android:textSize="14sp"
+                                android:layout_marginTop="4dp"
+                                android:textStyle="normal"
+                                android:textColor="#3797CF"
+                                android:text="Place Name:"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_column="1"/>
+                            <TextView
+                                android:id="@+id/placeName"
+                                android:padding="10dp"
+                                android:textSize="14sp"
+                                android:layout_marginTop="4dp"
+                                android:textStyle="normal"
+                                android:textColor="#aaa69d"
+                                android:text="Zara"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_column="2"
+                                android:layout_weight="20"/>
+                        </TableRow>
+
+
+                    </TableLayout>
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:id="@+id/bran2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="18dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#e1e0e0"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Branch Offers"
+                    android:textAllCaps="true"
+                    android:textColor="#878787"
+                    android:textSize="21dp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+
+                <TextView
+                    android:id="@+id/bran"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="18dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#e1e0e0"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Branch Rewards"
+                    android:textAllCaps="true"
+                    android:textColor="#878787"
+                    android:textSize="21dp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
 
-
-            <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
-                android:id="@+id/bottom_navigation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-
-                />
-
-
-        </FrameLayout>
-        <com.varunest.sparkbutton.SparkButton
-            android:id="@+id/spark_button"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            app:sparkbutton_activeImage="@drawable/sry"
-            app:sparkbutton_inActiveImage="@drawable/srg"
-            app:sparkbutton_iconSize="60dp"
-            app:sparkbutton_primaryColor="@color/firstsho"
-            app:sparkbutton_secondaryColor="@color/secondsho"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            android:src="@drawable/heartred"
+            android:tint="#FFFFFF"
             app:layout_anchor="@id/app_bar_layout"
             app:layout_anchorGravity="bottom|right|end"/>
     </android.support.design.widget.CoordinatorLayout>
 
 
 
-</LinearLayout>
+</RelativeLayout >
