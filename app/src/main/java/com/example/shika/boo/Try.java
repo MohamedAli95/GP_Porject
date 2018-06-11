@@ -335,37 +335,8 @@ public class Try extends AppCompatActivity {
 
 
 
-    //m3rfshhsssssssssssssssss
-    public void branch_trans(View view){
-        Intent ba = new Intent(this,BranchActivity.class);
-        startActivity(ba);
-    }
 
-    private void setupAdapter() {
-        List<App> apps = getApps();
 
-        SnapAdapter snapAdapter = new SnapAdapter(this);
-        if (mHorizontal) {
-            snapAdapter.addSnap(new Snap(Gravity.CENTER, "Our Branches", apps));
-
-        } else {
-            snapAdapter.addSnap(new Snap(Gravity.CENTER_VERTICAL, "Snap center", apps));
-            snapAdapter.addSnap(new Snap(Gravity.TOP, "Snap top", apps));
-            snapAdapter.addSnap(new Snap(Gravity.BOTTOM, "Snap bottom", apps));
-        }
-
-        mRecyclerView.setAdapter(snapAdapter);
-    }
-
-    private List<App> getApps() {
-        apps = new ArrayList<>();
-       /* apps.add(new App("Zara le merange", R.drawable.new1, "22 street ,EL Dokki   (Cairo)"));
-        apps.add(new App("Zara do2do2", R.drawable.new2, "22 street ,EL Dokki   (Cairo)"));
-        apps.add(new App("Modern zara", R.drawable.new3, "22 street ,EL Dokki   (Cairo)"));
-        apps.add(new App("Zara females", R.drawable.new4, "22 street ,EL Dokki   (Cairo)"));
-        apps.add(new App("Zara community", R.drawable.new6, "22 street ,EL Dokki   (Cairo)"));*/
-        return apps;
-    }
 
 
 

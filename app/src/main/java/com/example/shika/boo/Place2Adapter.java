@@ -18,6 +18,7 @@ public class Place2Adapter extends RecyclerView.Adapter<Place2Adapter.Place2View
     private List<Place2> place2list;
     private OnItemClicked onClick;
 
+
     public Place2Adapter(Context mCtx, List<Place2> place2list) {
         this.mCtx = mCtx;
         this.place2list = place2list;

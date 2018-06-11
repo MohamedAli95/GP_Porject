@@ -171,7 +171,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
 
 
         fragmentA = new FragmentA();
-        interstsFragment = new InterstsFragment();
+
         fragmentB = new FragmentB();
         profileFragment = new ProfileFragment();
         savedOffersFragment = new SavedOffersFragment();
@@ -192,6 +192,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
                     startActivity(getIntent());
                     return true;
                 } else if (item.getItemId() == R.id.camaraItem) {
+                    interstsFragment = new InterstsFragment();
                     setFragment(interstsFragment);
                     return true;
                 } else if (item.getItemId() == R.id.favoritosItem) {
@@ -263,6 +264,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
 
     private void setFragments(android.support.v4.app.Fragment frag){
         android.support.v4.app.FragmentTransaction fragmentTrans= getSupportFragmentManager().beginTransaction();
+
         fragmentTrans.replace(R.id.main_frame,frag);
         fragmentTrans.commit();
     }

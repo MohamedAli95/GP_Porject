@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import me.wangyuwei.particleview.ParticleView;
 
 public class BeginActivity extends AppCompatActivity {
- private static int Splash_timeout = 4000;
+ private static int Splash_timeout = 20000;
  //hi
 
  ParticleView mParticleView;

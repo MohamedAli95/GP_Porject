@@ -35,7 +35,6 @@
         tools:replace="android:allowBackup">
         <activity android:name=".SignUp" />
         <activity android:name=".SignIn" />
-
         <activity
             android:name=".MainActivity"
             android:label="Categories"
@@ -58,7 +57,7 @@
             android:label="Favourites"
             android:parentActivityName=".MapsActivity" />
         <activity
-            android:name=".Interests"
+            android:name=".Interestsadapter"
             android:label="Interests"
             android:parentActivityName=".MapsActivity" />
 
@@ -73,16 +72,13 @@
             android:label="Offer "
             android:parentActivityName=".BranchActivity" />
         <activity android:name=".RecyclerView_Activity" />
-
         <activity
             android:name=".BranchActivity"
             android:label="Branch"
             android:parentActivityName=".Try" />
         <activity
             android:name=".editprofile"
-            android:label="EditProfile"
-             />
-
+            android:label="EditProfile" />
         <activity android:name=".Merchant_signup" />
         <activity android:name=".Merchant_Home" />
         <activity
@@ -104,7 +100,6 @@
         </activity>
         <activity android:name=".TT" />
         <activity android:name=".Cong" />
-
         <activity
             android:name=".Try"
             android:label="Store"
@@ -206,6 +201,7 @@
             android:label="Pickup Branch Location"
             android:parentActivityName=".Merchant_Add_Branch" />
         <activity android:name=".sign_in_merchant" />
+        <activity android:name=".interestsactivity"></activity>
     </application>
 
 </manifest>
