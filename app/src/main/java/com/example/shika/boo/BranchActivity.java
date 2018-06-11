@@ -207,6 +207,11 @@ public class BranchActivity extends AppCompatActivity {
 
                                 loadbranch3(branch_id);
                             }
+                            else{
+                                TextView bran;
+                                bran=(TextView) findViewById(R.id.bran);
+                                bran.setText(" No Available Rewards Now  ");
+                            }
 
 
                         } catch (JSONException e) {
