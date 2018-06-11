@@ -176,7 +176,7 @@ public  void PlaceSesionStart(Place place)
      editor.putInt("PcategoryId",place.getPlaceCategoryId());
      editor.putBoolean("Papprove",place.getApprove());
      editor.putFloat("Prating",place.getPlaceRating());
-     editor.putBoolean("logged in",true);
+     editor.putBoolean("place logged in",true);
      editor.commit();
 
  }

@@ -13,15 +13,25 @@
         android:layout_marginTop="10dp"
         android:button="@drawable/selector" />
 
+    <TextView
+        android:id="@+id/placename"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:text="placename"
+        android:textSize="25dp" />
+
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="7dp"
-        android:contentDescription="hello"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
 
-        />
+
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="hello" />
 
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -63,7 +64,6 @@ public class InterstsFragment extends android.app.Fragment implements Interestsa
     public List<Integer> userinterests;
     List<UserInterests> finaluserinterests = new ArrayList<UserInterests>();
     Interestsadapter interestsadapter;
-    interestsInterfaces interfce = new interestsInterfaces();
     String type = "";
     String type1 = "";
 
@@ -104,6 +104,8 @@ public class InterstsFragment extends android.app.Fragment implements Interestsa
         interistsrecycleView = (RecyclerView) vin.findViewById(R.id.InteristsRecycler);
         interistsrecycleView.setHasFixedSize(true);
         interistsrecycleView.setLayoutManager(new LinearLayoutManager(vin.getContext()));
+        interistsrecycleView.addItemDecoration(new DividerItemDecoration(vin.getContext(),
+                DividerItemDecoration.VERTICAL));
 
 
 

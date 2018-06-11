@@ -23,6 +23,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,10 +88,16 @@ public class Try extends AppCompatActivity {
     int place_id;
     int user_id;
     TextView tv;
+    CheckBox favorite;
 
     private static final String Place1Url = "http://gp.sendiancrm.com/offerall/place1Query.php";
     private static final String Place2Url = "http://gp.sendiancrm.com/offerall/place2Query.php";
     private static final String Place3Url = "http://gp.sendiancrm.com/offerall/place3Query.php";
+    private static final String FavoritDelete = "http://gp.sendiancrm.com/offerall/deletefavorite.php";
+    private static final String addfavorite = "http://gp.sendiancrm.com/offerall/addfavorite.php";
+    private static final String retrivefavoriteplace = "http://gp.sendiancrm.com/offerall/retrivefavoriteplace.php";
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,7 +115,9 @@ public class Try extends AppCompatActivity {
         categoryPlace=(TextView) findViewById(R.id.categoryPlace);
         userPoint=(TextView) findViewById(R.id.userPoint);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar99);
+        favorite= (CheckBox) findViewById(R.id.fav);
 
+        retrivefavorite(place_id,user_id);
 
         loadplace1(place_id,user_id);
 
@@ -325,6 +335,112 @@ public class Try extends AppCompatActivity {
         };
         Volley.newRequestQueue(this).add(stringRequest);
     }
+
+    public void addfavorit(final int place_id,final int user_id ) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, addfavorite,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Try.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Place_ID",""+place_id);
+                params.put("user_id",""+user_id);
+
+
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    public void deletefavorit(final int place_id,final int user_id ) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, FavoritDelete,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Try.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Place_ID",""+place_id);
+                params.put("user_id",""+user_id);
+
+
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    public void retrivefavorite(final int place_id,final int user_id ) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, retrivefavoriteplace,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if(response.equals("Date not  found")){
+
+                            favorite.setChecked(false);
+                        }
+                        else{
+                            favorite.setChecked(true);
+
+                        }
+
+                        favorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                                if (isChecked) {
+                                    addfavorit(place_id,user_id);
+                                }
+                                else{
+
+                                    deletefavorit(place_id,user_id);
+                                }
+                            }
+                        });
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Try.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Place_ID",""+place_id);
+                params.put("user_id",""+user_id);
+
+
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
 
 
 

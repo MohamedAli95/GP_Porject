@@ -18,7 +18,7 @@ public class TT extends AppCompatActivity {
 /*
         //add the fragments you want to display in a List
         List<android.app.Fragment> fragments = new ArrayList<>();
-        fragments.add(new FragmentA());
+        fragments.add(new FavoritsFragment());
         fragments.add(new FragmentB());
         fragments.add(new FragmentC());
         fragments.add(new FragmentD());

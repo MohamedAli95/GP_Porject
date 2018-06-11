@@ -40,10 +40,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -65,7 +63,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
     private NavigationView navigation_view; // The new navigation view from Android Design Library. Can inflate menu resources. Easy
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private FragmentA fragmentA;
+    private FavoritsFragment favoritsFragment;
     InterstsFragment interstsFragment;
     ProfileFragment profileFragment;
     SavedOffersFragment savedOffersFragment;
@@ -170,7 +168,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
         });
 
 
-        fragmentA = new FragmentA();
+
 
         fragmentB = new FragmentB();
         profileFragment = new ProfileFragment();
@@ -180,7 +178,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
 
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
-        //  too = new Intent(this,FragmentA.class);
+        //  too = new Intent(this,FavoritsFragment.class);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -196,7 +194,8 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
                     setFragment(interstsFragment);
                     return true;
                 } else if (item.getItemId() == R.id.favoritosItem) {
-                    setFragment(fragmentA);
+                    favoritsFragment = new FavoritsFragment();
+                    setFragment(favoritsFragment);
                     return true;
                 } else if (item.getItemId() == R.id.perfilItem) {
                     setFragment(myprof);
@@ -257,7 +256,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
 
     private void setFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame,fragment);
+        fragmentTransaction.replace(R.id.main_frame,fragment,"fragment");
         fragmentTransaction   .addToBackStack(null)
                 .commit();
     }
