@@ -76,10 +76,10 @@ public class BackgroundMapService extends Service implements LocationListener {
     ArrayList<nearbyoffers> nearoffers= new ArrayList<nearbyoffers>();
     ArrayList<nearbyoffers> ExistedOffers= new ArrayList<nearbyoffers>();
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 60 * 1000; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = 1 * 1000; // 1 minute
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
@@ -460,7 +460,7 @@ public class BackgroundMapService extends Service implements LocationListener {
             JSONParser parser = new JSONParser();
 
             if (type.equals("get nearby offers")) {
-                try {
+
                     if (result.equals("no offers found")) {
 
                     } else {
@@ -491,9 +491,6 @@ public class BackgroundMapService extends Service implements LocationListener {
                     }
 
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
 
             }
         }
