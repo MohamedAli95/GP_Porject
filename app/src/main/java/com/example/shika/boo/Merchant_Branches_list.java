@@ -1,5 +1,7 @@
 package com.example.shika.boo;
 
+import models.listbranches;
+import models.nearbyoffers;
 import models.placebranch;
 import android.content.Context;
 import android.content.Intent;
@@ -30,12 +32,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +50,7 @@ public class Merchant_Branches_list extends AppCompatActivity {
 
     private ListView LV_branchesList ;
     private  Button toAddBranch ;
+    ArrayList<String> listBranchNames1 ;
 
     SharedPreferences sharedPreferences ;
     android.app.AlertDialog alertDialog;
@@ -56,7 +62,7 @@ public class Merchant_Branches_list extends AppCompatActivity {
     private int placeId  ;
 
     //String [] branchNames = {"Alex","Cairo","Giza","Elbadrashen"};
-    ArrayList<String> listBranchNames ;
+    ArrayList<listbranches> listBranchNames ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,7 @@ public class Merchant_Branches_list extends AppCompatActivity {
         LV_branchesList = (ListView) findViewById(R.id.branchList);
         toAddBranch = (Button) findViewById(R.id.add);
         listBranchNames = new ArrayList<>();
+         listBranchNames1 = new ArrayList<>();
 
         alertDialog = new android.app.AlertDialog.Builder(this).create();
         requestQueue = Volley.newRequestQueue(this);
@@ -98,9 +105,20 @@ public class Merchant_Branches_list extends AppCompatActivity {
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                String branchName =""+parent.getItemAtPosition(position);
+               listbranches brache = new listbranches();
+               String json = sharedPreferences.getString("Branches_Names", "");
+               Gson gson = new Gson();
+               Type type = new TypeToken<List<listbranches>>(){}.getType();
+               listBranchNames= gson.fromJson(json, type);
+               for(int i=0;i<listBranchNames.size();i++){
+                   if(listBranchNames.get(i).getBrnachname().equals(branchName)){
+                       brache = listBranchNames.get(i);
+                   }
+               }
               // Toast.makeText(Merchant_Branches_list.this, branchName, Toast.LENGTH_SHORT).show();
                Intent intent = new Intent(getApplicationContext(),Merchant_Branch_Pass.class);
-               intent.putExtra("BranchName",branchName);
+               intent.putExtra("BranchName",brache.getBrnachname());
+               intent.putExtra("branchid",String.valueOf(brache.getBranchid()));
                startActivity(intent);
            }
        });
@@ -129,12 +147,17 @@ public class Merchant_Branches_list extends AppCompatActivity {
 
                     JSONArray branches = jsonObject.getJSONArray("branchs");
                     for(int i=0 ; i<branches.length();i++)
-                    {
+                    {   listbranches branche=new listbranches();
                         JSONObject branch = branches.getJSONObject(i);
                         //Toast.makeText(Merchant_Branches_list.this,""+branch, Toast.LENGTH_SHORT).show();
-                        listBranchNames.add(branch.getString("Branch_name"));
+                        listBranchNames1.add(branch.getString("Branch_name"));
+                        branche.setBranchid(Integer.parseInt(branch.getString("Branch_id")));
+                        branche.setBrnachname(branch.getString("Branch_name"));
+                        listBranchNames.add(branche);
+
                     }
                     saveBNamesSharedPerf(listBranchNames);
+                    saveBNamesSharedPerf1(listBranchNames1);
                     loadBNamesSharedPerf();
 
                 } catch (JSONException e) {
@@ -164,24 +187,20 @@ public class Merchant_Branches_list extends AppCompatActivity {
     }
 
 
-    public  void saveBNamesSharedPerf(ArrayList<String> listBranch)
+    public  void saveBNamesSharedPerf(ArrayList<listbranches> listBranch)
     {
-        StringBuilder sb =new  StringBuilder();
-        for (String s : listBranch)
-        {
-            sb.append(s);
-            sb.append(",");
-        }
-        sharedPreferences = getSharedPreferences("BRnames",Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = gson.toJson(listBranch);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString("Branches_Names",sb.toString());
+        editor.putString("Branches_Names",json);
         editor.commit();
     }
 
     public void loadBNamesSharedPerf(){
         sharedPreferences = getSharedPreferences("BRnames",Context.MODE_PRIVATE);
-        String x =sharedPreferences.getString("Branches_Names",null);
+        String x =sharedPreferences.getString("Branches_Names1",null);
         String[] s =x.split(",");
         ArrayList<String> BNameFromSharedP = new ArrayList<String>();
         for (int i=0 ;i<s.length;i++)
@@ -192,5 +211,20 @@ public class Merchant_Branches_list extends AppCompatActivity {
         LV_branchesList.setAdapter(adapter);
 
     }
+    public  void saveBNamesSharedPerf1(ArrayList<String> listBranch)
+    {
+        StringBuilder sb =new  StringBuilder();
+        for (String s : listBranch)
+        {
+            sb.append(s);
+            sb.append(",");
+        }
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("Branches_Names1",sb.toString());
+        editor.commit();
+    }
+
 
 }
