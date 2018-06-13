@@ -264,43 +264,7 @@ public class InterstsFragment extends android.app.Fragment implements Interestsa
 
         }
 
-        protected void onPostExecute(String result) {
-            try {
 
-
-                JSONParser parser = new JSONParser();
-
-              if (resulttype.equals("userInterests")) {
-                    if (result.equals("Date not  found")) {
-
-                    } else {
-                        List<Integer> userinterests1 = new ArrayList<Integer>();
-                        JSONArray categories = new JSONArray(result);
-
-
-                        for (int i = 0; i < categories.length(); i++) {
-                            JSONObject categoryobject = categories.getJSONObject(i);
-                            int userinterest = Integer.valueOf(categoryobject.getString("Category_id"));
-
-                            userinterests.add(userinterest);
-
-
-
-
-                        }
-                        type="";
-
-
-
-                    }
-
-                }
-            } catch (Exception e) {
-                Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-
-
-            }
-        }
 
     }
 
@@ -343,41 +307,6 @@ public class InterstsFragment extends android.app.Fragment implements Interestsa
 
         }
 
-        protected void onPostExecute(String result) {
-            try {
-
-
-                JSONParser parser = new JSONParser();
-
-                if (resulttype.equals("loadInterestsRetrive")) {
-                    if (result.equals("Date not  found")) {
-
-
-                    } else {
-                        JSONArray categories = new JSONArray(result);
-
-
-
-                        for (int i = 0; i < categories.length(); i++) {
-                            JSONObject categoryobject = categories.getJSONObject(i);
-                            categorypage category = new categorypage();
-
-
-                            category.setCategory_id(Integer.valueOf(categoryobject.getString("Category_ID")));
-                            category.setCategorytitle(categoryobject.getString("Name"));
-
-
-                            categorylist.add(category);
-                        }
-
-                    }
-                }
-            } catch (Exception e) {
-                Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-
-
-            }
-        }
 
     }
 

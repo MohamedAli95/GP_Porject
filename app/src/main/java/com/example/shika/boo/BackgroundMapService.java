@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -46,14 +47,18 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import models.nearbyoffers;
 
 public class BackgroundMapService extends Service implements LocationListener {
 
-
+    private static final String userInterests = "http://gp.sendiancrm.com/offerall/userInterests.php";
+    String resulto;
+    public List<Integer> userinterests = new ArrayList<Integer>();
 
     // flag for GPS status
     boolean isGPSEnabled = false;
@@ -75,6 +80,7 @@ public class BackgroundMapService extends Service implements LocationListener {
     String type;
     ArrayList<nearbyoffers> nearoffers= new ArrayList<nearbyoffers>();
     ArrayList<nearbyoffers> ExistedOffers= new ArrayList<nearbyoffers>();
+    String Setting;
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
 
@@ -107,9 +113,17 @@ public class BackgroundMapService extends Service implements LocationListener {
 
 
             userid = sharedpreferences.getInt("Id", 0);
+            Setting = sharedpreferences.getString("Setting","null");
 
         }
-         notfication = new NotificationCompat.Builder(this);
+
+
+
+
+
+
+
+        notfication = new NotificationCompat.Builder(this);
         notfication.setAutoCancel(true);
        /* SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.remove("ExistedOffers");*//*
@@ -482,10 +496,55 @@ public class BackgroundMapService extends Service implements LocationListener {
                             offer.setStartdate((String) offer_obj.get("StartDate"));
                             offer.setEnddate((String) offer_obj.get("EndDate"));
                             offer.setNo_ofpoints(Integer.parseInt(offer_obj.get("points").toString()));
+                            offer.setCatgoryid(Integer.parseInt(offer_obj.get("Category_ID").toString()));
+                            offer.setEnddate((String) offer_obj.get("Name"));
                             nearoffers.add(offer);
                         }
 
-                        CompareNearOffers();
+                        if(Setting.equals("Get all Notfications")){
+                            CompareNearOffers();
+                        }
+                        else if(Setting.equals("According to Intersts")){
+                            try {
+                                resulto= new loadInterestsRetrive().execute().get();
+                                if (resulto.equals("Date not  found")) {
+
+                                } else {
+                                     userinterests = new ArrayList<Integer>();
+                                    org.json.JSONArray categories = new org.json.JSONArray(resulto);
+
+
+                                    for (int i = 0; i < categories.length(); i++) {
+                                        org.json.JSONObject categoryobject = categories.getJSONObject(i);
+                                        int userinterest = Integer.valueOf(categoryobject.getString("Category_id"));
+
+                                        userinterests.add(userinterest);
+
+
+
+
+                                    }
+
+
+
+
+                                }
+
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Compareoffersforinterists();
+
+                        }
+                        else{
+                            Intent x = new Intent(getApplicationContext(), BackgroundMapService.class);
+                            stopService(x);
+                        }
+
 
 
                     }
@@ -500,7 +559,82 @@ public class BackgroundMapService extends Service implements LocationListener {
             }
         }
 
-        protected  void CompareNearOffers(){
+        protected  void Compareoffersforinterists(){
+            getLocation();
+            Location templocation;
+            Float distance;
+            ArrayList<nearbyoffers> newoffers= new ArrayList<nearbyoffers>();
+            ArrayList<nearbyoffers> interistsoffers= new ArrayList<nearbyoffers>();
+            for(int i=0;i<nearoffers.size();i++){
+                for(int j=0;j<userinterests.size();j++){
+                    if(nearoffers.get(i).getCatgoryid()==userinterests.get(j)){
+                        interistsoffers.add(nearoffers.get(i));
+                    }
+                }
+            }
+
+            for(int i=0;i<interistsoffers.size();i++)
+            {
+
+                templocation=new Location("");
+                templocation.setLatitude(interistsoffers.get(i).getLatitude());
+                templocation.setLongitude(interistsoffers.get(i).getLongitude());
+                distance= templocation.distanceTo(location);
+                if(distance<2000)
+                { int flag =1;
+                    if(ExistedOffers.size()==0){
+                    ExistedOffers.add(interistsoffers.get(i));
+                    newoffers.add(interistsoffers.get(i));
+                }else{
+                    for(int j=0;j<ExistedOffers.size();j++) {
+                        if (ExistedOffers.get(j).getOffer_id() == interistsoffers.get(i).getOffer_id()) {
+                           flag=0;
+                        }
+                    }
+                    if(flag==1){
+                        ExistedOffers.add(interistsoffers.get(i));
+                        newoffers.add(interistsoffers.get(i));
+                    }
+                    }
+
+                }
+
+            }
+
+            if(newoffers.size()!=0){
+                for(int i=0 ;i<newoffers.size();i++){
+                    Random rand = new Random();
+                    int  n = rand.nextInt(1000) + 1;
+                    notfication.setSmallIcon(R.drawable.ngm);
+                    notfication.setTicker("this is a ticker");
+                    notfication.setWhen(System.currentTimeMillis());
+                    notfication.setContentTitle(newoffers.get(i).getTitle());
+                    notfication.setContentText("you have an offer from"+" "+newoffers.get(i).getPlacename()+" "+"("+newoffers.get(i).getBranch_name()+")");
+                    int offer_id=newoffers.get(i).getOffer_id();
+                    Intent intent = new Intent(getApplicationContext(),Offer_Page.class);
+                    intent.putExtra("k", offer_id);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                    notfication.setContentIntent(pendingIntent);
+                    NotificationManager nm =(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    nm.notify(n,notfication.build());
+                }
+            }
+
+            Gson gson = new Gson();
+            String json = gson.toJson(ExistedOffers);
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.remove("ExistedOffers");
+            editor.putString("ExistedOffers", json);
+
+            editor.commit();
+
+
+
+
+        }
+
+        protected void CompareNearOffers(){
             getLocation();
             Location templocation;
             Float distance;
@@ -513,9 +647,22 @@ public class BackgroundMapService extends Service implements LocationListener {
                 templocation.setLongitude(nearoffers.get(i).getLongitude());
                 distance= templocation.distanceTo(location);
                 if(distance<2000)
-                {
-                    ExistedOffers.add(nearoffers.get(i));
-                    newoffers.add(nearoffers.get(i));
+                { int flag =1;
+                    if(ExistedOffers.size()==0){
+                        ExistedOffers.add(nearoffers.get(i));
+                        newoffers.add(nearoffers.get(i));
+                    }else{
+                        for(int j=0;j<ExistedOffers.size();j++) {
+                            if (ExistedOffers.get(j).getOffer_id() == nearoffers.get(i).getOffer_id()) {
+                                flag=0;
+                            }
+                        }
+                        if(flag==1){
+                            ExistedOffers.add(nearoffers.get(i));
+                            newoffers.add(nearoffers.get(i));
+                        }
+                    }
+
                 }
 
             }
@@ -560,4 +707,55 @@ public class BackgroundMapService extends Service implements LocationListener {
         schedulenearbyoffers();
         Log.i(TAG,  "service stopped...");
     }
+
+
+    private class loadInterestsRetrive extends AsyncTask<String, Void, String> {
+
+
+
+
+        @Override
+        protected String doInBackground(String... Strings) {
+
+                try {
+
+                    URL url = new URL(userInterests);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(userid), "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                    String result = "";
+                    String line = "";
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    return result;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            return null;
+
+        }
+
+
+
+    }
+
 }

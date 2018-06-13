@@ -77,6 +77,7 @@ public class Try extends AppCompatActivity {
     RecyclerView place3recycleView;
     Place3Adapter adapter3;
     List<Place3> place3list;
+    int flag=1;
 
 
 
@@ -89,6 +90,8 @@ public class Try extends AppCompatActivity {
     int user_id;
     TextView tv;
     CheckBox favorite;
+    boolean backFromChild = false;
+
 
     private static final String Place1Url = "http://gp.sendiancrm.com/offerall/place1Query.php";
     private static final String Place2Url = "http://gp.sendiancrm.com/offerall/place2Query.php";
@@ -105,8 +108,10 @@ public class Try extends AppCompatActivity {
         setContentView(R.layout.activity_try);
         Intent intent=getIntent();
         Bundle extras = intent.getExtras();
-        place_id=extras.getInt("place_id");
-        place_id=extras.getInt("place_id");
+        if(flag==1) {
+            place_id = extras.getInt("place_id");
+            place_id = extras.getInt("place_id");
+        }
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
         user_id=sharedpreferences.getInt("Id",0);
 
@@ -254,6 +259,7 @@ public class Try extends AppCompatActivity {
                                 public void onItemClick(int position,int branchid) {
                                     Intent intent = new Intent(getApplicationContext(),BranchActivity.class);
                                     intent.putExtra("Branch_id",branchid);
+                                    intent.putExtra("place_id",place_id);
                                     startActivity(intent);
                                 }
                             });
@@ -445,9 +451,11 @@ public class Try extends AppCompatActivity {
 
 
 
-
-
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        flag=0;
+    }
 
 
 

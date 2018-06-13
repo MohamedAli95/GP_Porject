@@ -14,6 +14,17 @@ public  class User {
     private int age;
     private String Phone;
     private String gender;
+    private String Setting;
+
+    public String getSetting() {
+        return Setting;
+    }
+
+    public void setSetting(String setting) {
+        Setting = setting;
+    }
+
+
 
     public int getId() {
         return id;

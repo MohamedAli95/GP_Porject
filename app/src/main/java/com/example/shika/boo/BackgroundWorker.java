@@ -175,6 +175,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                     user.setPhone((String) User_json.get("UserPhone"));
                     user.setGender((String) User_json.get("User_Gender"));
                     user.setProfile_Picture((String) User_json.get("Userpicture"));
+                    user.setSetting((String) User_json.get("UserSetting"));
                     UserSesionStart(user);
                 }
 
@@ -236,6 +237,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
         editor.putString("LastLogin",formatter.format(user.getLastlogin()));
         editor.putString("profilepicture",user.getProfile_Picture());
         editor.putBoolean("logged in",true);
+        editor.putString("Setting",user.getSetting());
         editor.commit();
 
     }

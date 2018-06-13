@@ -299,7 +299,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
         int id = menuitem.getItemId();
         if(id == R.id.set){
 
-            x = new Intent(this, RecyclerView_Activity.class);
+            x = new Intent(this,Setting.class);
             startActivity(x);}
         else if(id == R.id.ctg){
             x = new Intent(this, MainActivity.class);

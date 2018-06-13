@@ -1,15 +1,26 @@
 package com.example.shika.boo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
 public class AfterBegin extends AppCompatActivity {
-
+    SharedPreferences sharedpreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(sharedpreferences.getBoolean("logged in",false)) {
+            Intent too = new Intent(this, MapsActivity.class);
+            startActivity(too);
+        }
+        else if(sharedpreferences.getBoolean("place logged in",false)){
+            Intent too = new Intent(this, Merchant_Home.class);
+            startActivity(too);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_begin);
         getSupportActionBar().hide();

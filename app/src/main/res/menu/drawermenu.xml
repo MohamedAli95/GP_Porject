@@ -6,7 +6,6 @@
     <item android:id="@+id/main" android:title="Home" android:icon="@drawable/home" android:tint="#8e44ad"/>
     <item android:id="@+id/ctg" android:title="Categories" android:icon="@drawable/categories" android:tint="#8e44ad"/>
     <item android:id="@+id/set" android:title="Settings" android:icon="@drawable/settings" android:tint="#8e44ad"/>
-    <item android:id="@+id/con" android:title="Contact us" android:icon="@drawable/contact" android:tint="#8e44ad"/>
     <item
         android:id="@+id/login"
         android:icon="@drawable/logi"

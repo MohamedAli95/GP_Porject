@@ -10,6 +10,25 @@ public class nearbyoffers {
     String Startdate;
     String Enddate;
     Integer No_ofpoints;
+    String Category;
+    int Catgoryid;
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
+    }
+
+    public int getCatgoryid() {
+        return Catgoryid;
+    }
+
+    public void setCatgoryid(int catgoryid) {
+        Catgoryid = catgoryid;
+    }
+
     public Integer getNo_ofpoints() {
         return No_ofpoints;
     }

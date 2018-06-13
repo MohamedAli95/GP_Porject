@@ -93,6 +93,7 @@ public class BranchActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private Menu drawerMenu;
     int branch_id;
+    int place_id;
     TextView tv;
 
     private static final String Branch1Url = "http://gp.sendiancrm.com/offerall/branch1Query.php";
@@ -109,6 +110,10 @@ public class BranchActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         branch_id=extras.getInt("Branch_id");
         branch_id=extras.getInt("Branch_id");
+        place_id = extras.getInt("place_id");
+        place_id = extras.getInt("place_id");
+
+
 
         //hena1
         branch1list =new ArrayList<>();
