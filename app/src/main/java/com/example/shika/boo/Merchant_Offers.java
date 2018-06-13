@@ -61,7 +61,7 @@ public class Merchant_Offers extends AppCompatActivity {
         mDataSet = new ArrayList<>();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            placeId = sharedPreferences.getInt("BId", Integer.parseInt("0"));
+            placeId = sharedPreferences.getInt("PID", Integer.parseInt("0"));
 
 
 

@@ -62,7 +62,7 @@ public class Merchant_Rewards_list extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-            placeId = sharedPreferences.getInt("BId", Integer.parseInt("0"));
+            placeId = sharedPreferences.getInt("PID", Integer.parseInt("0"));
 
 
 

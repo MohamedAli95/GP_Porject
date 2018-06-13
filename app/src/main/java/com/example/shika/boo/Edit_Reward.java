@@ -187,7 +187,7 @@ Intent u = getIntent();
 username.setText(title);
 from.setText(start);
 to.setText(end);
-points.setText(Integer.toString(p));
+points.setText(p);
         com.bumptech.glide.Glide.with(Edit_Reward.this)
                 .load(img)
                 .into(imageView);
@@ -307,7 +307,6 @@ points.setText(Integer.toString(p));
             context = ctx;
         }
         String name = username.getText().toString();
-        String poin = points.getText().toString();
         String sdate = from.getText().toString();
         String edate = to.getText().toString();
 
@@ -326,8 +325,7 @@ points.setText(Integer.toString(p));
                         + URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(userid), "UTF-8")+ "&"+
                         URLEncoder.encode("start_date", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(sdate), "UTF-8")+ "&"+
                         URLEncoder.encode("end_date", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(edate), "UTF-8")+ "&"
-                        + URLEncoder.encode("encoded_string", "UTF-8") + "=" + URLEncoder.encode(encoded_string, "UTF-8")+ "&"
-                        + URLEncoder.encode("points", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(poin), "UTF-8");
+                        + URLEncoder.encode("encoded_string", "UTF-8") + "=" + URLEncoder.encode(encoded_string, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
