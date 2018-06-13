@@ -7,6 +7,7 @@ public class YoutuberModel implements Serializable {
 
     private int id;
     private String Title;
+    private int points;
     private String From_date;
     private String To_date;
     private String Reward_image;
@@ -14,9 +15,10 @@ public class YoutuberModel implements Serializable {
     public YoutuberModel() {
     }
 
-    public YoutuberModel(int id,String Title , String From_date , String To_date , String Reward_image) {
+    public YoutuberModel(int id, String Title ,int points, String From_date , String To_date , String Reward_image) {
         this.id = id;
         this.Title = Title;
+        this.points=points;
 this.From_date = From_date;
 this.To_date = To_date;
 this.Reward_image = Reward_image;
@@ -38,6 +40,13 @@ this.Reward_image = Reward_image;
         this.Title = Title;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int id) {
+        this.points = points;
+    }
 
      public String getSdate() {
         return From_date;

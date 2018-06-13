@@ -26,8 +26,14 @@
                 app:expandedTitleMarginStart="48dp"
                 app:expandedTitleMarginEnd="32dp"
                 app:title="Zara Brand"
-                android:background="@drawable/zrr">
+                >
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivg"
+                    android:scaleType="centerCrop"
+                    />
 
 
                 <android.support.v7.widget.Toolbar
@@ -139,13 +145,12 @@
                     android:textSize="21dp"
                     android:padding="8dp"
                     android:gravity="center"/>
-                <fragment
-                    android:id="@+id/fragment"
-                    android:name="com.example.shika.boo.FragmentB"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_id"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="wrap_content">
 
-                    />
+                </android.support.v7.widget.RecyclerView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -160,13 +165,12 @@
                     android:textSize="21dp"
                     android:padding="8dp"
                     android:gravity="center"/>
-                <fragment
-                    android:id="@+id/fragm"
-                    android:name="com.example.shika.boo.FragmentB"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="wrap_content">
 
-                    />
+                </android.support.v7.widget.RecyclerView>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 

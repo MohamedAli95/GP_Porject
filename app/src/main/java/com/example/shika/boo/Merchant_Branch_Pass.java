@@ -8,8 +8,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -115,13 +117,21 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
                     classBranch.setLatitude(Float.parseFloat((String) branch.getString("latitude")));
                     classBranch.setLongitude(Float.parseFloat((String) branch.getString("longitude")));
 
-                     BranchSesionStart(classBranch);
+                    BranchSesionStart(classBranch);
 
                     if (sharedPreferences != null)
                     {
-                        Intent intent = new Intent(getApplicationContext(), Merchant_Branch_Home.class);
-                        startActivity(intent);
+                        int decide =branch.getInt("RewardSystemAvailabilty");
+                        if(decide==1) {
+                            Intent intent = new Intent(getApplicationContext(), Merchant_Branch_Home.class);
+                            startActivity(intent);
+                        }
+                        else{
 
+                            Intent intent = new Intent(getApplicationContext(), Merchant_Branch_Home.class);
+                            intent.putExtra("decide",2);
+                            startActivity(intent);
+                        }
                         alertDialog.setMessage("Welcome: "+sharedPreferences.getString("BName",null)+" "+"Branch");
                         alertDialog.show();
                     }else {
@@ -155,7 +165,7 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
             }
         };
 
-      requestQueue.add(request);
+        requestQueue.add(request);
     }
 
     public void BranchSesionStart(placebranch branch){

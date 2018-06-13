@@ -54,6 +54,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Merchant_Add_Branch extends AppCompatActivity {
 
@@ -64,7 +67,7 @@ public class Merchant_Add_Branch extends AppCompatActivity {
     MaterialBetterSpinner betterSpinner;
     // Creating button;
     Button InsertButton;
-    int strSavedMem1;
+    int strSavedMem1, RewardHolder2;
     // Creating Volley RequestQueue.
     RequestQueue requestQueue;
 
@@ -175,7 +178,7 @@ public class Merchant_Add_Branch extends AppCompatActivity {
                 params.put("Branch_name", FirstNameHolder);
                 params.put("Branch_Password", LastNameHolder);
                 params.put("Branch_phone", EmailHolder);
-                params.put("RewardSystemAvailabilty", RewardHolder);
+                params.put("RewardSystemAvailabilty", Integer.toString(RewardHolder2));
                 params.put("latitude", lat);
                 params.put("longitude", lon);
                 params.put("Place_id", ses);
@@ -199,6 +202,11 @@ public class Merchant_Add_Branch extends AppCompatActivity {
         LastNameHolder = LastName.getText().toString().trim();
         EmailHolder = Email.getText().toString().trim();
         RewardHolder =  betterSpinner.getText().toString();
+        if(RewardHolder.equals("Available")){
+            RewardHolder2=1;
+        }else if(RewardHolder.equals("UnAvailable")){
+            RewardHolder2=0;
+        }
 
     }
 
@@ -239,8 +247,14 @@ public class Merchant_Add_Branch extends AppCompatActivity {
 
     public boolean validate() {
         boolean valid = true;
+        String phone = Email.getText().toString();
         if(FirstName.getText().toString().matches("")||FirstName.length()>32){
             FirstName.setError("Please Enter Valid Name");
+            valid=false;
+        }else if(!FirstName.getText().toString().matches("[a-zA-Z ]+"))
+        {
+            FirstName.requestFocus();
+            FirstName.setError("ENTER ONLY ALPHABETICAL CHARACTER");
             valid=false;
         }
         if(LastName.getText().toString().matches("")||LastName.length()<8){
@@ -252,7 +266,25 @@ public class Merchant_Add_Branch extends AppCompatActivity {
             Email.setError("Enter Valid Phone");
             valid=false;
         }
-
+        if(!isValidPhone(phone)){
+            Email.setError("Enter Valid Phone");
+            valid=false;
+        }
         return valid;
+    }
+
+    public static boolean isValidPhone(String phone)
+    {
+        String expression = "^([0-9\\+]|\\(\\d{1,3}\\))[0-9\\-\\. ]{3,15}$";
+        CharSequence inputString = phone;
+        Pattern pattern = Pattern.compile(expression);
+        Matcher matcher = pattern.matcher(inputString);
+        if (matcher.matches())
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

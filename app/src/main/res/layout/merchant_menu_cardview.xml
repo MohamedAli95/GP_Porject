@@ -13,7 +13,9 @@
         android:layout_height="match_parent"
         >
 
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/VolleyImageView"
@@ -26,11 +28,13 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/Removebtn"
             android:text="Delete"
             android:textColor="#033fa6"
-            android:background="#FFFFFFFF"
-            android:textAllCaps="false"/>
-
+            android:background="@drawable/border_button"
+            android:textAllCaps="false"
+            android:layout_marginTop="152dp"/>
+</FrameLayout>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

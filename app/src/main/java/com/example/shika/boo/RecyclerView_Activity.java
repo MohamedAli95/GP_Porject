@@ -31,7 +31,7 @@ public class RecyclerView_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view);
         initViews();
-        populatRecyclerView();
+       // populatRecyclerView();
     }
 
     // Initialize the view
@@ -54,7 +54,7 @@ public class RecyclerView_Activity extends AppCompatActivity {
 
 
     // populate the list view by adding data to arraylist
-    private void populatRecyclerView() {
+  /*  private void populatRecyclerView() {
         ArrayList<Data_Model> arrayList = new ArrayList<>();
         for (int i = 0; i < TITLES.length; i++) {
             arrayList.add(new Data_Model(TITLES[i],OFFER[i],DURATION[i],IMAGES[i]));
@@ -73,5 +73,5 @@ public class RecyclerView_Activity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

@@ -326,19 +326,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:id="@+id/title"
-                android:maxHeight="180dp"
-                android:background="@drawable/merlogo"
-                android:textAlignment="center"
-                android:text="Merchant Home"
-                android:textSize="24sp"
-                android:gravity="bottom"
-                android:textColor="@color/white"
-                />
 
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:maxWidth="180dp"
+    android:id="@+id/homeback"
+    android:scaleType="centerCrop"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

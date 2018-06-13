@@ -93,7 +93,7 @@
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:text="Submit Offer"
-        android:id="@+id/subbtn"
+        android:id="@+id/addbtn"
         android:background="@drawable/blue_radius"
         android:textColor="@color/white"
         android:layout_gravity="center"

@@ -52,6 +52,7 @@ public class Merchant_Branches_list extends AppCompatActivity {
     StringRequest request ;
     RequestQueue requestQueue ;
     private static  final String listOfBranchesURL = "http://gp.sendiancrm.com/offerall/showListOfBranches.php";
+
     private int placeId  ;
 
     //String [] branchNames = {"Alex","Cairo","Giza","Elbadrashen"};

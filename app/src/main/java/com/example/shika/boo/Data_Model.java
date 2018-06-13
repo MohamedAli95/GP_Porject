@@ -8,14 +8,14 @@ public class Data_Model {
 
     // Getter and Setter model for recycler view items
     private String title;
-    private String ofer;
+    private int points;
     private String duration;
-    private int image;
+    private String image;
 
-    public Data_Model(String title,String ofer,String duration, int image) {
+    public Data_Model(String title,int points,String duration, String image) {
 
         this.title = title;
-        this.ofer = ofer;
+        this.points = points;
         this.duration = duration;
         this.image = image;
     }
@@ -24,14 +24,14 @@ public class Data_Model {
         return title;
     }
 
-    public String getBanner() {
-        return ofer;
+    public int getBanner() {
+        return points;
     }
     public String getDuration() {
         return duration;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 }

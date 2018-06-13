@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <android.support.v7.widget.CardView
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="150dp"
-    android:layout_height="wrap_content"
+    android:layout_height="220dp"
+    android:maxHeight="240dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="8dp"
     android:layout_marginBottom="12dp">
 
 
     <!--   Recycler View Item Row   -->
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:orientation="vertical"
-        android:layout_height="fill_parent">
+
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -35,18 +35,19 @@
             android:paddingLeft="3dp"
             android:layout_marginTop="10dp"
             android:textColor="#FFFFFF"/>
-</FrameLayout>
+
         <TextView
             android:id="@+id/title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textAllCaps="true"
             android:textColor="#19B5FE"
             android:paddingBottom="4dp"
             android:paddingTop="8dp"
             android:gravity="center"
-            android:background="#674172"/>
+            android:background="#674172"
+            android:layout_marginTop="155dp"/>
 
         <TextView
             android:id="@+id/dur"
@@ -56,8 +57,10 @@
             android:textColor="#ffffff"
             android:paddingBottom="8dp"
             android:gravity="center"
-            android:background="#674172"/>
+            android:background="#674172"
+            android:layout_marginTop="185dp"
+            />
+</FrameLayout>
 
-    </LinearLayout>
 
 </android.support.v7.widget.CardView>

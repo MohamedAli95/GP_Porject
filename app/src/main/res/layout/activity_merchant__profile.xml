@@ -26,9 +26,14 @@
                 app:expandedTitleMarginStart="48dp"
                 app:expandedTitleMarginEnd="32dp"
                 app:title="Zara Brand"
-                android:background="@drawable/zrr">
+                >
 
-
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ivg"
+    android:scaleType="centerCrop"
+    />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -117,7 +122,7 @@
                                 android:layout_marginTop="4dp"
                                 android:textStyle="normal"
                                 android:textColor="#aaa69d"
-                                android:text="Clothes"
+                                android:text=""
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_column="2"/>
@@ -132,22 +137,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/bran"
-                    android:background="#e1e0e0"
-                    android:text="Menus of Zara"
-                    android:textColor="#878787"
+                    android:background="#b93d1169"
+                    android:text="Your Menus "
+                    android:textColor="#f4f4f4"
                     android:textAllCaps="true"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="18dp"
                     android:textSize="21dp"
                     android:padding="8dp"
                     android:gravity="center"/>
-                <fragment
+           <!--     <fragment
                     android:id="@+id/fragment"
                     android:name="com.example.shika.boo.FragmentB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    />
+                    />-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 

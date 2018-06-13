@@ -55,8 +55,8 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         >
 
     <LinearLayout
@@ -98,7 +98,7 @@
             android:layout_marginLeft="5dp"
             android:text="Start Date:14/8/2018"
             android:textColor="#848484"
-            android:textSize="11sp"/>
+            android:textSize="13sp"/>
 
         <TextView
             android:id="@+id/endd"
@@ -107,11 +107,20 @@
             android:layout_marginLeft="5dp"
             android:text="End Date: 6/2/2019"
             android:textColor="#848484"
-            android:textSize="11sp"/>
+            android:textSize="13sp"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#9e9e9e"></View>
+        <TextView
+            android:id="@+id/po"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="7dp"
+            android:text="Points :"
+            android:textColor="#e2490d63"
+            android:textSize="14sp"/>
     </LinearLayout>
 
     </LinearLayout>

@@ -1,6 +1,8 @@
 package com.example.shika.boo;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,10 +13,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -22,7 +27,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MerchantMenu extends AppCompatActivity {
 
@@ -32,8 +39,9 @@ public class MerchantMenu extends AppCompatActivity {
     RecyclerView recyclerView;
     View vv;
 
-    List<Merchant_Menu> ListOfdataAdapter;
+    List<String> ListOfdataAdapter;
 
+    ArrayList<String> listBranchNames ;
 
     String HTTP_JSON_URL = "http://gp.sendiancrm.com/offerall/ImageJsonData.php";
     String Image_Name_JSON = "image_name";
@@ -41,11 +49,19 @@ public class MerchantMenu extends AppCompatActivity {
     JsonArrayRequest RequestOfJSonArray ;
     RequestQueue requestQueue ;
     View view ;
+
+    SharedPreferences sharedPreferences ;
+    android.app.AlertDialog alertDialog;
+    //arrayAdaptorHandle adaptor;
+    StringRequest request ;
+    private static  final String listOfBranchesURL = "http://gp.sendiancrm.com/offerall/ImageJsonData.php";
+
     int RecyclerViewItemPosition ;
     RecyclerView.LayoutManager layoutManagerOfrecyclerView;
     RecyclerView.Adapter recyclerViewadapter;
     ArrayList<String> ImageTitleNameArrayListForClick;
     List<Merchant_Menu> lstBook ;
+    int placeId;
     private StaggeredGridLayoutManager gaggeredGridLayoutManager;
 
     @Override
@@ -68,7 +84,7 @@ public class MerchantMenu extends AppCompatActivity {
         myrv.setLayoutManager(new GridLayoutManager(this,2));
         myrv.setAdapter(myAdapter);
 */
-
+        productList = new ArrayList<>();
         ImageTitleNameArrayListForClick = new ArrayList<>();
 
         ListOfdataAdapter = new ArrayList<>();
@@ -82,11 +98,16 @@ public class MerchantMenu extends AppCompatActivity {
      //   recyclerView.setLayoutManager(layoutManagerOfrecyclerView);
 
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("logged in", false)) {
+            placeId = sharedPreferences.getInt("PID", Integer.parseInt("0"));
+        }
 
-        JSON_HTTP_CALL();
+       // showListOfBranchesFromDB(placeId);
+     //   JSON_HTTP_CALL();
 
         // Implementing Click Listener on RecyclerView.
-        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+  /*      recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 
             GestureDetector gestureDetector = new GestureDetector(MerchantMenu.this, new GestureDetector.SimpleOnGestureListener() {
 
@@ -124,58 +145,58 @@ public class MerchantMenu extends AppCompatActivity {
             }
         });
 
+*/
 
-    }
-
-    public void JSON_HTTP_CALL(){
-
-        RequestOfJSonArray = new JsonArrayRequest(HTTP_JSON_URL,
-
-                new Response.Listener<JSONArray>() {
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, HTTP_JSON_URL,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(String response) {
+                        // System.out.println(response);
+                        Toast.makeText(MerchantMenu.this, "تبریک", Toast.LENGTH_LONG).show();
+                        try {
+                            JSONArray array=new JSONArray(response);
+                            for (int i=0; i < array.length(); i++) {
+                                JSONObject product=array.getJSONObject(i);
 
-                        ParseJSonResponse(response);
+                                productList.add(new Merchant_Menu(
+                                        product.getInt("menu_id"),
+                                        product.getString("image"),
+                                        product.getInt("placid")
+                                ));
+
+                            }
+                            recyclerViewadapter = new Merchant_RecyclerViewAdapter(productList, MerchantMenu.this);
+
+                            recyclerView.setAdapter(recyclerViewadapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(MerchantMenu.this, "خطای اتصال به شبکه", Toast.LENGTH_LONG).show();
                     }
-                });
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params=new HashMap<String, String>();
 
-        requestQueue = Volley.newRequestQueue(MerchantMenu.this);
-
-        requestQueue.add(RequestOfJSonArray);
-    }
-
-    public void ParseJSonResponse(JSONArray array){
-
-        for(int i = 0; i<array.length(); i++) {
-
-            Merchant_Menu GetDataAdapter2 = new Merchant_Menu();
-
-            JSONObject json = null;
-            try {
-
-                json = array.getJSONObject(i);
+                params.put("ID", Integer.toString(placeId));
 
 
-                // Adding image title name in array to display on RecyclerView click event.
-            //    ImageTitleNameArrayListForClick.add(json.getString(Image_Name_JSON));
-
-                GetDataAdapter2.setImageUrl(json.getString(Image_URL_JSON));
-
-            } catch (JSONException e) {
-
-                e.printStackTrace();
+                return params;
             }
-            ListOfdataAdapter.add(GetDataAdapter2);
-        }
 
-        recyclerViewadapter = new Merchant_RecyclerViewAdapter(ListOfdataAdapter, this);
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
 
-        recyclerView.setAdapter(recyclerViewadapter);
+
     }
-}
+
+
+    }

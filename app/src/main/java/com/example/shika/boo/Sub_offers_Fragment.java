@@ -42,7 +42,7 @@ public class Sub_offers_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
        initViews();
-        populatRecyclerView();
+  //      populatRecyclerView();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sub_offers_, container, false);
     }
@@ -64,7 +64,7 @@ public class Sub_offers_Fragment extends Fragment {
 
 
     // populate the list view by adding data to arraylist
-    private void populatRecyclerView() {
+  /*  private void populatRecyclerView() {
         ArrayList<Data_Model> arrayList = new ArrayList<>();
         for (int i = 0; i < TITLES.length; i++) {
             arrayList.add(new Data_Model(TITLES[i],OFFER[i],DURATION[i],IMAGES[i]));
@@ -83,5 +83,5 @@ public class Sub_offers_Fragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
+*/
 }

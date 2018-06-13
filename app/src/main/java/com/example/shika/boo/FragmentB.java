@@ -28,7 +28,7 @@ public class FragmentB extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
          vv = inflater.inflate(R.layout.fragment_b, container, false);
         initViews();
-        populatRecyclerView();
+  //      populatRecyclerView();
         return vv;
     }
 
@@ -51,7 +51,7 @@ public class FragmentB extends android.support.v4.app.Fragment {
 
 
     // populate the list view by adding data to arraylist
-    private void populatRecyclerView() {
+  /*  private void populatRecyclerView() {
         ArrayList<Data_Model> arrayList = new ArrayList<>();
         for (int i = 0; i < TITLES.length; i++) {
             arrayList.add(new Data_Model(TITLES[i],OFFER[i],DURATION[i],IMAGES[i]));
@@ -71,5 +71,5 @@ public class FragmentB extends android.support.v4.app.Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
+*/
 }

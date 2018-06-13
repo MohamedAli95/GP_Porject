@@ -1,106 +1,72 @@
 package com.example.shika.boo;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
-import android.content.DialogInterface;
-import android.os.Bundle;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
-import android.support.v7.app.AlertDialog;
-import com.android.volley.Request;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import java.util.HashMap;
-import java.util.HashMap;
-import java.util.Map;
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
-import android.widget.EditText;
-import android.content.Intent;
-import android.os.Bundle;
-import android.app.DatePickerDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.InputType;
-import android.view.View;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TextView;
-import java.util.Calendar;
-import android.content.SharedPreferences;
-import java.util.HashMap;
-import java.util.Map;
-
-public class Merchant_Add_Reward extends AppCompatActivity {
-private int PICK_IMAGE_REQUEST = 1;
-  double  latitude,longitude  ;
-    // Creating EditText.
-    EditText FirstName, LastName, Email ,from, to ;
- MaterialBetterSpinner betterSpinner;
- private Bitmap bitmap;
-    // Creating button;
-    Button InsertButton;
-    int strSavedMem1;
-    ImageView imageView;
-
-    RequestQueue requestQueue;
-Button buttonChoose;
-    // Create string variable to hold the EditText Value.
-    String FirstNameHolder, LastNameHolder, EmailHolder , RewardHolder , lat , lon , frdate,todate ;
-    // Creating Progress dialog.
+public class Merchant_Add_Reward extends AppCompatActivity   {
+    private Button buttonChoose , buttonInsert;
+    private ImageView imageView;
+    private EditText rewardName, rewardPoints,from,to;
+    private Bitmap bitmap;
+    private int PICK_IMAGE_REQUEST = 1;
+    private String UPLOAD_URL ="http://gp.sendiancrm.com/offerall/Add_reward.php";
     ProgressDialog progressDialog;
-public Map<String, String> par;
+    int strSaved;
+    // public Map<String, String> par;
 
     DatePickerDialog picker;
-
-    // Storing server url into String variable.
-    String HttpUrl = "http://gp.sendiancrm.com/offerall/Add_reward.php";
-String  ses;
-
+    String ses;
     java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.ENGLISH);
-
+    // private String KEY_IMAGE = “image”;
+    //private String KEY_NAME = “name”;
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant__add__reward);
 
-        // Assigning ID's to EditText.
-        FirstName = (EditText) findViewById(R.id.retitle);
-        LastName = (EditText) findViewById(R.id.point);
+        rewardName = (EditText) findViewById(R.id.retitle);
+        rewardPoints = (EditText) findViewById(R.id.point);
+        imageView = (ImageView) findViewById(R.id.imageView);
         buttonChoose = (Button) findViewById(R.id.upimage);
-        imageView  = (ImageView) findViewById(R.id.imageView);
+        buttonInsert = (Button) findViewById(R.id.insertbtn);
+        // buttonChoose.setOnClickListener(this);
+        //  buttonInsert.setOnClickListener(this);
 
-        from=(EditText) findViewById(R.id.etxt_fromdate);
+        from = (EditText) findViewById(R.id.etxt_fromdate);
         from.setInputType(InputType.TYPE_NULL);
         from.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,12 +83,16 @@ String  ses;
                                 from.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                             }
                         }, year, month, day);
+                picker.getDatePicker().setMinDate(cldr.getTimeInMillis());
+
                 picker.show();
             }
         });
 
-        to=(EditText) findViewById(R.id.etxt_todate);
+        to = (EditText) findViewById(R.id.etxt_todate);
         to.setInputType(InputType.TYPE_NULL);
+        String getfromdate = from.getText().toString().trim();
+        String getfrom[] = getfromdate.split("/");
         to.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,193 +108,136 @@ String  ses;
                                 to.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                             }
                         }, yeart, montht, dayt);
+                picker.getDatePicker().setMinDate(cldr.getTimeInMillis());
+
                 picker.show();
             }
         });
 
 
-
-      //  buttonChoose.setOnClickListener(this);
-        buttonChoose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-            public void onClick(View v) {
-            showFileChooser();
-                }
-             });
-         SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
-       // strSavedMem1 = sharedPreferences.getString("Name", "");
-         strSavedMem1 = sharedPreferences.getInt("Id",0);
-                       ses = Integer.toString(strSavedMem1);
+        SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        // strSavedMem1 = sharedPreferences.getString("Name", "");
+        strSaved = sharedPreferences.getInt("PID", 0);
 
 
-        // Assigning ID's to Button.
-        InsertButton = (Button) findViewById(R.id.subbtn);
-
-        // Creating Volley newRequestQueue .
-        requestQueue = Volley.newRequestQueue(Merchant_Add_Reward.this);
-
-        progressDialog = new ProgressDialog(Merchant_Add_Reward.this);
-
-        // Adding click listener to button.
-        InsertButton.setOnClickListener(new View.OnClickListener() {
+        buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // Showing progress dialog at user registration time.
-                progressDialog.setMessage("Please Wait, We are Inserting Your Data on Server");
-                progressDialog.show();
-
-                // Calling method to get value from EditText.
-                GetValueFromEditText();
-/*
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] imageBytes = baos.toByteArray();
-                final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-*/
-                // Creating string request with post method.
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String ServerResponse) {
-
-                                // Hiding the progress dialog after all task complete.
-                                progressDialog.dismiss();
-
-                                // Showing response message coming from server.
-                                Toast.makeText(Merchant_Add_Reward.this, ServerResponse, Toast.LENGTH_LONG).show();
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-
-                                // Hiding the progress dialog after all task complete.
-                                progressDialog.dismiss();
-
-                                // Showing error message if something goes wrong.
-                                Toast.makeText(Merchant_Add_Reward.this, volleyError.toString(), Toast.LENGTH_LONG).show();
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError{
-                      // String image = getStringImage(bitmap);
-                        // Creating Map String Params.
-                        par = new HashMap<String, String>();
-
-                        // Adding All values to Params.
-
-                        par.put("Title", FirstNameHolder);
-                        par.put("Points_num", LastNameHolder);
-                       par.put("From_date",frdate);
-                       par.put("To_date",todate);
-                    par.put("Branch_id", ses);
-
-                        return par;
-                    }
-
-                };
-                     uploadImage();
-                // Creating RequestQueue.
-                RequestQueue requestQueue = Volley.newRequestQueue(Merchant_Add_Reward.this);
-
-                // Adding the StringRequest object into requestQueue.
-                requestQueue.add(stringRequest);
-
-
+                if(validate())
+                {
+                    uploadImage();
+                }
             }
-
+        });
+        buttonChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFileChooser();
+            }
         });
 
     }
-
-    // Creating method to get value from EditText.
-    public void GetValueFromEditText(){
-
-        FirstNameHolder = FirstName.getText().toString().trim();
-        LastNameHolder = LastName.getText().toString().trim();
-        frdate = from.getText().toString().trim();
-        todate = to.getText().toString().trim();
-
-
-    }
-
-
-
-
-    /******************* image section **********************/
-
-
-    private void showFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-    }
-
-@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri filePath = data.getData();
-
-            try {
-                //getting image from gallery
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-
-                //Setting image to ImageView
-                imageView.setImageBitmap(bitmap);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-       public String getStringImage(Bitmap bmp){
+    public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
-
-
-     private void uploadImage(){
-        class UploadImage extends android.os.AsyncTask<Bitmap,Void,String>{
-
-            ProgressDialog loading;
-            RequestHandler rh = new RequestHandler();
-
+    private void uploadImage(){
+        //Showing the progress dialog
+        final ProgressDialog loading = ProgressDialog.show(this,"Inserting Reward","Please wait",false,false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        //Disimissing the progress dialog
+                        loading.dismiss();
+                        //Showing toast message of the response
+                        Toast.makeText(Merchant_Add_Reward.this, s , Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        //Dismissing the progress dialog
+                        loading.dismiss();
+                        //Showing toast
+                        //    Toast.makeText(RewardTest.this, volleyError.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }){
             @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(Merchant_Add_Reward.this, "Uploading...", null,true,true);
+            protected Map<String, String> getParams() {
+                //Converting Bitmap to String
+                String image = getStringImage(bitmap);
+                //Getting Image Name
+                String name = rewardName.getText().toString().trim();
+                String points = rewardPoints.getText().toString().trim();
+                String startDate = from.getText().toString().trim();
+                String endDate = to.getText().toString().trim();
+                ses = Integer.toString(strSaved);
+
+                //Creating parameters
+                Map<String,String> params = new HashMap<String, String>();
+                //Adding parameters
+                params.put("Title", name);
+                params.put("Points_num", points);
+                params.put("From_date", startDate);
+                params.put("To_date", endDate);
+                params.put("Branch_id", ses);
+                params.put("Reward_image", image);
+
+                //returning parameters
+                return params;
             }
+        };
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
-            }
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-            @Override           // de function el upload mohma gdn
-            protected String doInBackground(Bitmap... params) {
-                Bitmap bitmap = params[0];
-                String uploadImage = getStringImage(bitmap);
-          //     String vx = Integer.toString(strSavedMem1);
-                HashMap<String,String> data = new HashMap<>();
-
-                par.put("Reward_image", uploadImage);
-               // data.put("",vx);
-                String result = rh.sendPostRequest(HttpUrl,par);
-
-                return result;
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+    }
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Reward Picture"), PICK_IMAGE_REQUEST);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+            try {
+                //Getting the Bitmap from Gallery
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                //Setting the Bitmap to ImageView
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-
-        UploadImage ui = new UploadImage();
-        ui.execute(bitmap);
     }
+
+
+
+    public boolean validate() {
+        boolean valid = true;
+        if (rewardName.getText().toString().matches("") || rewardName.length() > 32) {
+            rewardName.setError("Please Enter Valid Name");
+            valid = false;
+        } else if (!rewardName.getText().toString().matches("[a-zA-Z ]+")) {
+            rewardName.requestFocus();
+            rewardName.setError("ENTER ONLY ALPHABETICAL CHARACTER");
+            valid = false;
+        }
+        return valid;
+
+    }
+
 }
