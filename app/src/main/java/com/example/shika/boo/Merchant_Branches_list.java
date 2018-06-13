@@ -78,7 +78,7 @@ public class Merchant_Branches_list extends AppCompatActivity {
         }*/
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean("logged in", false)) {
+        if (sharedPreferences.getBoolean("place logged in", false)) {
             placeId = sharedPreferences.getInt("PID", Integer.parseInt("0"));
         }
 

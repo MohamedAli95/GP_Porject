@@ -117,7 +117,7 @@ public class Merchant_Branch_Profile extends AppCompatActivity {
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean("logged in", false)) {
+        if (sharedPreferences.getBoolean("place logged in", false)) {
             branchId = sharedPreferences.getInt("PID", Integer.parseInt("0"));
         }
 

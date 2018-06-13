@@ -99,7 +99,7 @@ public class MerchantMenu extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean("logged in", false)) {
+        if (sharedPreferences.getBoolean("place logged in", false)) {
             placeId = sharedPreferences.getInt("PID", Integer.parseInt("0"));
         }
 

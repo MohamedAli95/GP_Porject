@@ -61,8 +61,9 @@ public class Merchant_Offers extends AppCompatActivity {
         mDataSet = new ArrayList<>();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("place logged in", false)) {
             placeId = sharedPreferences.getInt("PID", Integer.parseInt("0"));
-
+        }
 
 
         loadProducts(placeId);
