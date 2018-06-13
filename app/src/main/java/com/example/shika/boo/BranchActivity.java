@@ -177,8 +177,12 @@ public class BranchActivity extends AppCompatActivity {
                                 Place_LogoPhoto =branch1object.getString("Place_LogoPhoto");
                                 PLaceName=branch1object.getString("PLaceName");
                                 Branch_name=branch1object.getString("Branch_name");
-                                latitude=branch1object.getDouble("latitude");
-                                longitude=branch1object.getDouble("longitude");
+                                if(branch1object.has("latitude")) {
+                                    latitude = branch1object.getDouble("latitude");
+                                }
+                                if(branch1object.has("latitude")) {
+                                    longitude = branch1object.getDouble("longitude");
+                                }
                                 RewardSystemAvailabilty = Integer.valueOf(branch1object.getString("RewardSystemAvailabilty"));
                             }
 

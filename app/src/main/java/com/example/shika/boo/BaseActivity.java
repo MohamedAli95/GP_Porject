@@ -155,7 +155,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.searchzz);
+        MenuItem searchItem = menu.findItem(R.id.searchzzz);
         SearchManager searchManager = (SearchManager) BaseActivity.this.getSystemService(Context.SEARCH_SERVICE);
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
@@ -163,26 +163,26 @@ public class BaseActivity extends AppCompatActivity {
         if (searchView != null) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(BaseActivity.this.getComponentName()));
             searchView.setIconified(false);
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    Log.e("Search",s);
+                    Intent intent1 = new Intent(getApplicationContext(),Search_Place.class);
+                    intent1.putExtra("Querry",s);
+                    startActivity(intent1);
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return false;
+                }
+            });
         }
         return true;
     }
-    @Override
-    protected void onNewIntent(Intent intent) {
-        // Get search query and create object of class AsyncFetch
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            if (searchView != null) {
-                searchView.clearFocus();
-            }
-            Log.e("Search",query);
-            Intent intent1 = new Intent(getApplicationContext(),Search_Place.class);
-            intent.putExtra("Querry",query);
 
-
-            startActivity(intent);
-
-        }
-    }
     //  this is to access hardware menu button
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
@@ -280,4 +280,6 @@ public class BaseActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 */
+
+
 }
