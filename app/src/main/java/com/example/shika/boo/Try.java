@@ -111,7 +111,7 @@ public class Try extends AppCompatActivity {
         if(flag==1) {
             place_id = extras.getInt("place_id");
             place_id = extras.getInt("place_id");
-            //
+
         }
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
         user_id=sharedpreferences.getInt("Id",0);
