@@ -47,14 +47,14 @@
         />
 
     <Button
+        android:id="@+id/confirmPass"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/confirmPass"
-        android:text="Confirm"
         android:layout_below="@id/password"
-        android:background="@drawable/blue_radius"
-        android:textColor="@color/white"
-        android:layout_marginTop="60dp"
         android:layout_centerHorizontal="true"
-       />
+        android:layout_marginTop="60dp"
+        android:background="@drawable/blue_radius"
+        android:onClick="confirm"
+        android:text="Confirm"
+        android:textColor="@color/white" />
 </RelativeLayout>

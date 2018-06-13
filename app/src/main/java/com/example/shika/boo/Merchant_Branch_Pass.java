@@ -6,6 +6,7 @@ import android.content.Intent;
 import  models.placebranch ;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
     android.app.AlertDialog alertDialog;
     StringRequest request ;
     RequestQueue requestQueue ;
+    String branchid="";
     private static  final String loginBranchesURL ="http://gp.sendiancrm.com/offerall/loginBranch.php";
 
 
@@ -55,23 +57,13 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
 
 
         String branch_Name = getIntent().getExtras().getString("BranchName");
+         branchid = getIntent().getExtras().getString("branchid");
+        branchid = getIntent().getExtras().getString("branchid");
         TV_branchName.setText(branch_Name);
 
         Button conformPassword = (Button) findViewById(R.id.confirmPass);
 
-        conformPassword.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                if (validate())
-                {
-                    final String password = ET_password.getText().toString();
-                    loginBranch(password);
-                }
-
-
-            }
-        });
     }
 
     public  Boolean validate(){
@@ -86,7 +78,7 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
         return valid ;
     }
 
-    public  void loginBranch(final String Bpassword){
+    public  void loginBranch(final String Bpassword , final  String Bid){
         request=new StringRequest(Request.Method.POST, loginBranchesURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -114,7 +106,12 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
                     classBranch.setRewordSystem(Integer.parseInt((String) branch.getString("RewardSystemAvailabilty")));
                     classBranch.setPassword((String)branch.getString("Branch_Password"));
                     classBranch.setPhone((String)branch.getString("Branch_phone"));
-                    classBranch.setLatitude(Float.parseFloat((String) branch.getString("latitude")));
+                    if(branch.has("latitude")) {
+                        classBranch.setLatitude(Float.parseFloat((String) branch.getString("latitude")));
+                    }
+                    if(branch.has("longitude")) {
+                        classBranch.setLatitude(Float.parseFloat((String) branch.getString("latitude")));
+                    }
                     classBranch.setLongitude(Float.parseFloat((String) branch.getString("longitude")));
 
                     BranchSesionStart(classBranch);
@@ -161,6 +158,7 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> hashMap =new HashMap<>();
                 hashMap.put("password",Bpassword);
+                hashMap.put("branchid",Bid);
                 return hashMap;
             }
         };
@@ -170,7 +168,7 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
 
     public void BranchSesionStart(placebranch branch){
 
-        sharedPreferences = getSharedPreferences("branche", Context.MODE_PRIVATE);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("BId",branch.getId());
         editor.putString("BName",branch.getBranchName());
@@ -183,4 +181,8 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
         editor.commit();
     }
 
+    public void confirm(View view) {
+        String password = ET_password.getText().toString();
+        loginBranch(password,branchid);
+    }
 }
