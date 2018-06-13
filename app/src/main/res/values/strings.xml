@@ -39,5 +39,6 @@
         <item>Giza</item>
         <item>Elbadrashen</item>
     </string-array>
+    <string name="title_activity_search__place">Search_Place</string>
 
 </resources>

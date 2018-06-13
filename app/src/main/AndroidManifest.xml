@@ -79,8 +79,7 @@
         <activity
             android:name=".editprofile"
             android:label="EditProfile"
-            android:parentActivityName=".MapsActivity"
-            />
+            android:parentActivityName=".MapsActivity" />
         <activity android:name=".Merchant_signup" />
         <activity android:name=".Merchant_Home" />
         <activity
@@ -205,7 +204,14 @@
             android:parentActivityName=".Merchant_Add_Branch" />
         <activity android:name=".sign_in_merchant" />
         <activity android:name=".interestsactivity" />
-        <activity android:name=".Setting" android:label="Notfications Setting" android:parentActivityName=".MapsActivity"></activity>
+        <activity
+            android:name=".Setting"
+            android:label="Notfications Setting"
+            android:parentActivityName=".MapsActivity" />
+        <activity
+            android:name=".Search_Place"
+            android:label="@string/title_activity_search__place"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

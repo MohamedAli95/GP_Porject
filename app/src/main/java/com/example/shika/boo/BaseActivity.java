@@ -1,5 +1,7 @@
 package com.example.shika.boo;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -56,6 +59,7 @@ public class BaseActivity extends AppCompatActivity {
     Menu menuu;
     FrameLayout.LayoutParams layoutparams;
     SharedPreferences sharedpreferences;
+    SearchView searchView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +155,33 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+        MenuItem searchItem = menu.findItem(R.id.searchzz);
+        SearchManager searchManager = (SearchManager) BaseActivity.this.getSystemService(Context.SEARCH_SERVICE);
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(BaseActivity.this.getComponentName()));
+            searchView.setIconified(false);
+        }
         return true;
+    }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        // Get search query and create object of class AsyncFetch
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            if (searchView != null) {
+                searchView.clearFocus();
+            }
+            Log.e("Search",query);
+            Intent intent1 = new Intent(getApplicationContext(),Search_Place.class);
+            intent.putExtra("Querry",query);
+
+
+            startActivity(intent);
+
+        }
     }
     //  this is to access hardware menu button
     @Override
