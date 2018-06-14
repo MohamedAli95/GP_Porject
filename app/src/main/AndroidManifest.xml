@@ -224,7 +224,7 @@
             android:name=".Setting"
             android:label="Notfications Setting"
             android:parentActivityName=".MapsActivity"></activity>
-        <activity android:name=".Search_Place"></activity>
+        <activity android:name=".Search_Place" android:label="Search Results" android:parentActivityName=".MapsActivity" ></activity>
     </application>
 
 </manifest>

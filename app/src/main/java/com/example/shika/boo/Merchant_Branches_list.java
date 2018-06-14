@@ -199,7 +199,7 @@ public class Merchant_Branches_list extends AppCompatActivity {
     }
 
     public void loadBNamesSharedPerf(){
-        sharedPreferences = getSharedPreferences("BRnames",Context.MODE_PRIVATE);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String x =sharedPreferences.getString("Branches_Names1",null);
         String[] s =x.split(",");
         ArrayList<String> BNameFromSharedP = new ArrayList<String>();
