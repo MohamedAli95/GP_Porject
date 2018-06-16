@@ -29,9 +29,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
@@ -471,7 +472,7 @@ public class BackgroundMapService extends Service implements LocationListener {
 
 
 
-            JSONParser parser = new JSONParser();
+
 
             if (type.equals("get nearby offers")) {
 
@@ -479,26 +480,38 @@ public class BackgroundMapService extends Service implements LocationListener {
 
                     } else {
 
-                        Object obj = parser.parse(result);
-                        JSONArray array = (JSONArray) obj;
+
+                        JSONArray array = new JSONArray(result);
                         JSONObject offer_obj;
                         nearoffers = new ArrayList<nearbyoffers>();
                         nearbyoffers offer;
-                        for (int i = 0; i < array.size(); i++) {
+                        for (int i = 0; i < array.length(); i++) {
                             offer_obj = (JSONObject) array.get(i);
                             offer = new nearbyoffers();
-                            offer.setBranch_name((String) offer_obj.get("Branch_name"));
-                            offer.setTitle((String) offer_obj.get("Title"));
-                            offer.setPlacename((String) offer_obj.get("PlaceName"));
-                            offer.setLatitude(Double.parseDouble(offer_obj.get("latitude").toString()));
-                            offer.setLongitude(Double.parseDouble(offer_obj.get("longitude").toString()));
-                            offer.setOffer_id(Integer.parseInt(offer_obj.get("Offer_id").toString()));
-                            offer.setStartdate((String) offer_obj.get("StartDate"));
-                            offer.setEnddate((String) offer_obj.get("EndDate"));
-                            offer.setNo_ofpoints(Integer.parseInt(offer_obj.get("points").toString()));
-                            offer.setCatgoryid(Integer.parseInt(offer_obj.get("Category_ID").toString()));
-                            offer.setEnddate((String) offer_obj.get("Name"));
-                            nearoffers.add(offer);
+                            if (offer_obj.has("latitude") && offer_obj.has("Title") && offer_obj.has("longitude") && offer_obj.has("StartDate") && offer_obj.has("PlaceName") && offer_obj.has("EndDate")) {
+                                offer.setBranch_name(offer_obj.getString("Branch_name"));
+                                offer.setTitle(offer_obj.getString("Title"));
+                                offer.setPlacename(offer_obj.getString("PlaceName"));
+                                if (offer_obj.has("latitude")&&!offer_obj.getString("latitude").equals("null"))
+                                    offer.setLatitude(Double.parseDouble(offer_obj.getString("latitude")));
+                                else {
+                                    continue;
+                                }
+                                if (offer_obj.has("longitude")&&!offer_obj.getString("longitude").equals("null"))
+                                    offer.setLongitude(Double.parseDouble(offer_obj.getString("longitude")));
+                                else {
+                                    continue;
+                                }
+                                offer.setOffer_id(Integer.parseInt(offer_obj.getString("Offer_id")));
+                                offer.setStartdate(offer_obj.getString("StartDate"));
+                                offer.setEnddate( offer_obj.getString("EndDate"));
+                                offer.setNo_ofpoints(Integer.parseInt(offer_obj.getString("points")));
+                                offer.setCatgoryid(Integer.parseInt(offer_obj.getString("Category_ID")));
+                                offer.setCategory(offer_obj.getString("Name"));
+                                nearoffers.add(offer);
+                            }
+                            else
+                                continue;
                         }
 
                         if(Setting.equals("Get all Notfications")){
@@ -555,6 +568,8 @@ public class BackgroundMapService extends Service implements LocationListener {
         }
             catch (Exception e){
                 Toast.makeText(getApplication(),e.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("error backgroundservice",e.toString());
+                Log.e("error backgroundservice",e.getMessage());
 
             }
         }

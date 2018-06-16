@@ -175,7 +175,9 @@ public class editprofile extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+
+                Bitmap bit= MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                bitmap =  Bitmap.createScaledBitmap(bit, 380, 420, true);;
                 bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 profile_pic.setImageBitmap(bitmap2);
             } catch (IOException e) {

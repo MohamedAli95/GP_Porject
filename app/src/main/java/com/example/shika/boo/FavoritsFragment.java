@@ -128,7 +128,9 @@ public class FavoritsFragment extends android.app.Fragment implements com.exampl
     public void onItemClick1(int placeid) {
         Intent intent = new Intent(getActivity().getApplicationContext(), Try.class);
         intent.putExtra("place_id",placeid);
-        getActivity().getApplicationContext().startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getActivity().startActivity(intent);
+
     }
 
 

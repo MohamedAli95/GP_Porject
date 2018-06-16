@@ -203,6 +203,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
 
         } else if (type1.equals("register")) {
             if (result.equals("insert succ")) {
+                alertDialog.setMessage("Signup Successful");
                 Intent too = new Intent(context, SignIn.class);
                 context.startActivity(too);
             } else {

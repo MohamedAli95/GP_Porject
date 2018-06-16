@@ -94,7 +94,8 @@ public class SignUp extends AppCompatActivity {
         {
             filePath = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                Bitmap bit= MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                bitmap =  Bitmap.createScaledBitmap(bit, 380, 420, true);;
                 bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 profilepic.setImageBitmap(bitmap2);
             }
