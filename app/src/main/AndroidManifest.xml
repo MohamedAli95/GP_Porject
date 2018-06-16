@@ -221,6 +221,14 @@
         <activity android:name=".sign_in_merchant" />
         <activity android:name=".interestsactivity" />
         <activity
+            android:name=".Edit_offer"
+            android:label="Edit Offer"
+            android:parentActivityName=".Merchant_Offers" />
+        <activity
+            android:name=".Edit_Reward"
+            android:label="Edit Reward"
+            android:parentActivityName=".Merchant_Rewards_list" />
+        <activity
             android:name=".Setting"
             android:label="Notfications Setting"
             android:parentActivityName=".MapsActivity"></activity>

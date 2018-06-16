@@ -143,11 +143,11 @@ public class SwipeRecyclerViewAdapter extends RecyclerSwipeAdapter<SwipeRecycler
             public void onClick(View view) {
                 YoutuberModel c= studentList.get(position);
 
-           //   sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-             //   SharedPreferences.Editor editor = sharedpreferences.edit();
+                //   sharedpreferences = mContext.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+                //   SharedPreferences.Editor editor = sharedpreferences.edit();
 
 
-               // editor.putString("rewName",   viewHolder.Name.getText().toString());
+                // editor.putString("rewName",   viewHolder.Name.getText().toString());
                 //editor.putInt("idName", c.getId());
 
                 //editor.commit();
@@ -173,8 +173,8 @@ public class SwipeRecyclerViewAdapter extends RecyclerSwipeAdapter<SwipeRecycler
                     too.putExtra("offerid",c.getId());
                     mContext.startActivity(too);                }
 
-           //     int x = item.getId();
-             // String id = Integer.toString(x);
+                //     int x = item.getId();
+                // String id = Integer.toString(x);
 
                 Toast.makeText(view.getContext(), "Clicked on Edit  " + viewHolder.Name.getText().toString(), Toast.LENGTH_SHORT).show();
 
@@ -196,7 +196,7 @@ public class SwipeRecyclerViewAdapter extends RecyclerSwipeAdapter<SwipeRecycler
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                            //    progressDialog.cancel();
+                                //    progressDialog.cancel();
 
 
                                 //  startActivity( new Intent(Edit_Reward.this,Merchant_Rewards_list.class));

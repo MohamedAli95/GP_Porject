@@ -2,6 +2,7 @@ package com.example.shika.boo;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -111,8 +112,8 @@ public class Edit_Reward extends AppCompatActivity {
         points = (EditText) findViewById(R.id.point);
         submit = (Button) findViewById(R.id.insertbtn);
         pick_image = (Button) findViewById(R.id.upimage);
-imageView = (ImageView) findViewById(R.id.imageView);
-    //    collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        imageView = (ImageView) findViewById(R.id.imageView);
+        //    collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         c=this;
         encoded_string="";
 
@@ -143,7 +144,7 @@ imageView = (ImageView) findViewById(R.id.imageView);
         to = (EditText) findViewById(R.id.etxt_todate);
         to.setInputType(InputType.TYPE_NULL);
         String getfromdate = from.getText().toString().trim();
-    //    String getfrom[] = getfromdate.split("/");
+        //    String getfrom[] = getfromdate.split("/");
         to.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,20 +175,20 @@ imageView = (ImageView) findViewById(R.id.imageView);
                 chooseImage();
             }
         });
-     //   sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //   sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-    //    userid = sharedpreferences.getInt("idName", 0);
-Intent u = getIntent();
-  userid = u.getIntExtra("Rewarid",0);
-   String title =     u.getStringExtra("Rewarname");
-   int p = u.getIntExtra("Rewarpoints",0);
+        //    userid = sharedpreferences.getInt("idName", 0);
+        Intent u = getIntent();
+        userid = u.getIntExtra("Rewarid",0);
+        String title =     u.getStringExtra("Rewarname");
+        int p = u.getIntExtra("Rewarpoints",0);
         String start =     u.getStringExtra("Rewarfrom");
         String end =     u.getStringExtra("Rewarto");
-    String img = u.getStringExtra("Rewarimage");
-username.setText(title);
-from.setText(start);
-to.setText(end);
-points.setText(p);
+        String img = u.getStringExtra("Rewarimage");
+        username.setText(title);
+        from.setText(start);
+        to.setText(end);
+        points.setText(Integer.toString(p));
         com.bumptech.glide.Glide.with(Edit_Reward.this)
                 .load(img)
                 .into(imageView);
@@ -204,7 +205,7 @@ points.setText(p);
 
 
         pick_image = (Button) findViewById(R.id.upimage);
-       // profile_pic = (CircleImageView) findViewById(R.id.changeprofile_image);
+        // profile_pic = (CircleImageView) findViewById(R.id.changeprofile_image);
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
    /*     if (sharedpreferences.getBoolean("logged in", false)) {
             String profilepicurl = sharedpreferences.getString("profilepicture", null);
@@ -302,13 +303,22 @@ points.setText(p);
      }*/
     private class editporfileback extends AsyncTask<String, Void, String> {
         Context context;
+        ProgressDialog loading;
+
         editporfileback(Context ctx) {
 
             context = ctx;
         }
         String name = username.getText().toString();
+        String poin = points.getText().toString();
         String sdate = from.getText().toString();
         String edate = to.getText().toString();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = ProgressDialog.show(Edit_Reward.this, "Editing in progress...", null,true,true);
+        }
 
         protected String doInBackground(String... params) {
             try {
@@ -325,7 +335,8 @@ points.setText(p);
                         + URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(userid), "UTF-8")+ "&"+
                         URLEncoder.encode("start_date", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(sdate), "UTF-8")+ "&"+
                         URLEncoder.encode("end_date", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(edate), "UTF-8")+ "&"
-                        + URLEncoder.encode("encoded_string", "UTF-8") + "=" + URLEncoder.encode(encoded_string, "UTF-8");
+                        + URLEncoder.encode("encoded_string", "UTF-8") + "=" + URLEncoder.encode(encoded_string, "UTF-8")+ "&"
+                        + URLEncoder.encode("points", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(poin), "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -351,14 +362,16 @@ points.setText(p);
 
         protected void onPostExecute(String result) {
             try {
+                loading.dismiss();
+                Toast.makeText(getApplicationContext(),"Edit Success",Toast.LENGTH_LONG).show();
 
                 JSONParser parser = new JSONParser();
                 if (result.equals("error")) {
                     alertDialog.setMessage("error");
 
                     alertDialog.setMessage("Edit Successful");
-                //    Intent too = new Intent(context, MapsActivity.class);
-              //      startActivity(too);
+                    //    Intent too = new Intent(context, MapsActivity.class);
+                    //      startActivity(too);
 
                 } else {
 

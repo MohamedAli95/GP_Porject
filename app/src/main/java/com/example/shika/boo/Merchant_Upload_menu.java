@@ -57,7 +57,7 @@ public class Merchant_Upload_menu extends AppCompatActivity implements View.OnCl
 
         buttonChoose.setOnClickListener(this);
         buttonUpload.setOnClickListener(this);
-
+buttonUpload.setEnabled(false);
 
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -70,7 +70,7 @@ public class Merchant_Upload_menu extends AppCompatActivity implements View.OnCl
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select Menu Picture"), PICK_IMAGE_REQUEST);
     }
 
     @Override
@@ -83,6 +83,7 @@ public class Merchant_Upload_menu extends AppCompatActivity implements View.OnCl
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
+                buttonUpload.setEnabled(true);
             } catch (IOException e) {
                 e.printStackTrace();
             }

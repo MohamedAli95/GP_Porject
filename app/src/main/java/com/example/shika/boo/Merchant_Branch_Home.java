@@ -29,11 +29,11 @@ public class Merchant_Branch_Home extends AppCompatActivity {
         headerText4.setText("Profile");
         headerText5.setText("Manage Rewards");
         headerText6.setText("Logout to place");*/
-Intent iu = getIntent();
-int z = iu.getIntExtra("decide",0);
+        Intent iu = getIntent();
+        int z = iu.getIntExtra("decide",0);
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.tobranches);
-        LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.tomen);
+        //  LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.tomen);
         LinearLayout linearLayout2 = (LinearLayout) findViewById(R.id.toreport);
         LinearLayout linearLayout3 = (LinearLayout) findViewById(R.id.topro);
 
@@ -51,14 +51,7 @@ int z = iu.getIntExtra("decide",0);
             }
         });
 
-        linearLayout1.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                Intent ino = new Intent(Merchant_Branch_Home.this,Branch_Report.class);
-                startActivity(ino);
-            }
-        });
 
         linearLayout2.setOnClickListener(new View.OnClickListener() {
 

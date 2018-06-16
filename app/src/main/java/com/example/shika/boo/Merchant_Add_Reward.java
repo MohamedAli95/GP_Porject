@@ -117,7 +117,7 @@ public class Merchant_Add_Reward extends AppCompatActivity   {
 
         SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
         // strSavedMem1 = sharedPreferences.getString("Name", "");
-        strSaved = sharedPreferences.getInt("PID", 0);
+        strSaved = sharedPreferences.getInt("BId", 0);
 
 
         buttonInsert.setOnClickListener(new View.OnClickListener() {

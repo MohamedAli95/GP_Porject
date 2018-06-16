@@ -2,6 +2,7 @@ package com.example.shika.boo;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -302,6 +303,8 @@ public class Edit_offer extends AppCompatActivity {
      }*/
     private class editporfileback extends AsyncTask<String, Void, String> {
         Context context;
+        ProgressDialog loading;
+
         editporfileback(Context ctx) {
 
             context = ctx;
@@ -310,6 +313,12 @@ public class Edit_offer extends AppCompatActivity {
         String poin = points.getText().toString();
         String sdate = from.getText().toString();
         String edate = to.getText().toString();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = ProgressDialog.show(Edit_offer.this, "Editing in progress...", null,true,true);
+        }
 
         protected String doInBackground(String... params) {
             try {
@@ -352,6 +361,8 @@ public class Edit_offer extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
+            loading.dismiss();
+            Toast.makeText(getApplicationContext(),"Edit Success",Toast.LENGTH_LONG).show();
             try {
 
                 JSONParser parser = new JSONParser();

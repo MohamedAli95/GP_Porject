@@ -45,13 +45,13 @@ public class Merchant_Offers extends AppCompatActivity {
     RecyclerView.Adapter mAdapter;
     SharedPreferences sharedPreferences;
     private int placeId;
-        private static final String request_url = "http://gp.sendiancrm.com/offerall/Fetch_Offerslist.php";
+    private static final String request_url = "http://gp.sendiancrm.com/offerall/Fetch_Offerslist.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant__offers);
-         rq = Volley.newRequestQueue(this);
+        rq = Volley.newRequestQueue(this);
 
         tvEmptyTextView = (TextView) findViewById(R.id.empty_view);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -61,9 +61,8 @@ public class Merchant_Offers extends AppCompatActivity {
         mDataSet = new ArrayList<>();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean("place logged in", false)) {
-            placeId = sharedPreferences.getInt("BId", Integer.parseInt("0"));
-        }
+        placeId = sharedPreferences.getInt("BId", Integer.parseInt("0"));
+
 
 
         loadProducts(placeId);
@@ -103,15 +102,15 @@ public class Merchant_Offers extends AppCompatActivity {
     }
 */
 
-     private void loadProducts(final int place_Id) {
+    private void loadProducts(final int place_Id) {
 
         /*
-        * Creating a String Request
-        * The request type is GET defined by first parameter
-        * The URL is defined in the second parameter
-        * Then we have a Response Listener and a Error Listener
-        * In response listener we will get the JSON response as a String
-        * */
+         * Creating a String Request
+         * The request type is GET defined by first parameter
+         * The URL is defined in the second parameter
+         * Then we have a Response Listener and a Error Listener
+         * In response listener we will get the JSON response as a String
+         * */
         StringRequest stringRequest = new StringRequest(Request.Method.POST,request_url,
                 new Response.Listener<String>() {
                     @Override
