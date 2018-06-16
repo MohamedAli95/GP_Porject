@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="51dp"
             android:orientation="vertical"
-            android:background="#e3833471"
+            android:background="#db682b7c"
             android:layout_marginTop="169dp"
 
             android:gravity="center"
@@ -36,17 +36,17 @@
             android:id="@+id/nameTextView"
             android:text="Zara le merange"
             android:textColor="#ffffff"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-        <TextView
+   <!--     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ratingTextView"
             android:textColor="#60e0f7"
             android:text="22 street ,EL Dokki   (Cairo)"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="13sp"/>
+            android:textSize="13sp"/> -->
         </LinearLayout>
     </FrameLayout>
 

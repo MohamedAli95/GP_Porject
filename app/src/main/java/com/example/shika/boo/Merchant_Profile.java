@@ -59,7 +59,7 @@ public class Merchant_Profile extends AppCompatActivity {
     private WebView mwebView;
     private RecyclerView mRecyclerView;
     private boolean mHorizontal;
-ImageView iv;
+    ImageView iv;
     List<App> apps;
     Toolbar toolbar;
     String name,placeimg;
@@ -85,6 +85,8 @@ ImageView iv;
     StringRequest request ;
     RequestQueue requestQueue ;
     private static  final String listOfBranchesURL = "http://gp.sendiancrm.com/offerall/Place_profile.php";
+    private static  final String listOfBranchesURL2 = "http://gp.sendiancrm.com/offerall/showListOfBranches.php";
+
     private int placeId ,strSaved  ;
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     //String [] branchNames = {"Alex","Cairo","Giza","Elbadrashen"};
@@ -96,10 +98,7 @@ ImageView iv;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant__profile);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setHasFixedSize(true);
 
         productList = new ArrayList<>();
         ListOfdataAdapter = new ArrayList<>();
@@ -110,7 +109,7 @@ ImageView iv;
         //   recyclerView.setLayoutManager(layoutManagerOfrecyclerView);
 
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-iv = (ImageView) findViewById(R.id.ivg);
+        iv = (ImageView) findViewById(R.id.ivg);
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         tv = (TextView) findViewById(R.id.desc);
@@ -123,13 +122,20 @@ iv = (ImageView) findViewById(R.id.ivg);
         } else {
             mHorizontal = savedInstanceState.getBoolean(ORIENTATION);
         }
-        setupAdapter();
+
+        //  setupAdapter();
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPreferences.getBoolean("place logged in", false)) {
             placeId = sharedPreferences.getInt("PID", Integer.parseInt("0"));
         }
+        apps = new ArrayList<>();
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setHasFixedSize(true);
+        loadbranch3(placeId);
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, listOfBranchesURL,
                 new Response.Listener<String>() {
@@ -137,34 +143,35 @@ iv = (ImageView) findViewById(R.id.ivg);
                     @Override
                     public void onResponse(String response) {
                         // System.out.println(response);
-                        Toast.makeText(Merchant_Profile.this, "تبریک", Toast.LENGTH_LONG).show();
+                        //     Toast.makeText(Merchant_Profile.this, "تبریک", Toast.LENGTH_LONG).show();
                         try {
                             JSONArray arr = new JSONArray(response);
                             JSONObject jObj = arr.getJSONObject(0);
                             name = jObj.getString("PLaceName");
-                             cat = jObj.getString("Name");
-                             placeimg = jObj.getString("Place_LogoPhoto");
+                            cat = jObj.getString("Name");
+                            placeimg = jObj.getString("Place_LogoPhoto");
+                            mCollapsingToolbarLayout.setTitle(name);
+                            category.setText(cat);
+                            Glide.with(Merchant_Profile.this).load(placeimg)
+                                    .apply(new RequestOptions()
+                                            .placeholder(R.drawable.placeholder)   // optional
+                                            .error(R.drawable.error))
+                                    .into(iv);
+
                             for (int i=0; i < arr.length(); i++) {
                                 JSONObject product=arr.getJSONObject(i);
 
                                 productList.add(new Merchant_Menu(
-                                        product.getInt("menu_id"),
-                                        product.getString("image"),
-                                        product.getInt("placid")
+                                        product.getInt("Menu_id"),
+                                        product.getString("Menu_Image"),
+                                        product.getInt("Place_id")
                                 ));
 
                             }
 
-                        //    JSONObject array=new JSONObject(response);
+                            //    JSONObject array=new JSONObject(response);
 
-                      //    garden =  array.getString("PLaceName");
-                            mCollapsingToolbarLayout.setTitle(name);
-                            category.setText(cat);
-                          Glide.with(Merchant_Profile.this).load(placeimg)
-                                  .apply(new RequestOptions()
-                                 .placeholder(R.drawable.placeholder)   // optional
-                                  .error(R.drawable.error))
-                                   .into(iv);
+                            //    garden =  array.getString("PLaceName");
 
 
                             recyclerViewadapter = new Merchant_RecyclerViewAdapter(productList, Merchant_Profile.this);
@@ -175,7 +182,7 @@ iv = (ImageView) findViewById(R.id.ivg);
                         }
                         // tv.setText(date);
 
-                        }
+                    }
                 },
                 new Response.ErrorListener() {
                     @Override
@@ -196,6 +203,7 @@ iv = (ImageView) findViewById(R.id.ivg);
         };
         Volley.newRequestQueue(this).add(stringRequest);
 
+
     }
 
 
@@ -206,7 +214,7 @@ iv = (ImageView) findViewById(R.id.ivg);
         Intent ba = new Intent(this,BranchActivity.class);
         startActivity(ba);
     }
-
+/*
     private void setupAdapter() {
         List<App> apps = getApps();
 
@@ -225,13 +233,75 @@ iv = (ImageView) findViewById(R.id.ivg);
 
     private List<App> getApps() {
         apps = new ArrayList<>();
-       /* apps.add(new App("Zara le merange", R.drawable.new1, "22 street ,EL Dokki   (Cairo)"));
-        apps.add(new App("Zara do2do2", R.drawable.new2, "22 street ,EL Dokki   (Cairo)"));
-        apps.add(new App("Modern zara", R.drawable.new3, "22 street ,EL Dokki   (Cairo)"));
-        apps.add(new App("Zara females", R.drawable.new4, "22 street ,EL Dokki   (Cairo)"));
-        apps.add(new App("Zara community", R.drawable.new6, "22 street ,EL Dokki   (Cairo)"));*/
-        return apps;
+        apps.add(new App("Zara le merange", "Zara le merange", "22 street ,EL Dokki   (Cairo)",1,3));
+        apps.add(new App("Zara do2do2", "Zara le merange", "22 street ,EL Dokki   (Cairo)",2,5));
+        apps.add(new App("Modern zara", "Zara le merange", "22 street ,EL Dokki   (Cairo)",3,8));
+        apps.add(new App("Zara females", "Zara le merange", "22 street ,EL Dokki   (Cairo)",5,7));
+        apps.add(new App("Zara community", "Zara le merange", "22 street ,EL Dokki   (Cairo)",6,2));
+       return apps;
     }
+*/
 
+
+    public void loadbranch3(final int place_id ) {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, listOfBranchesURL2 ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(Merchant_Profile.this, "branches response", Toast.LENGTH_LONG).show();
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray branches3 =jsonObject.getJSONArray("branchs");
+
+                            for(int i=0; i<branches3.length();i++){
+                                JSONObject branch3object = branches3.getJSONObject(i);
+                                apps.add(new App(
+
+                                        branch3object.getString("Branch_name"),
+                                        branch3object.getString("Branch_image"),
+                                        branch3object.getString("Branch_name"),
+                                        branch3object.getInt("Branch_id"),
+                                        branch3object.getInt("Place_id")
+
+
+                                ));
+
+
+                            }
+
+                            SnapAdapter snapAdapter = new SnapAdapter(Merchant_Profile.this);
+
+                            snapAdapter.addSnap(new Snap(Gravity.CENTER, "", apps));
+
+
+
+                            mRecyclerView.setAdapter(snapAdapter);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Merchant_Profile.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("placeId",""+place_id);
+
+
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
 
 }

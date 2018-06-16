@@ -25,15 +25,15 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginStart="48dp"
                 app:expandedTitleMarginEnd="32dp"
-                app:title="Zara Brand"
+                app:title=""
                 >
 
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/ivg"
-    android:scaleType="centerCrop"
-    />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivg"
+                    android:scaleType="centerCrop"
+                    />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -130,8 +130,28 @@
                     </TableLayout>
                 </android.support.v7.widget.CardView>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/branw"
+                    android:background="#b93d1169"
+                    android:text="Your Branches "
+                    android:textColor="#f4f4f4"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="18dp"
+                    android:textSize="21dp"
+                    android:padding="8dp"
+                    android:gravity="center"/>
 
-                <include layout="@layout/snp" />
+                <!--     <include layout="@layout/snp" /> -->
+                <android.support.v7.widget.RecyclerView
+
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </android.support.v7.widget.RecyclerView>
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -146,13 +166,13 @@
                     android:textSize="21dp"
                     android:padding="8dp"
                     android:gravity="center"/>
-           <!--     <fragment
-                    android:id="@+id/fragment"
-                    android:name="com.example.shika.boo.FragmentB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <!--     <fragment
+                         android:id="@+id/fragment"
+                         android:name="com.example.shika.boo.FragmentB"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
 
-                    />-->
+                         />-->
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerview_id"
                     android:layout_width="match_parent"

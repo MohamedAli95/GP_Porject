@@ -159,9 +159,9 @@ public class MerchantMenu extends AppCompatActivity {
                                 JSONObject product=array.getJSONObject(i);
 
                                 productList.add(new Merchant_Menu(
-                                        product.getInt("menu_id"),
-                                        product.getString("image"),
-                                        product.getInt("placid")
+                                        product.getInt("Menu_id"),
+                                        product.getString("Menu_Image"),
+                                        product.getInt("Place_id")
                                 ));
 
                             }

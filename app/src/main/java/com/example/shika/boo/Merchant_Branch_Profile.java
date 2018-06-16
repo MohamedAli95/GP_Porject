@@ -136,6 +136,15 @@ public class Merchant_Branch_Profile extends AppCompatActivity {
                             placeimg = jObj.getString("Branch_image");
                             RewardSystemAvailabilty =Integer.valueOf(jObj.getString("RewardSystemAvailabilty"));
 
+                            mCollapsingToolbarLayout.setTitle(name);
+                            category.setText(cat);
+                            Glide.with(Merchant_Branch_Profile.this).load(placeimg)
+                                    .apply(new RequestOptions()
+                                            .placeholder(R.drawable.placeholder)   // optional
+                                            .error(R.drawable.error))
+                                    .into(iv);
+
+
                             for (int i=0; i < arr.length(); i++) {
                                 JSONObject product=arr.getJSONObject(i);
 
@@ -173,13 +182,6 @@ public class Merchant_Branch_Profile extends AppCompatActivity {
                             //    JSONObject array=new JSONObject(response);
 
                             //    garden =  array.getString("PLaceName");
-                            mCollapsingToolbarLayout.setTitle(name);
-                            category.setText(cat);
-                            Glide.with(Merchant_Branch_Profile.this).load(placeimg)
-                                    .apply(new RequestOptions()
-                                            .placeholder(R.drawable.placeholder)   // optional
-                                            .error(R.drawable.error))
-                                    .into(iv);
 
 
                           recyclerViewadapter = new RecyclerView_Adapter(Merchant_Branch_Profile.this,productList);
@@ -232,8 +234,8 @@ public class Merchant_Branch_Profile extends AppCompatActivity {
                                 rewardList.add(new Data_Model(
 
                                         branch3object.getString("Title"),
-                                        branch3object.getInt("Points_num"),
-                                        branch3object.getString("To_date"),
+                                        branch3object.getInt("No_OF_points"),
+                                        branch3object.getString("EndDate"),
                                         branch3object.getString("Reward_image")
 
                                 ));

@@ -1,14 +1,42 @@
 package com.example.shika.boo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Merchant_Branch_Home extends AppCompatActivity {
+    SharedPreferences sharedPreferences ;
+int branchId;
+    ImageView iv;
+    Toolbar toolbar;
+    String name,placeimg;
+    private static  final String listOfBranchesURL = "http://gp.sendiancrm.com/offerall/Branch_profile.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,5 +99,58 @@ public class Merchant_Branch_Home extends AppCompatActivity {
                 startActivity(ino);
             }
         });
+
+        iv = (ImageView) findViewById(R.id.homeback);
+       // requestQueue = Volley.newRequestQueue(this);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("place logged in", false)) {
+            branchId = sharedPreferences.getInt("BId", Integer.parseInt("0"));
+        }
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, listOfBranchesURL,
+                new Response.Listener<String>() {
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                    @Override
+                    public void onResponse(String response) {
+                        // System.out.println(response);
+                        Toast.makeText(Merchant_Branch_Home.this, "تبریک", Toast.LENGTH_LONG).show();
+                        try {
+                            JSONArray arr = new JSONArray(response);
+                            JSONObject jObj = arr.getJSONObject(0);
+
+                            placeimg = jObj.getString("Branch_image");
+
+                            Glide.with(Merchant_Branch_Home.this).load(placeimg)
+                                    .apply(new RequestOptions()
+                                            .placeholder(R.drawable.placeholder)   // optional
+                                            .error(R.drawable.error))
+                                    .into(iv);
+
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+                        // tv.setText(date);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Merchant_Branch_Home.this, "خطای اتصال به شبکه", Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params=new HashMap<String, String>();
+
+                params.put("ID", Integer.toString(branchId));
+
+
+                return params;
+            }
+
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
+
     }
 }

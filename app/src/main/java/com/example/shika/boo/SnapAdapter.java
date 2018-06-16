@@ -138,15 +138,22 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder> im
 
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends RecyclerView.ViewHolder {
 
-        public static TextView snapTextView;
+        public  TextView snapTextView;
         public RecyclerView recyclerView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             snapTextView = (TextView) itemView.findViewById(R.id.snapTextView);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.recyclerView);
+
+            if(context instanceof Merchant_Profile){
+                // Button bd = (Button)itemView.findViewById(R.id.Removebtn);
+                ViewGroup vg = (ViewGroup)(snapTextView.getParent());
+                vg.removeView(snapTextView);
+            }
+
         }
 
     }
