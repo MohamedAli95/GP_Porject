@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -68,9 +69,9 @@ public class Merchant_Profile extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private Menu drawerMenu;
-    TextView tv,category;
+    TextView tv,category,pass;
     RecyclerView.Adapter recyclerViewadapter;
-    String cat;
+    String cat,password,email;
     SharedPreferences sharedPreferences ;
     android.app.AlertDialog alertDialog;
     RecyclerView.LayoutManager layoutManagerOfrecyclerView;
@@ -89,6 +90,7 @@ public class Merchant_Profile extends AppCompatActivity {
 
     private int placeId ,strSaved  ;
     CollapsingToolbarLayout mCollapsingToolbarLayout;
+    FloatingActionButton floatingActionButton;
     //String [] branchNames = {"Alex","Cairo","Giza","Elbadrashen"};
     ArrayList<String> listBranchNames ;
 
@@ -112,8 +114,10 @@ public class Merchant_Profile extends AppCompatActivity {
         iv = (ImageView) findViewById(R.id.ivg);
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
-        tv = (TextView) findViewById(R.id.desc);
+        tv = (TextView) findViewById(R.id.desc2);
+        pass = (TextView) findViewById(R.id.pass);
         category = (TextView) findViewById(R.id.ctg2);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         requestQueue = Volley.newRequestQueue(this);
 
 //tv = (TextView) findViewById(R.id.bran);
@@ -150,8 +154,13 @@ public class Merchant_Profile extends AppCompatActivity {
                             name = jObj.getString("PLaceName");
                             cat = jObj.getString("Name");
                             placeimg = jObj.getString("Place_LogoPhoto");
+                           password = jObj.getString("PlacePassword");
+                            email = jObj.getString("PlaceEmail");
+
                             mCollapsingToolbarLayout.setTitle(name);
+                            tv.setText(email);
                             category.setText(cat);
+                            pass.setText(password);
                             Glide.with(Merchant_Profile.this).load(placeimg)
                                     .apply(new RequestOptions()
                                             .placeholder(R.drawable.placeholder)   // optional
@@ -202,6 +211,23 @@ public class Merchant_Profile extends AppCompatActivity {
 
         };
         Volley.newRequestQueue(this).add(stringRequest);
+
+
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent too = new Intent(Merchant_Profile.this, Merchant_Edit_profile.class);
+                too.putExtra("Placename",mCollapsingToolbarLayout.getTitle().toString());
+                too.putExtra("Placeemail",tv.getText().toString());
+                too.putExtra("Placepass",pass.getText().toString());
+                too.putExtra("Placeimage",placeimg);
+
+                too.putExtra("Placeid",placeId);
+                startActivity(too);
+            }
+        });
 
 
     }

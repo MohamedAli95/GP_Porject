@@ -155,6 +155,8 @@ public class Merchant_Add_Reward extends AppCompatActivity   {
                         loading.dismiss();
                         //Showing toast message of the response
                         Toast.makeText(Merchant_Add_Reward.this, s , Toast.LENGTH_LONG).show();
+                        Intent inoz = new Intent(Merchant_Add_Reward.this,Merchant_Reward_main.class);
+                        startActivity(inoz);
                     }
                 },
                 new Response.ErrorListener() {

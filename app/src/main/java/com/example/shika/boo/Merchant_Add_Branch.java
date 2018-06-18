@@ -63,7 +63,7 @@ public class Merchant_Add_Branch extends AppCompatActivity {
     private final int REQUEST_CODE_PLACEPICKER = 1;
     double  latitude,longitude  ;
     // Creating EditText.
-    EditText FirstName, LastName, Email ;
+    EditText FirstName, LastName, Email ,Location;
     MaterialBetterSpinner betterSpinner;
     // Creating button;
     Button InsertButton;
@@ -89,6 +89,8 @@ public class Merchant_Add_Branch extends AppCompatActivity {
         FirstName = (EditText) findViewById(R.id.bname);
         LastName = (EditText) findViewById(R.id.bpass);
         Email = (EditText) findViewById(R.id.bphone);
+Location = (EditText) findViewById(R.id.loc);
+        Location.setKeyListener(null);
 
         SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
         // strSavedMem1 = sharedPreferences.getString("Name", "");
@@ -103,7 +105,7 @@ public class Merchant_Add_Branch extends AppCompatActivity {
                 startPlacePickerActivity();
             }
         });
-        bu.setText(Integer.toString(strSavedMem1));
+      //  bu.setText(Integer.toString(strSavedMem1));
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,Reward);
         betterSpinner = (MaterialBetterSpinner) findViewById(R.id.sp1);
@@ -154,6 +156,8 @@ public class Merchant_Add_Branch extends AppCompatActivity {
 
                         // Showing response message coming from server.
                         Toast.makeText(Merchant_Add_Branch.this, ServerResponse, Toast.LENGTH_LONG).show();
+                        Intent inoz = new Intent(Merchant_Add_Branch.this,Merchant_Home.class);
+                        startActivity(inoz);
                     }
                 },
                 new Response.ErrorListener() {
@@ -165,6 +169,7 @@ public class Merchant_Add_Branch extends AppCompatActivity {
 
                         // Showing error message if something goes wrong.
                         Toast.makeText(Merchant_Add_Branch.this, volleyError.toString(), Toast.LENGTH_LONG).show();
+
                     }
                 }) {
             @Override
@@ -233,8 +238,8 @@ public class Merchant_Add_Branch extends AppCompatActivity {
         longitude = placeSelected.getLatLng().longitude;
         lon = String.valueOf(longitude);
 
-        android.widget.TextView enterCurrentLocation = (android.widget.TextView) findViewById(R.id.loctex);
-        enterCurrentLocation.setText("location:"+ address);
+       // android.widget.TextView enterCurrentLocation = (android.widget.TextView) findViewById(R.id.loctex);
+       Location.setText( address);
     }
 
     protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -268,6 +273,10 @@ public class Merchant_Add_Branch extends AppCompatActivity {
         }
         if(!isValidPhone(phone)){
             Email.setError("Enter Valid Phone");
+            valid=false;
+        }
+        if(Location.getText().toString().matches("")){
+            Location.setError("Selecting Location is required");
             valid=false;
         }
         return valid;

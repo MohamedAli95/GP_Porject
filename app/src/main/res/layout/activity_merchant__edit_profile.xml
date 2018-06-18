@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Merchant_add_offer"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingRight="30dp"
+            android:paddingLeft="30dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Place Name "
+                android:textSize="20dp"
+                android:textColor="@color/headings"
+                android:layout_marginTop="15dp"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/retitle"
+                android:hint="Name"
+                android:inputType="text"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="20dp"
+                android:textColor="@color/headings"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/point"
+                android:inputType="textEmailAddress"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textSize="20dp"
+                android:textColor="@color/headings"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ps"
+                android:inputType="textPassword"
+                />
+            <!--   <Button
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/upimage"
+                   android:background="@drawable/circular_btn"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="15dp"
+                   android:text="+ Photo"
+                   android:textColor="#a3a3a3"/> -->
+
+            <Button
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/upimage"
+                android:background="@drawable/border_button"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="+ Place Photo"
+                android:textSize="18sp"
+                android:textColor="#e2661e99"/>
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center"
+                android:id="@+id/imageView" />
+
+
+            <Button
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:text="Confirm changes"
+                android:id="@+id/insertbtn"
+                android:background="@drawable/blue_radius"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -82,7 +82,7 @@
                                 android:layout_marginTop="4dp"
                                 android:textStyle="normal"
                                 android:textColor="#3797CF"
-                                android:text="Description  :"
+                                android:text="Email  :"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_column="1"/>
@@ -93,7 +93,35 @@
                                 android:layout_marginTop="4dp"
                                 android:textStyle="normal"
                                 android:textColor="#aaa69d"
-                                android:text="Zara is a Spanish clothing and accessories retailer based in Arteixo"
+                                android:text=""
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_column="2"
+                                android:layout_weight="20"/>
+                        </TableRow>
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <TextView
+                                android:id="@+id/pas"
+                                android:padding="10dp"
+                                android:textSize="14sp"
+                                android:layout_marginTop="4dp"
+                                android:textStyle="normal"
+                                android:textColor="#3797CF"
+                                android:text="Password  :"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_column="1"/>
+                            <TextView
+                                android:id="@+id/pass"
+                                android:padding="10dp"
+                                android:textSize="14sp"
+                                android:layout_marginTop="4dp"
+                                android:textStyle="normal"
+                                android:textColor="#aaa69d"
+                                android:text=""
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_column="2"
@@ -184,8 +212,18 @@
         </android.support.v4.widget.NestedScrollView>
 
 
-
-
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            android:src="@drawable/ic_edi"
+            android:tint="#FFFFFF"
+            app:layout_anchor="@id/app_bar_layout"
+            app:layout_anchorGravity="bottom|right|end"/>
     </android.support.design.widget.CoordinatorLayout>
 
 

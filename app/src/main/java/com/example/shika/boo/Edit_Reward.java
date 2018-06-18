@@ -364,7 +364,8 @@ public class Edit_Reward extends AppCompatActivity {
             try {
                 loading.dismiss();
                 Toast.makeText(getApplicationContext(),"Edit Success",Toast.LENGTH_LONG).show();
-
+                Intent inoz = new Intent(Edit_Reward.this,Merchant_Reward_main.class);
+                startActivity(inoz);
                 JSONParser parser = new JSONParser();
                 if (result.equals("error")) {
                     alertDialog.setMessage("error");

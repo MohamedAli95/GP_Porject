@@ -149,6 +149,8 @@ public class Merchant_add_offer extends AppCompatActivity   {
                         loading.dismiss();
                         //Showing toast message of the response
                         Toast.makeText(Merchant_add_offer.this, s , Toast.LENGTH_LONG).show();
+                        Intent inoz = new Intent(Merchant_add_offer.this,Merchant_Branch_ManageOffer.class);
+                        startActivity(inoz);
                     }
                 },
                 new Response.ErrorListener() {

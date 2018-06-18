@@ -34,6 +34,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.squareup.picasso.Picasso;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -61,18 +62,15 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import models.Place;
 
-public class Edit_offer extends AppCompatActivity {
+public class Merchant_Edit_profile extends AppCompatActivity {
     private Button pick_image;
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 1;
     CircleImageView profile_pic;
-    EditText username;
-    EditText useremail;
-    EditText from , to;
-    EditText points;
-    EditText userpassword;
+    EditText placename;
+    EditText placeemail;
+    EditText placepass;
     DatePickerDialog picker;
-    java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.ENGLISH);
 
     private Bitmap bitmap;
     private Bitmap bitmap2;
@@ -82,7 +80,7 @@ public class Edit_offer extends AppCompatActivity {
     SharedPreferences sharedpreferences;
     RequestQueue requestQueue;
     StringRequest request;
-    private String editeprofileURL = "http://gp.sendiancrm.com/offerall/Edit_offer.php";
+    private String editeprofileURL = "http://gp.sendiancrm.com/offerall/Merchant_Edit_Profile.php";
     AlertDialog alertDialog;
     Button submit;
     String name;
@@ -93,11 +91,7 @@ public class Edit_offer extends AppCompatActivity {
     String password;
     int userid;
     ImageView imageView;
-    TextView viewname;
-    TextView viewemail;
-    TextView viewphone;
-    TextView viewage;
-    TextView viewgender;
+
     CollapsingToolbarLayout collapsingToolbarLayout;
     Context c;
 
@@ -106,66 +100,17 @@ public class Edit_offer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_offer);
+        setContentView(R.layout.activity_merchant__edit_profile);
 
-        username = (EditText) findViewById(R.id.name);
-        points = (EditText) findViewById(R.id.poins);
-        submit = (Button) findViewById(R.id.addbtn);
+        placename = (EditText) findViewById(R.id.retitle);
+        placeemail = (EditText) findViewById(R.id.point);
+        placepass = (EditText) findViewById(R.id.ps);
+        submit = (Button) findViewById(R.id.insertbtn);
         pick_image = (Button) findViewById(R.id.upimage);
         imageView = (ImageView) findViewById(R.id.imageView);
         //    collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         c=this;
         encoded_string="";
-
-
-        from = (EditText) findViewById(R.id.etxt_fromdate);
-        from.setInputType(InputType.TYPE_NULL);
-        from.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
-                // date picker dialog
-                picker = new DatePickerDialog(Edit_offer.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                from.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                            }
-                        }, year, month, day);
-                picker.getDatePicker().setMinDate(cldr.getTimeInMillis());
-
-                picker.show();
-            }
-        });
-
-        to = (EditText) findViewById(R.id.etxt_todate);
-        to.setInputType(InputType.TYPE_NULL);
-        String getfromdate = from.getText().toString().trim();
-        //    String getfrom[] = getfromdate.split("/");
-        to.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar cldr = Calendar.getInstance();
-                int dayt = cldr.get(Calendar.DAY_OF_MONTH);
-                int montht = cldr.get(Calendar.MONTH);
-                int yeart = cldr.get(Calendar.YEAR);
-                // date picker dialog
-                picker = new DatePickerDialog(Edit_offer.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                to.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                            }
-                        }, yeart, montht, dayt);
-                picker.getDatePicker().setMinDate(cldr.getTimeInMillis());
-
-                picker.show();
-            }
-        });
-
 
 
 
@@ -179,17 +124,15 @@ public class Edit_offer extends AppCompatActivity {
 
         //    userid = sharedpreferences.getInt("idName", 0);
         Intent u = getIntent();
-        userid = u.getIntExtra("offerid",0);
-        String title =     u.getStringExtra("offername");
-        int p = u.getIntExtra("offerpoints",0);
-        String start =     u.getStringExtra("offerfrom");
-        String end =     u.getStringExtra("offerto");
-        String img = u.getStringExtra("offerimage");
-        username.setText(title);
-        from.setText(start);
-        to.setText(end);
-        points.setText(Integer.toString(p));
-        com.bumptech.glide.Glide.with(Edit_offer.this)
+        userid = u.getIntExtra("Placeid",0);
+        String title =     u.getStringExtra("Placename");
+        String Email =     u.getStringExtra("Placeemail");
+        String Pass =     u.getStringExtra("Placepass");
+        String img = u.getStringExtra("Placeimage");
+        placename.setText(title);
+        placeemail.setText(Email);
+        placepass.setText(Pass);
+        com.bumptech.glide.Glide.with(Merchant_Edit_profile.this)
                 .load(img)
                 .into(imageView);
 
@@ -218,7 +161,7 @@ public class Edit_offer extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select offer Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -254,53 +197,7 @@ public class Edit_offer extends AppCompatActivity {
         }
     }
 
-    /* public void submitediteprofile(final String name, final String email,final String phone,final String age,final String gender,final String profilepic,final int userid, final String userpassword){
-         request = new StringRequest(Request.Method.POST, editeprofileURL, new Response.Listener<String>() {
-             @Override
-             public void onResponse(String response) {
-                 try {
-                     JSONObject jsonObject = new JSONObject(response);
-                     //if (jsonObject.names().get(0).equals("success")){
-                     //Toast.makeText(getApplicationContext(), ""+jsonObject.get("success"),
-                     //Toast.LENGTH_LONG).show();else
-                     if (jsonObject.names().get(0).equals("error"))
-                     {
-                         Toast.makeText(getApplicationContext(), ""+jsonObject.get("error"),
-                                 Toast.LENGTH_LONG).show();
-                     }
-                     else{
-                         alertDialog.setMessage("Update Successful");
-                         alertDialog.show();
-                     }
-                 } catch (JSONException e) {
-                     e.printStackTrace();
-                 }
-             }
-         }, new Response.ErrorListener() {
-             @Override
-             public void onErrorResponse(VolleyError error) {
-                 Toast.makeText(getApplicationContext(), "Something went wrong",Toast.LENGTH_LONG).show();
-                 alertDialog.setMessage("error found when connecting to internet " +"\n"+"You must enable you internet connection");
-                 alertDialog.show();
-                 error.printStackTrace();
-             }
-         }) {
-             @Override
-             protected Map<String, String> getParams() throws AuthFailureError {
-                 HashMap<String, String> hashMap = new HashMap<>();
-                 hashMap.put("email", email);
-                 hashMap.put("password", userpassword);
-                 hashMap.put("user_id", String.valueOf(userid));
-                 hashMap.put("user_name", name);
-                 hashMap.put("user_age", age);
-                 hashMap.put("user_phone", phone);
-                 hashMap.put("user_Gender", gender);
-                 hashMap.put("encoded_string", profilepic);
-                 return hashMap;
-             }
-         };
-         requestQueue.add(request);
-     }*/
+
     private class editporfileback extends AsyncTask<String, Void, String> {
         Context context;
         ProgressDialog loading;
@@ -309,15 +206,14 @@ public class Edit_offer extends AppCompatActivity {
 
             context = ctx;
         }
-        String name = username.getText().toString();
-        String poin = points.getText().toString();
-        String sdate = from.getText().toString();
-        String edate = to.getText().toString();
+        String name = placename.getText().toString();
+        String mail = placeemail.getText().toString();
+        String pass = placepass.getText().toString();
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = ProgressDialog.show(Edit_offer.this, "Editing in progress...", null,true,true);
+            loading = ProgressDialog.show(Merchant_Edit_profile.this, "Editing in progress...", null,true,true);
         }
 
         protected String doInBackground(String... params) {
@@ -331,12 +227,11 @@ public class Edit_offer extends AppCompatActivity {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data =  URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&"
-                        + URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(userid), "UTF-8")+ "&"+
-                        URLEncoder.encode("start_date", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(sdate), "UTF-8")+ "&"+
-                        URLEncoder.encode("end_date", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(edate), "UTF-8")+ "&"
-                        + URLEncoder.encode("encoded_string", "UTF-8") + "=" + URLEncoder.encode(encoded_string, "UTF-8")+ "&"
-                        + URLEncoder.encode("points", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(poin), "UTF-8");
+                String post_data =  URLEncoder.encode("place_name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&"
+                        + URLEncoder.encode("place_id", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(userid), "UTF-8")+ "&"+
+                        URLEncoder.encode("place_email", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(mail), "UTF-8")+ "&"+
+                        URLEncoder.encode("place_pass", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(pass), "UTF-8")+ "&"
+                        + URLEncoder.encode("encoded_string", "UTF-8") + "=" + URLEncoder.encode(encoded_string, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -361,12 +256,11 @@ public class Edit_offer extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            loading.dismiss();
-            Toast.makeText(getApplicationContext(),"Edit Success",Toast.LENGTH_LONG).show();
-            Intent inoz = new Intent(Edit_offer.this,Merchant_Branch_ManageOffer.class);
-            startActivity(inoz);
             try {
-
+                loading.dismiss();
+                Toast.makeText(getApplicationContext(),"Edit Success",Toast.LENGTH_LONG).show();
+                Intent inoz = new Intent(Merchant_Edit_profile.this,Merchant_Profile.class);
+                startActivity(inoz);
                 JSONParser parser = new JSONParser();
                 if (result.equals("error")) {
                     alertDialog.setMessage("error");
@@ -396,4 +290,7 @@ public class Edit_offer extends AppCompatActivity {
             }
         }
     }
+
+
+
 }

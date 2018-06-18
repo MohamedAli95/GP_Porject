@@ -231,8 +231,13 @@
         <activity
             android:name=".Setting"
             android:label="Notfications Setting"
-            android:parentActivityName=".MapsActivity"></activity>
-        <activity android:name=".Search_Place" android:label="Search Results" android:parentActivityName=".MapsActivity" ></activity>
+            android:parentActivityName=".MapsActivity" />
+        <activity
+            android:name=".Search_Place"
+            android:label="Search Results"
+            android:parentActivityName=".MapsActivity" />
+        <activity android:name=".Merchant_Edit_profile" />
+        <activity android:name=".Branch_Edit_profile"></activity>
     </application>
 
 </manifest>

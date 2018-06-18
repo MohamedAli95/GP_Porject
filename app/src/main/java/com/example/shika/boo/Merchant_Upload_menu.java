@@ -115,6 +115,8 @@ buttonUpload.setEnabled(false);
                 super.onPostExecute(s);
                 loading.dismiss();
                 Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+                Intent inoz = new Intent(Merchant_Upload_menu.this,Merchant_After_menu.class);
+                startActivity(inoz);
             }
 
             @Override           // de function el upload mohma gdn

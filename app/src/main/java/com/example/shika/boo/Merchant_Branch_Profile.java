@@ -1,11 +1,15 @@
 package com.example.shika.boo;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -36,9 +40,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Merchant_Branch_Profile extends AppCompatActivity {
@@ -55,9 +61,9 @@ public class Merchant_Branch_Profile extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private Menu drawerMenu;
-    TextView tv,category;
+    TextView tv,lo,passtxt,mobtxt;
     RecyclerView.Adapter recyclerViewadapter,recyclerViewadapter2;
-    String cat;
+    String cat,pass;
     SharedPreferences sharedPreferences ;
     android.app.AlertDialog alertDialog;
     RecyclerView.LayoutManager layoutManagerOfrecyclerView;
@@ -67,7 +73,9 @@ public class Merchant_Branch_Profile extends AppCompatActivity {
     View vv;
 
     List<String> ListOfdataAdapter;
-
+    Geocoder geocoder;
+    List<Address> addresses;
+    double lat,lan;
     //arrayAdaptorHandle adaptor;
     StringRequest request ;
     RequestQueue requestQueue ;
@@ -76,6 +84,7 @@ public class Merchant_Branch_Profile extends AppCompatActivity {
     public int RewardSystemAvailabilty=0;
     private int branchId ,strSaved  ;
     CollapsingToolbarLayout mCollapsingToolbarLayout;
+    FloatingActionButton floatingActionButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,10 +118,14 @@ public class Merchant_Branch_Profile extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
 
         iv = (ImageView) findViewById(R.id.ivg);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         tv = (TextView) findViewById(R.id.desc);
-        category = (TextView) findViewById(R.id.ctg2);
+        passtxt = (TextView) findViewById(R.id.pass);
+        mobtxt = (TextView) findViewById(R.id.mobile);
+        lo = (TextView) findViewById(R.id.desc2);
+       // loca = (TextView) findViewById(R.id.ctg2);
         requestQueue = Volley.newRequestQueue(this);
 
 
@@ -133,18 +146,50 @@ public class Merchant_Branch_Profile extends AppCompatActivity {
                             JSONObject jObj = arr.getJSONObject(0);
                             name = jObj.getString("Branch_name");
                             cat = jObj.getString("Branch_phone");
+                            pass = jObj.getString("Branch_Password");
                             placeimg = jObj.getString("Branch_image");
+
                             RewardSystemAvailabilty =Integer.valueOf(jObj.getString("RewardSystemAvailabilty"));
 
                             mCollapsingToolbarLayout.setTitle(name);
-                            category.setText(cat);
+                            passtxt.setText(pass);
+                            mobtxt.setText(cat);
+                          //  category.setText(cat);
                             Glide.with(Merchant_Branch_Profile.this).load(placeimg)
                                     .apply(new RequestOptions()
                                             .placeholder(R.drawable.placeholder)   // optional
                                             .error(R.drawable.error))
                                     .into(iv);
+                            try {
+                                lat = jObj.getDouble("latitude");
+                                lan = jObj.getDouble("longitude");
+                                geocoder = new Geocoder(Merchant_Branch_Profile.this, Locale.ENGLISH);
+                                addresses = geocoder.getFromLocation(lat, lan, 1);
+                                StringBuilder str = new StringBuilder();
+                                if (geocoder.isPresent()) {
+                               //     Toast.makeText(getApplicationContext(), "geocoder present", Toast.LENGTH_SHORT).show();
+                                  //  Address returnAddress = addresses.get(0);
+                                    String address = addresses.get(0).getAddressLine(0);
+                                  //  String address = addresses.get(0).getAddressLine(0);
+                                  //  String localityString = returnAddress.getLocality();
 
 
+                                    lo.setText(address);
+                              //      Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    Toast.makeText(getApplicationContext(),
+                                            "geocoder not present", Toast.LENGTH_SHORT).show();
+                                }
+
+// } else {
+// Toast.makeText(getApplicationContext(),
+// "address not available", Toast.LENGTH_SHORT).show();
+// }
+                            } catch (IOException e) {
+
+                              //  Log.e("tag", e.getMessage());
+                            }
                             for (int i=0; i < arr.length(); i++) {
                                 JSONObject product=arr.getJSONObject(i);
 
@@ -215,6 +260,24 @@ public class Merchant_Branch_Profile extends AppCompatActivity {
 
         };
         Volley.newRequestQueue(this).add(stringRequest);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent too = new Intent(Merchant_Branch_Profile.this, Branch_Edit_profile.class);
+                too.putExtra("braname",mCollapsingToolbarLayout.getTitle().toString());
+                too.putExtra("braphone",mobtxt.getText().toString());
+                too.putExtra("brapass",passtxt.getText().toString());
+                too.putExtra("braimage",placeimg);
+                too.putExtra("bralocation",lo.getText().toString());
+                too.putExtra("lt",lat);
+                too.putExtra("ln",lan);
+                too.putExtra("braid",branchId);
+                startActivity(too);
+            }
+        });
+
 
     }
 
