@@ -184,6 +184,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                     alertDialog.show();
                     AppController.getInstance().ServiceStart();
                     Intent too = new Intent(context, MapsActivity.class);
+                    too.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(too);
 
                 } else {

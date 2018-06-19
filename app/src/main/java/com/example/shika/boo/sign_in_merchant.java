@@ -126,7 +126,7 @@ public class sign_in_merchant extends AppCompatActivity {
                      if(sharedPreferences!=null) {
 
                          Intent intent = new Intent(getApplicationContext(), Merchant_Home.class);
-                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                          startActivity(intent);
 
                         alertDialog.setMessage("Welcome:  "+sharedPreferences.getString("PName",null));
@@ -183,4 +183,8 @@ public  void PlaceSesionStart(Place place)
  }
 
 
+    public void forgotpassword(View view) {
+        Intent too = new Intent(this,forgotpasswordmerchant.class);
+        startActivity(too);
+    }
 }

@@ -240,7 +240,10 @@
         <activity android:name=".Branch_Edit_profile" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".ResetPassword" />
-        <activity android:name=".newpassword"></activity>
+        <activity android:name=".newpassword" />
+        <activity android:name=".forgotpasswordmerchant" />
+        <activity android:name=".Resetpasswordmerchant" />
+        <activity android:name=".newpasswordmerchant"></activity>
     </application>
 
 </manifest>
