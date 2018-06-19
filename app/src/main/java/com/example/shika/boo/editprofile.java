@@ -333,7 +333,7 @@ public class editprofile extends AppCompatActivity {
                     if (!name.equals(""))
                         editor.putString("Name", name);
                     if (!age.equals(""))
-                        editor.putInt("Age", Integer.getInteger(age));
+                        editor.putInt("Age", Integer.valueOf(age));
                     if (!email.equals(""))
                         editor.putString("Email", email);
                     if (!password.equals(""))

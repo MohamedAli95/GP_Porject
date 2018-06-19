@@ -237,7 +237,10 @@
             android:label="Search Results"
             android:parentActivityName=".MapsActivity" />
         <activity android:name=".Merchant_Edit_profile" />
-        <activity android:name=".Branch_Edit_profile"></activity>
+        <activity android:name=".Branch_Edit_profile" />
+        <activity android:name=".ForgotPassword" />
+        <activity android:name=".ResetPassword" />
+        <activity android:name=".newpassword"></activity>
     </application>
 
 </manifest>

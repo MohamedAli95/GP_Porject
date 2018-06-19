@@ -84,5 +84,9 @@ public class SignIn extends AppCompatActivity {
     }
 
 
+    public void toforgotpassword(View view) {
+        Intent too = new Intent(this,ForgotPassword.class);
+        startActivity(too);
+    }
 }
 
