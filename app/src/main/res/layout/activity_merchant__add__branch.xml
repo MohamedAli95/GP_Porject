@@ -35,7 +35,8 @@
                 android:id="@+id/bname"
                 android:hint="Name"
                 android:inputType="text"
-                />
+                android:background="@drawable/border_button"
+                android:padding="6dp"                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -51,8 +52,28 @@
                 android:id="@+id/bpass"
                 android:hint="password"
                 android:inputType="textPassword"
+                android:background="@drawable/border_button"
+                android:padding="6dp"
                 />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Branch Phone"
+                android:textSize="20dp"
+                android:textColor="@color/headings"
+                android:layout_marginTop="11dp"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bphone"
+                android:hint="eg : 01124522645"
+                android:inputType="number"
+                android:digits="0123456789+"
+                android:background="@drawable/border_button"
+                android:padding="6dp"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,21 +110,23 @@
                 android:id="@+id/loc"
 
                 />
-            <TextView
-                android:layout_width="match_parent"
+
+            <Button
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:text="Branch Phone"
-                android:textSize="20dp"
-                android:textColor="@color/headings"
-                android:layout_marginTop="11dp"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/bphone"
-                android:hint="bphone"
-                android:inputType="number"
-                />
+                android:id="@+id/upimage"
+                android:background="@drawable/border_button"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="+ Reward Photo"
+                android:textSize="18sp"
+                android:textColor="#e2661e99"/>
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center"
+                android:id="@+id/imageView" />
+
 
             <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:layout_width="wrap_content"
@@ -113,7 +136,7 @@
                 android:paddingLeft="5dp"
                 android:textColor="@color/headings"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="25dp"
+                android:layout_gravity="center"
                 />
 
             <Button
@@ -125,6 +148,7 @@
                 android:textColor="@color/white"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
                 />
         </LinearLayout>
     </ScrollView>

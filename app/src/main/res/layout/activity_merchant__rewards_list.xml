@@ -2,6 +2,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Swipe Left To Manage Reward"
+        android:background="#eaeaea"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:padding="6dp"
+        android:textColor="#e346126b"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"

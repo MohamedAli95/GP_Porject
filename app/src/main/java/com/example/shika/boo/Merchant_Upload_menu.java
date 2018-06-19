@@ -40,7 +40,7 @@ public class Merchant_Upload_menu extends AppCompatActivity implements View.OnCl
 //    private Button buttonView;
 
     private ImageView imageView;
-
+    private Bitmap bitmap2;
     private Bitmap bitmap;
 
     private Uri filePath;
@@ -63,7 +63,7 @@ buttonUpload.setEnabled(false);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
        // strSavedMem1 = sharedPreferences.getString("Name", "");
          strSavedMem1 = sharedPreferences.getInt("PID",0);
-        buttonChoose.setText(Integer.toString(strSavedMem1));
+      //  buttonChoose.setText(Integer.toString(strSavedMem1));
     }
 
     private void showFileChooser() {
@@ -81,6 +81,8 @@ buttonUpload.setEnabled(false);
 
             filePath = data.getData();
             try {
+                Bitmap bit = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                bitmap2 =  Bitmap.createScaledBitmap(bit, 380, 420, true);
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
                 buttonUpload.setEnabled(true);
@@ -92,7 +94,7 @@ buttonUpload.setEnabled(false);
 
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;

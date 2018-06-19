@@ -83,7 +83,7 @@ public class SwipeRecyclerViewAdapter extends RecyclerSwipeAdapter<SwipeRecycler
         viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
 
         //dari kiri
-        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper1));
+    //    viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper1));
 
         //dari kanan
         viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, viewHolder.swipeLayout.findViewById(R.id.bottom_wraper));
@@ -129,12 +129,7 @@ public class SwipeRecyclerViewAdapter extends RecyclerSwipeAdapter<SwipeRecycler
             }
         });
 
-        viewHolder.btnLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Clicked on Information " + viewHolder.Name.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
 
 
@@ -272,7 +267,7 @@ public class SwipeRecyclerViewAdapter extends RecyclerSwipeAdapter<SwipeRecycler
             Point = (TextView) itemView.findViewById(R.id.po);
             Delete = (TextView) itemView.findViewById(R.id.Delete);
             Edit = (TextView) itemView.findViewById(R.id.Edit);
-            btnLocation = (ImageButton) itemView.findViewById(R.id.btnLocation);
+          //  btnLocation = (ImageButton) itemView.findViewById(R.id.btnLocation);
         }
     }
 

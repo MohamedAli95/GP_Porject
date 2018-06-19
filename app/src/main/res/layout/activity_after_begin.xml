@@ -7,7 +7,8 @@
     android:orientation="vertical"
     tools:context=".AfterBegin"
     android:layout_marginTop="40dp"
-    android:background="#f4f4f4">
+    android:background="#f4f4f4"
+    android:weightSum="4">
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -15,14 +16,16 @@
         android:id="@+id/person"
         android:src="@drawable/buyer"
         android:background="@color/transparent"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_weight="1"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Client"
         android:textColor="@color/headings"
         android:textSize="28dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_weight="1"/>
 
 
     <View
@@ -38,14 +41,16 @@
         android:src="@drawable/merchant"
         android:background="@color/transparent"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp"
+        android:layout_weight="1"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Merchant"
         android:textColor="@color/headings"
         android:textSize="28dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_weight="1"/>
 
 
 </LinearLayout>

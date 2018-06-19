@@ -1,12 +1,15 @@
 package com.example.shika.boo;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -31,6 +34,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -44,11 +48,13 @@ public class Merchant_add_offer extends AppCompatActivity   {
     private String UPLOAD_URL ="http://gp.sendiancrm.com/offerall/Add_offer.php";
     ProgressDialog progressDialog;
     int strSaved;
+    String image;
+    Bitmap bitmap2;
     // public Map<String, String> par;
-
+    String startDate, endDate;
     DatePickerDialog picker;
     String ses;
-    java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.ENGLISH);
+    java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.ENGLISH);
     // private String KEY_IMAGE = “image”;
     //private String KEY_NAME = “name”;
     @Override
@@ -119,8 +125,13 @@ public class Merchant_add_offer extends AppCompatActivity   {
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                uploadImage();
+                try {
+                    if(validate()) {
+                        uploadImage();
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
         buttonChoose.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +144,7 @@ public class Merchant_add_offer extends AppCompatActivity   {
     }
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
@@ -150,6 +161,7 @@ public class Merchant_add_offer extends AppCompatActivity   {
                         //Showing toast message of the response
                         Toast.makeText(Merchant_add_offer.this, s , Toast.LENGTH_LONG).show();
                         Intent inoz = new Intent(Merchant_add_offer.this,Merchant_Branch_ManageOffer.class);
+                        inoz.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(inoz);
                     }
                 },
@@ -166,12 +178,12 @@ public class Merchant_add_offer extends AppCompatActivity   {
             @Override
             protected Map<String, String> getParams() {
                 //Converting Bitmap to String
-                String image = getStringImage(bitmap);
+                 image = getStringImage(bitmap);
                 //Getting Image Name
                 String name = offerName.getText().toString().trim();
                 String points = offerPoints.getText().toString().trim();
-                String startDate = from.getText().toString().trim();
-                String endDate = to.getText().toString().trim();
+                 startDate = from.getText().toString().trim();
+                 endDate = to.getText().toString().trim();
                 ses = Integer.toString(strSaved);
 
                 //Creating parameters
@@ -214,6 +226,8 @@ public class Merchant_add_offer extends AppCompatActivity   {
             Uri filePath = data.getData();
             try {
                 //Getting the Bitmap from Gallery
+                Bitmap bit = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                bitmap2 =  Bitmap.createScaledBitmap(bit, 380, 420, true);
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 //Setting the Bitmap to ImageView
                 imageView.setImageBitmap(bitmap);
@@ -224,18 +238,109 @@ public class Merchant_add_offer extends AppCompatActivity   {
     }
 
 
-    public boolean validate() {
+
+
+
+
+    public boolean validate() throws ParseException {
         boolean valid = true;
-        if (offerName.getText().toString().matches("") || offerName.length() > 32) {
+       // String phone = Email.getText().toString();
+        if(offerName.getText().toString().matches("")||offerName.length()>32){
             offerName.setError("Please Enter Valid Name");
-            valid = false;
-        } else if (!offerName.getText().toString().matches("[a-zA-Z ]+")) {
+            valid=false;
+        }else if(!offerName.getText().toString().matches("[a-zA-Z ]+"))
+        {
             offerName.requestFocus();
             offerName.setError("ENTER ONLY ALPHABETICAL CHARACTER");
+            valid=false;
+        }
+
+        if(formatter.parse(to.getText().toString()).before(formatter.parse(from.getText().toString()))){
+           // Toast.makeText(Merchant_add_offer.this, "Nooo " , Toast.LENGTH_LONG).show();
+            final AlertDialog alertDialog = new AlertDialog.Builder(
+                    Merchant_add_offer.this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Date Validation");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("start date must be before end date");
+
+            // Setting Icon to Dialog
+             alertDialog.setIcon(R.drawable.error);
+
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+            valid=false;
+        }
+
+        if(imageView.getDrawable() == null){
+            final AlertDialog alertDialog = new AlertDialog.Builder(
+                    Merchant_add_offer.this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Offer Image");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("your customers wish to provide an Image for this offer");
+
+            // Setting Icon to Dialog
+            alertDialog.setIcon(R.drawable.error);
+
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
             valid = false;
         }
-        return valid;
+      /*  if(image.matches("")){
+            Toast.makeText(Merchant_add_offer.this, "no image selected !!" , Toast.LENGTH_LONG).show();
 
+            valid=false;
+        }*/
+       /* if(formatter.parse(from.getText().toString()).after(formatter.parse(to.getText().toString()))){
+          //  Toast.makeText(Merchant_add_offer.this, "Dates is unvalid " , Toast.LENGTH_LONG).show();
+            AlertDialog alertDialog = new AlertDialog.Builder(
+                    Merchant_add_offer.this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Alert Dialog");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("Welcome to AndroidHive.info");
+
+            // Setting Icon to Dialog
+           // alertDialog.setIcon(R.drawable.tick);
+
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+            valid=false;
+        }*/
+
+        return valid;
     }
+
 
 }

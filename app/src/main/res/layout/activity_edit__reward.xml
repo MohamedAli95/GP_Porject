@@ -16,37 +16,42 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingRight="30dp"
-            android:paddingLeft="30dp">
+            android:paddingLeft="30dp"
+            android:weightSum="10">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="Reward Title"
                 android:textSize="20dp"
                 android:textColor="@color/headings"
                 android:layout_marginTop="15dp"
+                android:layout_weight="1.5"
                 />
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:id="@+id/retitle"
                 android:hint="Name"
                 android:inputType="text"
+                android:layout_weight="2"
                 />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="Reward Points"
                 android:textSize="20dp"
                 android:textColor="@color/headings"
+                android:layout_weight="1.5"
                 />
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:hint="eg: 4 points"
                 android:id="@+id/point"
                 android:inputType="number"
+                android:layout_weight="2"
                 />
             <!--   <Button
                    android:layout_width="wrap_content"
@@ -60,14 +65,15 @@
 
             <Button
                 android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:id="@+id/upimage"
                 android:background="@drawable/border_button"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:text="+ Reward Photo"
                 android:textSize="18sp"
-                android:textColor="#e2661e99"/>
+                android:textColor="#e2661e99"
+                android:layout_weight="2.5"/>
             <ImageView
                 android:layout_width="250dp"
                 android:layout_height="130dp"

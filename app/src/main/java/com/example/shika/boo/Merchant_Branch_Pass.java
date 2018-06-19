@@ -121,12 +121,14 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
                         int decide =branch.getInt("RewardSystemAvailabilty");
                         if(decide==1) {
                             Intent intent = new Intent(getApplicationContext(), Merchant_Branch_Home.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
                         else{
 
                             Intent intent = new Intent(getApplicationContext(), Merchant_Branch_Home.class);
                             intent.putExtra("decide",2);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
                         alertDialog.setMessage("Welcome: "+sharedPreferences.getString("BName",null)+" "+"Branch");

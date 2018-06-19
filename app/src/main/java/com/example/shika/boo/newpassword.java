@@ -75,4 +75,19 @@ public class newpassword extends AppCompatActivity {
         Volley.newRequestQueue(this).add(stringRequest);
     }
 
+
+    public boolean validate() {
+        boolean valid = true;
+
+        if (newpassword.getText().toString().matches("") || newpassword.length() < 8) {
+            newpassword.requestFocus();
+            newpassword.setError("Enter password At Least 8 CharS ");
+            valid = false;
+        }
+
+
+        return valid;
+    }
+
+
 }

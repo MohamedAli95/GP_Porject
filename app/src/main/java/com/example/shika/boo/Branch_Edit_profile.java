@@ -58,6 +58,8 @@ import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import models.Place;
@@ -152,9 +154,10 @@ TextView mkan;
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editporfileback editprofilenew = new editporfileback(c);
-                editprofilenew.execute();
-
+                if( validate()) {
+                    editporfileback editprofilenew = new editporfileback(c);
+                    editprofilenew.execute();
+                }
                 /*submitediteprofile(name,email,phone,age, gender,encoded_string,sharedpreferences.getInt("Id",0),password);*/
             }
         });
@@ -219,7 +222,7 @@ TextView mkan;
             }*/
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
             bitmap.recycle();
 
             byte[] array = stream.toByteArray();
@@ -293,6 +296,7 @@ TextView mkan;
                 loading.dismiss();
                 Toast.makeText(getApplicationContext(),"Edit Success",Toast.LENGTH_LONG).show();
                 Intent inoz = new Intent(Branch_Edit_profile.this,Merchant_Branch_Profile.class);
+                inoz.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(inoz);
                 JSONParser parser = new JSONParser();
                 if (result.equals("error")) {
@@ -350,6 +354,55 @@ TextView mkan;
 
         android.widget.TextView enterCurrentLocation = (android.widget.TextView) findViewById(R.id.loc);
         enterCurrentLocation.setText( address);
+    }
+
+
+
+    public boolean validate() {
+        boolean valid = true;
+      //  String phone = Email.getText().toString();
+        if(braname.getText().toString().matches("")||braname.length()>32){
+            braname.setError("Please Enter Valid Name");
+            valid=false;
+        }else if(!braname.getText().toString().matches("[a-zA-Z ]+"))
+        {
+            braname.requestFocus();
+            braname.setError("ENTER ONLY ALPHABETICAL CHARACTER");
+            valid=false;
+        }
+        if(brapass.getText().toString().matches("")||brapass.length()<8){
+            brapass.setError("Enter password At Least 8 CharS ");
+            valid=false;
+        }
+
+        if(braphone.getText().toString().matches("")){
+            braphone.setError("phone is required");
+            valid=false;
+        }
+        if(!isValidPhone(phone)){
+            braphone.setError("Phone Number must be 11 numbers");
+            valid=false;
+        }
+        if(mkan.getText().toString().matches("")){
+            mkan.setError("Selecting Location is required");
+            valid=false;
+        }
+        return valid;
+    }
+
+    public static boolean isValidPhone(String phone)
+    {
+        String expression = "\\d{3}\\d{8}";
+        CharSequence inputString = phone;
+        Pattern pattern = Pattern.compile(expression);
+        Matcher matcher = pattern.matcher(inputString);
+        if (matcher.matches())
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 }

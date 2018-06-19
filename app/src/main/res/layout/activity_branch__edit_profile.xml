@@ -16,75 +16,82 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingRight="30dp"
-            android:paddingLeft="30dp">
+            android:paddingLeft="30dp"
+            android:weightSum="20">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="Branch Name "
                 android:textSize="20dp"
                 android:textColor="@color/headings"
                 android:layout_marginTop="15dp"
+                android:layout_weight="1.5"
                 />
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:id="@+id/retitle"
                 android:hint="Name"
                 android:inputType="text"
+                android:layout_weight="2"
                 />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="Phone number"
                 android:textSize="20dp"
+                android:layout_weight="1.5"
                 android:textColor="@color/headings"
                 />
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:id="@+id/point"
                 android:inputType="number"
+                android:layout_weight="2"
                 />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="Password"
                 android:textSize="20dp"
+                android:layout_weight="1.5"
                 android:textColor="@color/headings"
                 />
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:id="@+id/ps"
+                android:layout_weight="2"
                 android:inputType="textPassword"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="Branch Location"
                 android:id="@+id/loctex"
                 android:textSize="20dp"
                 android:textColor="@color/headings"
                 android:layout_marginTop="11dp"
-                android:layout_weight="2.4"
+                android:layout_weight="1.5"
                 />
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text=""
                 android:id="@+id/loc"
                 android:textSize="14dp"
                 android:textColor="#8c8c8c"
                 android:layout_marginTop="11dp"
-                android:layout_weight="2.4"
+                android:layout_weight="1"
                 />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:id="@+id/pickup_btn"
                 android:text="Pickup another Location"
                 android:textColor="#FFFFFF"
@@ -94,6 +101,7 @@
                 android:drawableLeft="@drawable/lo"
                 android:drawableTint="#FFFFFF"
                 android:background="#e34c1a73"
+                android:layout_weight="2"
                 />
             <!--   <Button
                    android:layout_width="wrap_content"
@@ -107,31 +115,34 @@
 
             <Button
                 android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:id="@+id/upimage"
                 android:background="@drawable/border_button"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:text="+ Branch Photo"
                 android:textSize="18sp"
-                android:textColor="#e2661e99"/>
+                android:textColor="#e2661e99"
+                android:layout_weight="2"
+                />
             <ImageView
                 android:layout_width="250dp"
                 android:layout_height="130dp"
                 android:layout_gravity="center"
-                android:id="@+id/imageView" />
+                android:id="@+id/imageView"
+                android:layout_weight="1"/>
 
 
             <Button
                 android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="Confirm changes"
                 android:id="@+id/insertbtn"
                 android:background="@drawable/blue_radius"
                 android:textColor="@color/white"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
-                />
+                android:layout_weight="2"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

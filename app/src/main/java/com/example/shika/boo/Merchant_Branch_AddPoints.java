@@ -73,9 +73,10 @@ public class Merchant_Branch_AddPoints extends AppCompatActivity {
     // Creating button;
     Button InsertButton;
     int strSavedMem;
+String [] s_name,s_gender,va;
     // Creating Volley RequestQueue.
     RequestQueue requestQueue;
-
+    Map<String,String> params;
     // Create string variable to hold the EditText Value.
     String FirstNameHolder, LastNameHolder, EmailHolder , RewardHolder , lat , lon ;
     // Creating Progress dialog.
@@ -86,7 +87,8 @@ public class Merchant_Branch_AddPoints extends AppCompatActivity {
     // Storing server url into String variable.
     String HttpUrl = "http://gp.sendiancrm.com/offerall/Add_userpoints.php";
 String  ses,ID;
-
+int pos;
+    String trick;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +112,9 @@ String  ses,ID;
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               ID=   spinner.getItemAtPosition(spinner.getSelectedItemPosition()).toString();
+              pos=  spinner.getSelectedItemPosition();
+            trick =s_gender[pos];
+            //    ID=   spinner.getItemAtPosition(spinner.getSelectedItemPosition()).toString();
               //  Toast.makeText(getApplicationContext(),country,Toast.LENGTH_LONG).show();
             }
 
@@ -149,6 +153,7 @@ String  ses,ID;
                                 // Showing response message coming from server.
                                 Toast.makeText(Merchant_Branch_AddPoints.this, ServerResponse, Toast.LENGTH_LONG).show();
                                 Intent inoz = new Intent(Merchant_Branch_AddPoints.this,Merchant_Reward_main.class);
+                                inoz.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(inoz);
                             }
                         },
@@ -172,7 +177,7 @@ String  ses,ID;
                         // Adding All values to Params.
           //             ses = Integer.toString(strSavedMem);
 
-                        params.put("User_id", ID);
+                        params.put("User_id", trick);
                        params.put("Place_id", ses);
 
                         params.put("No_OF_points", LastNameHolder);
@@ -213,12 +218,20 @@ String  ses,ID;
                     JSONObject jsonObject=new JSONObject(response);
 
                         JSONArray jsonArray=jsonObject.getJSONArray("users");
+                    s_name   = new String[jsonArray.length()];
+                    s_gender = new String[jsonArray.length()];
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                            String country=jsonObject1.getString("UserId");
-                            CountryName.add(country);
+                            s_name[i]=jsonObject1.getString("UserName");
+                            s_gender[i] = jsonObject1.getString("UserId");
+                         //   String country=jsonObject1.getString("UserId");
+                          //  CountryName.add(country);
                         }
 
+                    for(int i = 0; i<s_name.length; i++)
+                    {
+                        CountryName.add(s_name[i]+" : "+s_gender[i]);
+                    }
                     spinner.setAdapter(new ArrayAdapter<String>(Merchant_Branch_AddPoints.this, android.R.layout.simple_spinner_dropdown_item, CountryName));
                 }catch (JSONException e){e.printStackTrace();}
             }

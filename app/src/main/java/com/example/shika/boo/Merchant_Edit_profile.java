@@ -2,8 +2,10 @@ package com.example.shika.boo;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -55,6 +57,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -139,9 +142,10 @@ public class Merchant_Edit_profile extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editporfileback editprofilenew = new editporfileback(c);
-                editprofilenew.execute();
-
+                if(validate()) {
+                    editporfileback editprofilenew = new editporfileback(c);
+                    editprofilenew.execute();
+                }
                 /*submitediteprofile(name,email,phone,age, gender,encoded_string,sharedpreferences.getInt("Id",0),password);*/
             }
         });
@@ -188,7 +192,7 @@ public class Merchant_Edit_profile extends AppCompatActivity {
             }*/
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
             bitmap.recycle();
 
             byte[] array = stream.toByteArray();
@@ -260,6 +264,7 @@ public class Merchant_Edit_profile extends AppCompatActivity {
                 loading.dismiss();
                 Toast.makeText(getApplicationContext(),"Edit Success",Toast.LENGTH_LONG).show();
                 Intent inoz = new Intent(Merchant_Edit_profile.this,Merchant_Profile.class);
+                inoz.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(inoz);
                 JSONParser parser = new JSONParser();
                 if (result.equals("error")) {
@@ -291,6 +296,59 @@ public class Merchant_Edit_profile extends AppCompatActivity {
         }
     }
 
+
+
+    public boolean validate() {
+        boolean valid = true;
+      //  String phone = Email.getText().toString();
+        if(placename.getText().toString().matches("")||placename.length()>32){
+            placename.setError("Please Enter Valid Name");
+            valid=false;
+        }else if(!placename.getText().toString().matches("[a-zA-Z ]+"))
+        {
+            placename.requestFocus();
+            placename.setError("ENTER ONLY ALPHABETICAL CHARACTER");
+            valid=false;
+        }
+        if(placepass.getText().toString().matches("")||placepass.length()<8){
+           placepass.setError("Enter password At Least 8 CharS ");
+            valid=false;
+        }
+
+
+        if(placeemail.getText().equals("")||!android.util.Patterns.EMAIL_ADDRESS.matcher(placeemail.getText()).matches()){
+            placeemail.setError("Please Enter Valid Email Adress");
+            valid=false;
+        }
+
+        if(imageView.getDrawable() == null){
+            final android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(
+                    Merchant_Edit_profile.this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Place Image");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("your customers wish to provide an Image for your place");
+
+            // Setting Icon to Dialog
+            alertDialog.setIcon(R.drawable.error);
+
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+            valid = false;
+        }
+
+        return valid;
+    }
 
 
 }

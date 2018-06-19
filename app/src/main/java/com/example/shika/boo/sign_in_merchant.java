@@ -126,6 +126,7 @@ public class sign_in_merchant extends AppCompatActivity {
                      if(sharedPreferences!=null) {
 
                          Intent intent = new Intent(getApplicationContext(), Merchant_Home.class);
+                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                          startActivity(intent);
 
                         alertDialog.setMessage("Welcome:  "+sharedPreferences.getString("PName",null));

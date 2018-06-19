@@ -1,13 +1,22 @@
 package com.example.shika.boo;
 
+import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,6 +36,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 import java.util.HashMap;
@@ -61,7 +72,10 @@ import java.util.regex.Pattern;
 public class Merchant_Add_Branch extends AppCompatActivity {
 
     private final int REQUEST_CODE_PLACEPICKER = 1;
+    private int PICK_IMAGE_REQUEST = 0;
+private Bitmap bitmap,bitmap2;
     double  latitude,longitude  ;
+    ImageView imageView;
     // Creating EditText.
     EditText FirstName, LastName, Email ,Location;
     MaterialBetterSpinner betterSpinner;
@@ -70,13 +84,13 @@ public class Merchant_Add_Branch extends AppCompatActivity {
     int strSavedMem1, RewardHolder2;
     // Creating Volley RequestQueue.
     RequestQueue requestQueue;
-
+String image;
     // Create string variable to hold the EditText Value.
     String FirstNameHolder, LastNameHolder, EmailHolder , RewardHolder , lat , lon ;
     String[] Reward = {"UnAvailable","Available"};
     // Creating Progress dialog.
     ProgressDialog progressDialog;
-
+Button buttonChoose;
     // Storing server url into String variable.
     String HttpUrl = "http://gp.sendiancrm.com/offerall/Add_branch.php";
     String  ses;
@@ -90,6 +104,9 @@ public class Merchant_Add_Branch extends AppCompatActivity {
         LastName = (EditText) findViewById(R.id.bpass);
         Email = (EditText) findViewById(R.id.bphone);
 Location = (EditText) findViewById(R.id.loc);
+        buttonChoose = (Button) findViewById(R.id.upimage);
+        imageView = (ImageView) findViewById(R.id.imageView);
+
         Location.setKeyListener(null);
 
         SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
@@ -97,6 +114,12 @@ Location = (EditText) findViewById(R.id.loc);
         strSavedMem1 = sharedPreferences.getInt("PID",0);
         ses = Integer.toString(strSavedMem1);
 
+        buttonChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFileChooser();
+            }
+        });
 
         Button bu = (Button) findViewById(R.id.pickup_btn);
         bu.setOnClickListener(new View.OnClickListener() {
@@ -187,17 +210,31 @@ Location = (EditText) findViewById(R.id.loc);
                 params.put("latitude", lat);
                 params.put("longitude", lon);
                 params.put("Place_id", ses);
+                params.put("Branch_image", image);
+
 
                 return params;
             }
 
         };
 
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // Creating RequestQueue.
         RequestQueue requestQueue = Volley.newRequestQueue(Merchant_Add_Branch.this);
 
         // Adding the StringRequest object into requestQueue.
         requestQueue.add(stringRequest);
+    }
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
     }
 
     // Creating method to get value from EditText.
@@ -212,6 +249,7 @@ Location = (EditText) findViewById(R.id.loc);
         }else if(RewardHolder.equals("UnAvailable")){
             RewardHolder2=0;
         }
+       image = getStringImage(bitmap);
 
     }
 
@@ -242,49 +280,110 @@ Location = (EditText) findViewById(R.id.loc);
        Location.setText( address);
     }
 
-    protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_PLACEPICKER && resultCode == RESULT_OK) {
-            displaySelectedPlaceFromPlacePicker(data);
-        }
+
+
+
+
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Reward Picture"), PICK_IMAGE_REQUEST);
     }
 
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case 0:
+
+                if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                        && data != null && data.getData() != null) {
+                    Uri filePath = data.getData();
+                    try {
+                        //Getting the Bitmap from Gallery
+                        Bitmap bit = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                        bitmap2 =  Bitmap.createScaledBitmap(bit, 380, 420, true);
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                        //Setting the Bitmap to ImageView
+                        imageView.setImageBitmap(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case 1:
+                if (requestCode == REQUEST_CODE_PLACEPICKER && resultCode == RESULT_OK) {
+                    displaySelectedPlaceFromPlacePicker(data);
+                }
+                break;
+        }
+    }
 
     public boolean validate() {
         boolean valid = true;
         String phone = Email.getText().toString();
-        if(FirstName.getText().toString().matches("")||FirstName.length()>32){
+        if (FirstName.getText().toString().matches("") || FirstName.length() > 32) {
+            FirstName.requestFocus();
             FirstName.setError("Please Enter Valid Name");
-            valid=false;
-        }else if(!FirstName.getText().toString().matches("[a-zA-Z ]+"))
-        {
+            valid = false;
+        } else if (!FirstName.getText().toString().matches("[a-zA-Z ]+")) {
             FirstName.requestFocus();
             FirstName.setError("ENTER ONLY ALPHABETICAL CHARACTER");
-            valid=false;
+            valid = false;
         }
-        if(LastName.getText().toString().matches("")||LastName.length()<8){
+        if (LastName.getText().toString().matches("") || LastName.length() < 8) {
+            LastName.requestFocus();
             LastName.setError("Enter password At Least 8 CharS ");
-            valid=false;
+            valid = false;
         }
 
-        if(Email.getText().toString().matches("")){
-            Email.setError("Enter Valid Phone");
-            valid=false;
+        if (Email.getText().toString().matches("")) {
+            Email.requestFocus();
+            Email.setError("phone is required");
+            valid = false;
         }
-        if(!isValidPhone(phone)){
-            Email.setError("Enter Valid Phone");
-            valid=false;
+        if (!isValidPhone(phone)) {
+            Email.requestFocus();
+            Email.setError("Phone Number must be 11 numbers");
+            valid = false;
         }
-        if(Location.getText().toString().matches("")){
+        if (Location.getText().toString().matches("")) {
+            Location.requestFocus();
             Location.setError("Selecting Location is required");
-            valid=false;
+            valid = false;
         }
+        if (betterSpinner.getText().toString().matches("")){
+            final AlertDialog alertDialog = new AlertDialog.Builder(
+                    Merchant_Add_Branch.this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Rewards Availability");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("Kindly specify if this branch has a (reward system) or not !");
+
+            // Setting Icon to Dialog
+            alertDialog.setIcon(R.drawable.error);
+
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+            valid = false;
+    }
         return valid;
     }
 
     public static boolean isValidPhone(String phone)
     {
-        String expression = "^([0-9\\+]|\\(\\d{1,3}\\))[0-9\\-\\. ]{3,15}$";
+        String expression = "\\d{3}\\d{8}";
         CharSequence inputString = phone;
         Pattern pattern = Pattern.compile(expression);
         Matcher matcher = pattern.matcher(inputString);

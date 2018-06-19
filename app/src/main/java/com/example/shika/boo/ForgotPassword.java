@@ -39,7 +39,9 @@ public class ForgotPassword extends AppCompatActivity {
         alertDialog= new AlertDialog.Builder(this).create();
     }
     public void submit(View view) {
+        if(validate()) {
             forgotpassword(email.getText().toString());
+        }
     }
 
     public void forgotpassword(final String email ) {
@@ -78,5 +80,15 @@ public class ForgotPassword extends AppCompatActivity {
         Volley.newRequestQueue(this).add(stringRequest);
     }
 
+
+    public boolean validate() {
+        boolean valid = true;
+        if(email.getText().equals("")||!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()){
+            email.setError("Please Enter Valid Email Adress");
+            valid=false;
+        }
+
+        return valid;
+    }
 
 }
