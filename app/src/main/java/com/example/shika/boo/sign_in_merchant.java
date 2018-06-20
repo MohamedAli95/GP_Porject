@@ -125,7 +125,7 @@ public class sign_in_merchant extends AppCompatActivity {
 
                      if(sharedPreferences!=null) {
 
-                         Intent intent = new Intent(getApplicationContext(), Merchant_Home.class);
+                         Intent intent = new Intent(getApplicationContext(), SecondHome.class);
                          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                          startActivity(intent);
 
