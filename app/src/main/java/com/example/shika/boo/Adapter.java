@@ -2,12 +2,10 @@ package com.example.shika.boo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,15 +66,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
             }
         });
-        if(context instanceof Merchant_Profile || context instanceof SecondHome){
-            Picasso.get().load(app.getPlaceimage()).into(holder.imageButton);
-            holder.nameTextView.setText(app.getName());
-            //   holder.ratingTextView.setText(String.valueOf(app.getRating()));
-        }else {
-            Picasso.get().load(app.getPlaceimage()).into(holder.imageView);
-            holder.nameTextView.setText(app.getName());
-            holder.ratingTextView.setText(String.valueOf(app.getRating()));
-        }
+        if(app.getPlaceimage().isEmpty())
+           Picasso.get().load(R.drawable.placeholder).error(R.drawable.placeholder).into(holder.imageView);
+        else
+            Picasso.get().load(app.getPlaceimage()).error(R.drawable.placeholder).into(holder.imageView);
+        holder.nameTextView.setText(app.getName());
+        holder.ratingTextView.setText(String.valueOf(app.getRating()));
+
     }
 
     @Override
@@ -90,14 +86,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageButton imageButton;
+
         public ImageView imageView;
         public TextView nameTextView;
         public TextView ratingTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imageButton = (ImageButton) itemView.findViewById(R.id.imageView);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
             nameTextView = (TextView) itemView.findViewById(R.id.nameTextView);
             ratingTextView = (TextView) itemView.findViewById(R.id.ratingTextView);
