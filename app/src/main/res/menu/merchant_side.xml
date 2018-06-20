@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/mainz" android:title="Home" android:icon="@drawable/home" android:tint="#7f399c"/>
+    <item android:id="@+id/ctgz" android:title="Manage Menu" android:icon="@drawable/categories" android:tint="#8e44ad"/>
+    <item android:id="@+id/brlist" android:title="Branches" android:icon="@drawable/sideli" android:tint="#8e44ad"/>
+    <item android:id="@+id/brplus" android:title="Add Branch" android:icon="@drawable/sideadd" android:tint="#8e44ad"/>
+    <item android:id="@+id/pf" android:title="Profile" android:icon="@drawable/sidepro" android:tint="#8e44ad"/>
+
+
+
+
+</menu>
