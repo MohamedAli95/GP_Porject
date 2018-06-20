@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:paddingLeft="20dp"
     android:paddingBottom="20dp"
     android:paddingRight="20dp"
@@ -9,30 +9,33 @@
     android:layout_height="fill_parent"
     android:background="@color/white"
     >
-
-    <Button
-        android:id="@+id/add"
-        android:layout_width="240dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Add New Branch"
-        android:textSize="17sp"
-        android:layout_marginLeft="20dp"
-        android:textColor="#ed49116c"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/border_button"
-        />
+        android:orientation="horizontal"
+        android:id="@+id/linear">
 
+        <Button
+            android:id="@+id/add"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/addbr"
+            />
+    </RelativeLayout>
 
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/linear"
         android:id="@+id/branchList">
 
     </ListView>
 
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -75,6 +75,7 @@ public class Myprof extends android.app.Fragment {
         gender = (TextView) vi.findViewById(R.id.gendertext);
         phone = (TextView) vi.findViewById(R.id.userphonetext);
         profile_pic=(CircleImageView) vi.findViewById(R.id.profile_image);
+
         collapsingToolbarLayout = (CollapsingToolbarLayout) vi.findViewById(R.id.collapsing_toolbar);
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(vi.getContext());
         if (sharedpreferences.getBoolean("logged in", false)) {

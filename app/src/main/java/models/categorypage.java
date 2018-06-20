@@ -1,6 +1,7 @@
 package models;
 
 public class categorypage {
+
     String Categorytitle;
     Integer category_id;
 

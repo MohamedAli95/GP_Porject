@@ -41,4 +41,13 @@
     </string-array>
     <string name="title_activity_search__place">Search_Place</string>
 
+    <string name="title_activity_merchant__side_menu">Merchant_SideMenu</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Place Name</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_help">Help</string>
+    <string name="title_activity_merchant_branches__side_menu">MerchantBranches_SideMenu</string>
+
 </resources>

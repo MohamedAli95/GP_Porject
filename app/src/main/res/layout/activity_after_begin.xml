@@ -7,50 +7,66 @@
     android:orientation="vertical"
     tools:context=".AfterBegin"
     android:layout_marginTop="40dp"
-    android:background="#f4f4f4"
-    android:weightSum="4">
+    android:background="#f4f4f4">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/person"
-        android:src="@drawable/buyer"
-        android:background="@color/transparent"
-        android:layout_gravity="center"
-        android:layout_weight="1"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Client"
-        android:textColor="@color/headings"
-        android:textSize="28dp"
-        android:layout_gravity="center"
-        android:layout_weight="1"/>
-
-
-    <View
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="1.4dp"
-        android:layout_marginTop="15dp"
-        android:background="#f75514" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/merchant"
-        android:src="@drawable/merchant"
-        android:background="@color/transparent"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_weight="1"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Merchant"
-        android:textColor="@color/headings"
-        android:textSize="28dp"
-        android:layout_gravity="center"
-        android:layout_weight="1"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/person"
+                android:src="@drawable/buyer"
+                android:background="@color/transparent"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Client"
+                android:textColor="@color/headings"
+                android:textSize="28dp"
+                android:layout_gravity="center"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.4dp"
+                android:layout_marginTop="15dp"
+                android:background="#f75514" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/merchant"
+                android:src="@drawable/merchant"
+                android:background="@color/transparent"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Merchant"
+                android:textColor="@color/headings"
+                android:textSize="28dp"
+                android:layout_gravity="center"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.4dp"
+                android:layout_marginTop="15dp"
+                android:background="#f75514" />
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 
 </LinearLayout>

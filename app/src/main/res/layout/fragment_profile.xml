@@ -35,7 +35,6 @@
             android:layout_height="wrap_content"
             android:text="Mohamed shika"
             android:layout_gravity="center|bottom"
-
             android:textColor="#FFFFFF"
 
             />

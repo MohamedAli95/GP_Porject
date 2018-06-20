@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.example.shika.boo.merchant.Merchant_SideMenu;
+
 public class AfterBegin extends AppCompatActivity {
     SharedPreferences sharedpreferences;
     @Override
@@ -46,5 +48,6 @@ public class AfterBegin extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
     }
 }
