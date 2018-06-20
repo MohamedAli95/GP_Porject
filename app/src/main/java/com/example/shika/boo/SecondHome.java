@@ -3,6 +3,7 @@ package com.example.shika.boo;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,12 +44,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.communication.IOnItemFocusChangedListener;
+import org.eazegraph.lib.models.PieModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +68,6 @@ public class SecondHome extends AppCompatActivity implements NavigationView.OnNa
     private RecyclerView mRecyclerView;
     private boolean mHorizontal;
     ImageView iv;
-    List<App> apps;
     Toolbar toolbar;
     String name,placeimg;
     private FrameLayout view_stub; //This is the framelayout to keep your content view
@@ -86,10 +90,19 @@ public class SecondHome extends AppCompatActivity implements NavigationView.OnNa
     //arrayAdaptorHandle adaptor;
     StringRequest request ;
     RequestQueue requestQueue ;
+    List<Integer> apps;
+
+
+    int placeId;
+
+    int ones = 0;
+    int zeroes= 0;
+
     private static  final String listOfBranchesURL = "http://gp.sendiancrm.com/offerall/Place_profile.php";
     private static  final String listOfBranchesURL2 = "http://gp.sendiancrm.com/offerall/showListOfBranches.php";
 
-    private int placeId ,strSaved  ;
+
+    private int strSaved  ;
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     FloatingActionButton floatingActionButton;
     //String [] branchNames = {"Alex","Cairo","Giza","Elbadrashen"};
@@ -114,26 +127,7 @@ public class SecondHome extends AppCompatActivity implements NavigationView.OnNa
 iv = (ImageView) header.findViewById(R.id.merchantiv);
 title = (TextView) header.findViewById(R.id.headertx);
 
-        productList = new ArrayList<>();
-        ListOfdataAdapter = new ArrayList<>();
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_id);
-        recyclerView.setHasFixedSize(true);
-        layoutManagerOfrecyclerView = new LinearLayoutManager(this);
 
-        //   recyclerView.setLayoutManager(layoutManagerOfrecyclerView);
-
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-
-        requestQueue = Volley.newRequestQueue(this);
-
-//tv = (TextView) findViewById(R.id.bran);
-        if (savedInstanceState == null) {
-            mHorizontal = true;
-        } else {
-            mHorizontal = savedInstanceState.getBoolean(ORIENTATION);
-        }
-
-        //  setupAdapter();
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -141,83 +135,80 @@ title = (TextView) header.findViewById(R.id.headertx);
             placeId = sharedPreferences.getInt("PID", Integer.parseInt("0"));
         }
         apps = new ArrayList<>();
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setHasFixedSize(true);
+
         loadbranch3(placeId);
 
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, listOfBranchesURL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, listOfBranchesURL2 ,
                 new Response.Listener<String>() {
-                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onResponse(String response) {
-                        // System.out.println(response);
-                        //     Toast.makeText(Merchant_Profile.this, "تبریک", Toast.LENGTH_LONG).show();
-                        try {
-                            JSONArray arr = new JSONArray(response);
-                            JSONObject jObj = arr.getJSONObject(0);
-                            placeimg = jObj.getString("Place_LogoPhoto");
-                            hna = jObj.getString("PLaceName");
-                            Glide.with(SecondHome.this).load(placeimg)
-                                    .apply(new RequestOptions()
-                                            .placeholder(R.drawable.placeholder)   // optional
-                                            .error(R.drawable.error))
-                                    .into(iv);
-                            title.setText(hna);
-                            for (int i=0; i < arr.length(); i++) {
-                                JSONObject product=arr.getJSONObject(i);
+                        Toast.makeText(SecondHome.this, "branches response", Toast.LENGTH_LONG).show();
 
-                                productList.add(new Merchant_Menu(
-                                        product.getInt("Menu_id"),
-                                        product.getString("Menu_Image"),
-                                        product.getInt("Place_id")
-                                ));
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray branches3 =jsonObject.getJSONArray("branchs");
+
+                            for(int i=0; i<branches3.length();i++){
+                                JSONObject branch3object = branches3.getJSONObject(i);
+                                apps.add(
+
+
+                                        branch3object.getInt("RewardSystemAvailabilty")
+
+
+                                );
+
 
                             }
 
-                            //    JSONObject array=new JSONObject(response);
+                            ones = Collections.frequency(apps, 1);
+                            zeroes = Collections.frequency(apps, 0);
 
-                            //    garden =  array.getString("PLaceName");
+                            PieChart mPieChart = (PieChart) findViewById(R.id.piechart);
 
+                            mPieChart.addPieSlice(new PieModel("Branches with Reward System", ones, Color.parseColor("#FE6DA8")));
+                            mPieChart.addPieSlice(new PieModel("Branches without Reward System", zeroes, Color.parseColor("#56B7F1")));
+                            //     mPieChart.addPieSlice(new PieModel("Work", 35, Color.parseColor("#CDA67F")));
+                            //     mPieChart.addPieSlice(new PieModel("Eating", 9, Color.parseColor("#FED70E")));
 
-                            recyclerViewadapter = new Merchant_RecyclerViewAdapter(productList, SecondHome.this);
+                            mPieChart.startAnimation();
 
-                            recyclerView.setAdapter(recyclerViewadapter);
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
+                            mPieChart.setOnItemFocusChangedListener(new IOnItemFocusChangedListener() {
+                                @Override
+                                public void onItemFocusChanged(int _Position) {
+//                Log.d("PieChart", "Position: " + _Position);
+                                }
+                            });
+
+                            //   tv.setText(Integer.toString(ones));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        // tv.setText(date);
-
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SecondHome.this, "خطای اتصال به شبکه", Toast.LENGTH_LONG).show();
-                    }
-                }) {
+                }, new Response.ErrorListener() {
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params=new HashMap<String, String>();
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SecondHome.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
 
-                params.put("ID", Integer.toString(placeId));
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("placeId",""+placeId);
 
 
                 return params;
             }
-
         };
         Volley.newRequestQueue(this).add(stringRequest);
 
-
     }
 
 
-    public void branch_trans(View view){
-        Intent ba = new Intent(this,BranchActivity.class);
-        startActivity(ba);
-    }
+
 /*
     private void setupAdapter() {
         List<App> apps = getApps();
@@ -247,41 +238,23 @@ title = (TextView) header.findViewById(R.id.headertx);
 */
 
 
-    public void loadbranch3(final int place_id ) {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, listOfBranchesURL2 ,
+    public void loadbranch3(final int branch_id ) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, listOfBranchesURL ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(SecondHome.this, "branches response", Toast.LENGTH_LONG).show();
-
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray branches3 =jsonObject.getJSONArray("branchs");
-
-                            for(int i=0; i<branches3.length();i++){
-                                JSONObject branch3object = branches3.getJSONObject(i);
-                                apps.add(new App(
-
-                                        branch3object.getString("Branch_name"),
-                                        branch3object.getString("Branch_image"),
-                                        branch3object.getString("Branch_name"),
-                                        branch3object.getInt("Branch_id"),
-                                        branch3object.getInt("Place_id")
-
-
-                                ));
-
-
-                            }
-
-                            SnapAdapter snapAdapter = new SnapAdapter(SecondHome.this);
-
-                            snapAdapter.addSnap(new Snap(Gravity.CENTER, "", apps));
-
-
-
-                            mRecyclerView.setAdapter(snapAdapter);
+                            JSONArray arr = new JSONArray(response);
+                            JSONObject jObj = arr.getJSONObject(0);
+                            placeimg = jObj.getString("Place_LogoPhoto");
+                            hna = jObj.getString("PLaceName");
+                            Glide.with(SecondHome.this).load(placeimg)
+                                    .apply(new RequestOptions()
+                                            .placeholder(R.drawable.placeholder)   // optional
+                                            .error(R.drawable.error))
+                                    .into(iv);
+                            title.setText(hna);
 
 
                         } catch (JSONException e) {
@@ -299,7 +272,7 @@ title = (TextView) header.findViewById(R.id.headertx);
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("placeId",""+place_id);
+                params.put("ID",""+branch_id);
 
 
                 return params;
@@ -307,6 +280,8 @@ title = (TextView) header.findViewById(R.id.headertx);
         };
         Volley.newRequestQueue(this).add(stringRequest);
     }
+
+
 
 
     public boolean onNavigationItemSelected(MenuItem menuitem) {
