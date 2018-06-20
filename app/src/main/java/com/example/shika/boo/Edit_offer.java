@@ -70,7 +70,7 @@ public class Edit_offer extends AppCompatActivity {
     EditText useremail;
     EditText from , to;
     EditText points;
-    EditText userpassword;
+    EditText userpassword, price;
     DatePickerDialog picker;
     java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.ENGLISH);
 
@@ -110,6 +110,7 @@ public class Edit_offer extends AppCompatActivity {
 
         username = (EditText) findViewById(R.id.name);
         points = (EditText) findViewById(R.id.poins);
+        price = (EditText) findViewById(R.id.price);
         submit = (Button) findViewById(R.id.addbtn);
         pick_image = (Button) findViewById(R.id.upimage);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -185,7 +186,10 @@ public class Edit_offer extends AppCompatActivity {
         String start =     u.getStringExtra("offerfrom");
         String end =     u.getStringExtra("offerto");
         String img = u.getStringExtra("offerimage");
+        Double money = u.getDoubleExtra("Price",0);
+
         username.setText(title);
+        price.setText(Double.toString(money));
         from.setText(start);
         to.setText(end);
         points.setText(Integer.toString(p));
@@ -310,6 +314,7 @@ public class Edit_offer extends AppCompatActivity {
             context = ctx;
         }
         String name = username.getText().toString();
+        String pric = price.getText().toString();
         String poin = points.getText().toString();
         String sdate = from.getText().toString();
         String edate = to.getText().toString();
@@ -336,7 +341,8 @@ public class Edit_offer extends AppCompatActivity {
                         URLEncoder.encode("start_date", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(sdate), "UTF-8")+ "&"+
                         URLEncoder.encode("end_date", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(edate), "UTF-8")+ "&"
                         + URLEncoder.encode("encoded_string", "UTF-8") + "=" + URLEncoder.encode(encoded_string, "UTF-8")+ "&"
-                        + URLEncoder.encode("points", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(poin), "UTF-8");
+                        + URLEncoder.encode("points", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(poin), "UTF-8")+ "&"
+                        + URLEncoder.encode("flos", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(pric), "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();

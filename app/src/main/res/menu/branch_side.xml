@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/mainz" android:title="Home" android:icon="@drawable/home" android:tint="#8e44ad"/>
+    <item android:id="@+id/ctgz" android:title="Manage Offers" android:icon="@drawable/home" android:tint="#8e44ad"/>
+    <item android:id="@+id/pf" android:title="Profile" android:icon="@drawable/sidepro" android:tint="#8e44ad"/>
+    <item android:id="@+id/brlist" android:title="Manage Rewards" android:icon="@drawable/home" android:tint="#8e44ad"/>
+
+
+</menu>

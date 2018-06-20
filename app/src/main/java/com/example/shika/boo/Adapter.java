@@ -68,7 +68,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
             }
         });
-        if(context instanceof Merchant_Profile){
+        if(context instanceof Merchant_Profile || context instanceof SecondHome){
             Picasso.get().load(app.getPlaceimage()).into(holder.imageButton);
             holder.nameTextView.setText(app.getName());
             //   holder.ratingTextView.setText(String.valueOf(app.getRating()));

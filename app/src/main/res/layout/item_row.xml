@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="150dp"
-    android:layout_height="220dp"
+    android:layout_height="240dp"
     android:maxHeight="240dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="8dp"
@@ -60,6 +60,20 @@
             android:background="#674172"
             android:layout_marginTop="185dp"
             />
+
+    <TextView
+        android:id="@+id/money"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:layout_marginTop="198dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:gravity="start"
+        android:text=""
+        android:background="#674172"/>
 </FrameLayout>
 
 

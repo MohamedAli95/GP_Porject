@@ -35,8 +35,7 @@
                 android:id="@+id/bname"
                 android:hint="Name"
                 android:inputType="text"
-                android:background="@drawable/border_button"
-                android:padding="6dp"                />
+                      />
 
             <TextView
                 android:layout_width="match_parent"
@@ -52,8 +51,7 @@
                 android:id="@+id/bpass"
                 android:hint="password"
                 android:inputType="textPassword"
-                android:background="@drawable/border_button"
-                android:padding="6dp"
+
                 />
 
             <TextView
@@ -71,8 +69,7 @@
                 android:hint="eg : 01124522645"
                 android:inputType="number"
                 android:digits="0123456789+"
-                android:background="@drawable/border_button"
-                android:padding="6dp"
+
                 />
 
             <LinearLayout

@@ -12,7 +12,9 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,10 +41,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Merchant_add_offer extends AppCompatActivity   {
     private Button buttonChoose , buttonInsert;
     private ImageView imageView;
-    private EditText offerName, offerPoints,from,to;
+    private EditText offerName, offerPoints,from,to,price;
     private Bitmap bitmap;
     private int PICK_IMAGE_REQUEST = 1;
     private String UPLOAD_URL ="http://gp.sendiancrm.com/offerall/Add_offer.php";
@@ -64,6 +69,8 @@ public class Merchant_add_offer extends AppCompatActivity   {
 
         offerName = (EditText) findViewById(R.id.name);
         offerPoints = (EditText) findViewById(R.id.poins);
+        price = (EditText) findViewById(R.id.price);
+        price.setFilters(new InputFilter[]{new InputFilterMinMax("0", "10000")});
         imageView = (ImageView) findViewById(R.id.imageView);
         buttonChoose = (Button) findViewById(R.id.upimage);
         buttonInsert = (Button) findViewById(R.id.addbtn);
@@ -182,6 +189,7 @@ public class Merchant_add_offer extends AppCompatActivity   {
                 //Getting Image Name
                 String name = offerName.getText().toString().trim();
                 String points = offerPoints.getText().toString().trim();
+                String pric = price.getText().toString().trim();
                  startDate = from.getText().toString().trim();
                  endDate = to.getText().toString().trim();
                 ses = Integer.toString(strSaved);
@@ -195,6 +203,7 @@ public class Merchant_add_offer extends AppCompatActivity   {
                 params.put("EndDate",endDate);
                 params.put("Branch_id", ses);
                 params.put("Offer_image", image);
+                params.put("Price", pric);
 
                 //returning parameters
                 return params;
@@ -244,7 +253,7 @@ public class Merchant_add_offer extends AppCompatActivity   {
 
     public boolean validate() throws ParseException {
         boolean valid = true;
-       // String phone = Email.getText().toString();
+        String money = price.getText().toString();
         if(offerName.getText().toString().matches("")||offerName.length()>32){
             offerName.setError("Please Enter Valid Name");
             valid=false;
@@ -307,6 +316,13 @@ public class Merchant_add_offer extends AppCompatActivity   {
             alertDialog.show();
             valid = false;
         }
+
+        if (price.getText().toString().matches("") || price.length()>4) {
+            price.requestFocus();
+           price.setError("Enter a valid price");
+            valid = false;
+        }
+
       /*  if(image.matches("")){
             Toast.makeText(Merchant_add_offer.this, "no image selected !!" , Toast.LENGTH_LONG).show();
 
@@ -340,6 +356,35 @@ public class Merchant_add_offer extends AppCompatActivity   {
         }*/
 
         return valid;
+    }
+
+
+    public class InputFilterMinMax implements InputFilter {
+        private int min, max;
+
+        public InputFilterMinMax(int min, int max) {
+            this.min = min;
+            this.max = max;
+        }
+
+        public InputFilterMinMax(String min, String max) {
+            this.min = Integer.parseInt(min);
+            this.max = Integer.parseInt(max);
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            try {
+                int input = Integer.parseInt(dest.toString() + source.toString());
+                if (isInRange(min, max, input))
+                    return null;
+            } catch (NumberFormatException nfe) { }
+            return "";
+        }
+
+        private boolean isInRange(int a, int b, int c) {
+            return b > a ? c >= a && c <= b : c >= b && c <= a;
+        }
     }
 
 

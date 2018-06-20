@@ -40,7 +40,7 @@ import org.json.JSONObject;
 public class Merchant_Offers extends AppCompatActivity {
     private TextView tvEmptyTextView;
     private RecyclerView mRecyclerView;
-    private java.util.List<YoutuberModel> mDataSet;
+    private java.util.List<OfferModel> mDataSet;
     RequestQueue rq;
     RecyclerView.Adapter mAdapter;
     SharedPreferences sharedPreferences;
@@ -126,18 +126,19 @@ public class Merchant_Offers extends AppCompatActivity {
                                 JSONObject product = array.getJSONObject(i);
 
                                 //adding the product to product list
-                                mDataSet.add(new YoutuberModel(
+                                mDataSet.add(new OfferModel(
                                         product.getInt("Offer_id"),
                                         product.getString("Title"),
                                         product.getInt("points"),
                                         product.getString("StartDate"),
                                         product.getString("EndDate"),
-                                        product.getString("Offer_image")
+                                        product.getString("Offer_image"),
+                                        product.getDouble("Price")
                                 ));
                             }
 
                             //creating adapter object and setting it to recyclerview
-                            SwipeRecyclerViewAdapter adapter = new SwipeRecyclerViewAdapter(Merchant_Offers.this, mDataSet);
+                            SwipeRecyclerViewAdapter_Offers adapter = new SwipeRecyclerViewAdapter_Offers(Merchant_Offers.this, mDataSet);
                             mRecyclerView.setAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();

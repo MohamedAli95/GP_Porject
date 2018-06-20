@@ -82,7 +82,7 @@ buttonUpload.setEnabled(false);
             filePath = data.getData();
             try {
                 Bitmap bit = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                bitmap2 =  Bitmap.createScaledBitmap(bit, 380, 420, true);
+                bitmap2 =  Bitmap.createScaledBitmap(bit, 20, 20, true);
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
                 buttonUpload.setEnabled(true);

@@ -146,7 +146,7 @@ String k,URL_UPDATE;
             super(itemView);
             Delete = (Button) itemView.findViewById(R.id.Removebtn);
 
-            if(context instanceof Merchant_Profile){
+            if(context instanceof Merchant_Profile || context instanceof SecondHome){
                 Button bd = (Button)itemView.findViewById(R.id.Removebtn);
                 ViewGroup vg = (ViewGroup)(bd.getParent());
                 vg.removeView(bd);

@@ -148,7 +148,7 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder> im
             snapTextView = (TextView) itemView.findViewById(R.id.snapTextView);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.recyclerView);
 
-            if(context instanceof Merchant_Profile){
+            if(context instanceof Merchant_Profile || context instanceof SecondHome){
                 // Button bd = (Button)itemView.findViewById(R.id.Removebtn);
                 ViewGroup vg = (ViewGroup)(snapTextView.getParent());
                 vg.removeView(snapTextView);
