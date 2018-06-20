@@ -101,7 +101,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
         super.onCreate(savedInstanceState);
 
         if (googleServicesAvailable()) {
-            Toast.makeText(this, "done successfully..", Toast.LENGTH_LONG).show();
             setContentView(R.layout.activity_maps);
             //  initMap();} else {
 
@@ -123,7 +122,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
         mapFragment.getMapAsync(this);
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
         } else {
             showGPSDisabledAlertToUser();
         }
@@ -443,7 +441,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
             mMap.addMarker(new MarkerOptions().position(latLng));
 
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-            Toast.makeText(this, "Location Changed",Toast.LENGTH_LONG).show();
+
 
         }
     }

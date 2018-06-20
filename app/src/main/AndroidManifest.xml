@@ -21,7 +21,7 @@
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
+         Google Maps Android API v2, but you mQust specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
     <application
@@ -244,6 +244,12 @@
         <activity android:name=".forgotpasswordmerchant" />
         <activity android:name=".Resetpasswordmerchant" />
         <activity android:name=".newpasswordmerchant"></activity>
+        <activity
+            android:name=".SecondHome"
+            android:label="Place Home"></activity>
+        <activity
+            android:name=".SecondHome_Branch"
+            android:label="Branch Home"></activity>
     </application>
 
 </manifest>
