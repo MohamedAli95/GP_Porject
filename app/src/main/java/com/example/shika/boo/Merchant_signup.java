@@ -58,7 +58,7 @@ public class Merchant_signup extends AppCompatActivity {
 
 
     private EditText ET_email ,ET_password, ET_PlaceName ;
-    //String email = ET_email.getText().toString().trim();
+    //String email = ET_email.getText().toString().trim();**
     //String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     private RequestQueue requestQueue ;
