@@ -631,7 +631,7 @@ public class BackgroundMapService extends Service implements LocationListener {
                     int offer_id=newoffers.get(i).getOffer_id();
                     Intent intent = new Intent(getApplicationContext(),Offer_Page.class);
                     intent.putExtra("k", offer_id);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),i,intent,PendingIntent.FLAG_UPDATE_CURRENT);
                     notfication.setContentIntent(pendingIntent);
                     NotificationManager nm =(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                     nm.notify(n,notfication.build());
@@ -697,7 +697,7 @@ public class BackgroundMapService extends Service implements LocationListener {
                     int offer_id=newoffers.get(i).getOffer_id();
                     Intent intent = new Intent(getApplicationContext(),Offer_Page.class);
                     intent.putExtra("k", offer_id);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),i,intent,PendingIntent.FLAG_UPDATE_CURRENT);
                     notfication.setContentIntent(pendingIntent);
                     NotificationManager nm =(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                     nm.notify(n,notfication.build());
