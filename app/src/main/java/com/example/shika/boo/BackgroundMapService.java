@@ -508,6 +508,9 @@ public class BackgroundMapService extends Service implements LocationListener {
                                 offer.setNo_ofpoints(Integer.parseInt(offer_obj.getString("points")));
                                 offer.setCatgoryid(Integer.parseInt(offer_obj.getString("Category_ID")));
                                 offer.setCategory(offer_obj.getString("Name"));
+                                if (offer_obj.has("Offer_image")){
+                                    offer.setOfferphoto(offer_obj.getString("Offer_image"));
+                                }
                                 nearoffers.add(offer);
                             }
                             else

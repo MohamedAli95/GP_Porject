@@ -12,6 +12,15 @@ public class nearbyoffers {
     Integer No_ofpoints;
     String Category;
     int Catgoryid;
+    String offerphoto;
+
+    public String getOfferphoto() {
+        return offerphoto;
+    }
+
+    public void setOfferphoto(String offerphoto) {
+        this.offerphoto = offerphoto;
+    }
 
     public String getCategory() {
         return Category;

@@ -158,17 +158,7 @@
 
 
 
-        <com.varunest.sparkbutton.SparkButton
-            android:id="@+id/spark_button"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            app:sparkbutton_activeImage="@drawable/sry"
-            app:sparkbutton_inActiveImage="@drawable/srg"
-            app:sparkbutton_iconSize="60dp"
-            app:sparkbutton_primaryColor="@color/firstsho"
-            app:sparkbutton_secondaryColor="@color/secondsho"
-            app:layout_anchor="@id/app_bar_layout"
-            app:layout_anchorGravity="bottom|right|end"/>
+
 
 
         <com.github.siyamed.shapeimageview.RoundedImageView

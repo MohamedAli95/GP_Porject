@@ -89,7 +89,7 @@ public class Offer_Page extends AppCompatActivity implements OnMapReadyCallback 
             Title.setText(Theoffer.getTitle()); // de 3shan el asm ex(zara brand)
             No_ofpoints.setText(String.valueOf(Theoffer.getNo_ofpoints()));
             collapsingToolbarLayout.setTitle(Theoffer.getBranch_name());
-            Picasso.get().load("http://gp.sendiancrm.com/offerall/images/20180529084501.jpg").into(new Target() {
+            Picasso.get().load(Theoffer.getOfferphoto()).error(R.drawable.placeholder).into(new Target() {
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -107,7 +107,7 @@ public class Offer_Page extends AppCompatActivity implements OnMapReadyCallback 
 
                 }
             }); // de 3shan el sora el back ground
-            Picasso.get().load("http://gp.sendiancrm.com/offerall/images/20180529084501.jpg").into(placeimage);
+            Picasso.get().load(Theoffer.getOfferphoto()).error(R.drawable.placeholder).into(placeimage);
         }
 
 
