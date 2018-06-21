@@ -73,7 +73,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
     Intent too;
     private Menu drawerMenu;
     String[] listItems;
-    static Button btn;
     SharedPreferences sharedpreferences;
     SpaceTabLayout tabLayout;
     FragmentManager fragmentManager = getSupportFragmentManager();

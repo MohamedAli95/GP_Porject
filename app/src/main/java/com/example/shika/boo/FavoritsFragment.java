@@ -67,7 +67,6 @@ public class FavoritsFragment extends android.app.Fragment implements com.exampl
         // Inflate the layout for this fragment
         View vi = inflater.inflate(R.layout.favoritsfragment, container, false);
 
-        MapsActivity.btn.setVisibility(View.GONE);
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(vi.getContext());
         user_id = sharedpreferences.getInt("Id", 0);
 

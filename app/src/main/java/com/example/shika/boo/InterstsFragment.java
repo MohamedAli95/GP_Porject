@@ -93,7 +93,7 @@ public class InterstsFragment extends android.app.Fragment implements Interestsa
                              Bundle savedInstanceState) {
         View vin = inflater.inflate(R.layout.activity_interestsactivity, container, false);
 
-        MapsActivity.btn.setVisibility(View.GONE);
+
 
 
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(vin.getContext());

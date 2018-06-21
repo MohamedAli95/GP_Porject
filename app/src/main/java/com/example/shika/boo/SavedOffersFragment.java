@@ -40,8 +40,6 @@ public class SavedOffersFragment extends android.app.Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        MapsActivity.btn.setVisibility(View.GONE);
-
 
 
         //initializing the productlist

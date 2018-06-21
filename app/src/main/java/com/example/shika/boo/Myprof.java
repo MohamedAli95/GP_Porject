@@ -53,7 +53,7 @@ public class Myprof extends android.app.Fragment {
         // Inflate the layout for this fragment
         View vi = inflater.inflate(R.layout.activity_myprof, container, false);
       //  getSupportActionBar().hide();
-        MapsActivity.btn.setVisibility(View.GONE);
+
 
 
 
