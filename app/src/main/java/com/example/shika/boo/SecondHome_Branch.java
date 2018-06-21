@@ -352,12 +352,7 @@ public class SecondHome_Branch extends AppCompatActivity implements NavigationVi
             x = new Intent(this, Merchant_Branch_Profile.class);
             startActivity(x);}
         else if(id == R.id.lo) {
-            sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.clear();
-            editor.commit();
-            x = new Intent(this, AfterBegin.class);
+            x = new Intent(this, SecondHome.class);
             x.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(x);
         }
