@@ -179,7 +179,8 @@ Location = (EditText) findViewById(R.id.loc);
 
                         // Showing response message coming from server.
                         Toast.makeText(Merchant_Add_Branch.this, ServerResponse, Toast.LENGTH_LONG).show();
-                        Intent inoz = new Intent(Merchant_Add_Branch.this,Merchant_Home.class);
+                        Intent inoz = new Intent(Merchant_Add_Branch.this,SecondHome.class);
+                        inoz.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(inoz);
                     }
                 },
@@ -377,7 +378,32 @@ Location = (EditText) findViewById(R.id.loc);
             // Showing Alert Message
             alertDialog.show();
             valid = false;
-    }
+    } if(imageView.getDrawable() == null){
+            final AlertDialog alertDialog = new AlertDialog.Builder(
+                    Merchant_Add_Branch.this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Branch Image");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("your customers wish to provide an Image for your branch");
+
+            // Setting Icon to Dialog
+            alertDialog.setIcon(R.drawable.error);
+
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+            valid = false;
+        }
+
         return valid;
     }
 

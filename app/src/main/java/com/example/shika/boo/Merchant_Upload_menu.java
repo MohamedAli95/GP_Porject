@@ -116,8 +116,9 @@ buttonUpload.setEnabled(false);
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_LONG).show();
                 Intent inoz = new Intent(Merchant_Upload_menu.this,Merchant_After_menu.class);
+                inoz.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(inoz);
             }
 

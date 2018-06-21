@@ -2,8 +2,10 @@ package com.example.shika.boo;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -54,6 +56,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,7 +75,7 @@ public class Edit_Reward extends AppCompatActivity {
     EditText points;
     EditText userpassword;
     DatePickerDialog picker;
-    java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.ENGLISH);
+    java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.ENGLISH);
 
     private Bitmap bitmap;
     private Bitmap bitmap2;
@@ -365,6 +368,7 @@ public class Edit_Reward extends AppCompatActivity {
                 loading.dismiss();
                 Toast.makeText(getApplicationContext(),"Edit Success",Toast.LENGTH_LONG).show();
                 Intent inoz = new Intent(Edit_Reward.this,Merchant_Reward_main.class);
+                inoz.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(inoz);
                 JSONParser parser = new JSONParser();
                 if (result.equals("error")) {
@@ -395,4 +399,76 @@ public class Edit_Reward extends AppCompatActivity {
             }
         }
     }
+
+
+    public boolean validate() throws ParseException {
+        boolean valid = true;
+        // String phone = Email.getText().toString();
+        if(username.getText().toString().matches("")||username.length()>32){
+            username.setError("Please Enter Valid Name");
+            valid=false;
+        }else if(!username.getText().toString().matches("[a-zA-Z ]+"))
+        {
+            username.requestFocus();
+            username.setError("ENTER ONLY ALPHABETICAL CHARACTER");
+            valid=false;
+        }
+
+        if(formatter.parse(to.getText().toString()).before(formatter.parse(from.getText().toString()))){
+            // Toast.makeText(Merchant_add_offer.this, "Nooo " , Toast.LENGTH_LONG).show();
+            final android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(
+                    Edit_Reward.this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Date Validation");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("start date must be before end date");
+
+            // Setting Icon to Dialog
+            alertDialog.setIcon(R.drawable.error);
+
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+            valid=false;
+        }
+
+        if(imageView.getDrawable() == null){
+            final android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(
+                    Edit_Reward.this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Reward Image");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("your customers wish to provide an Image for this reward");
+
+            // Setting Icon to Dialog
+            alertDialog.setIcon(R.drawable.error);
+
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+            valid = false;
+        }
+
+
+        return valid;
+    }
+
 }

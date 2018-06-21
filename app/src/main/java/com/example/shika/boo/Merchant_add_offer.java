@@ -55,6 +55,7 @@ public class Merchant_add_offer extends AppCompatActivity   {
     int strSaved;
     String image;
     Bitmap bitmap2;
+    int z;
     // public Map<String, String> par;
     String startDate, endDate;
     DatePickerDialog picker;
@@ -122,6 +123,7 @@ public class Merchant_add_offer extends AppCompatActivity   {
                 picker.show();
             }
         });
+
 
 
         SharedPreferences sharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(this);

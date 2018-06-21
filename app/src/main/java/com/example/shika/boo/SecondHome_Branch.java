@@ -87,6 +87,7 @@ public class SecondHome_Branch extends AppCompatActivity implements NavigationVi
     double lat,lan;
     int  branches,brs;
     SharedPreferences sharedpreferences;
+    int z;
     //arrayAdaptorHandle adaptor;
     StringRequest request ;
     RequestQueue requestQueue ;
@@ -116,7 +117,7 @@ public class SecondHome_Branch extends AppCompatActivity implements NavigationVi
         title = (TextView) header.findViewById(R.id.headertx);
 
         Intent iu = getIntent();
-        int z = iu.getIntExtra("decide",0);
+         z = iu.getIntExtra("decide",0);
 
         if(z==2) {
             hideItem();
@@ -342,7 +343,10 @@ public class SecondHome_Branch extends AppCompatActivity implements NavigationVi
             x = new Intent(this,SecondHome_Branch.class);
             startActivity(x);}
         else if(id == R.id.ctgz){
+
             x = new Intent(this, Merchant_Branch_ManageOffer.class);
+            x.putExtra("decide",z);
+
             startActivity(x);}
         else if(id == R.id.brlist){
             x = new Intent(this, Merchant_Reward_main.class);

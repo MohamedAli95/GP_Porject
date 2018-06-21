@@ -2,8 +2,10 @@ package com.example.shika.boo;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -14,7 +16,9 @@ import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -54,6 +58,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,7 +77,7 @@ public class Edit_offer extends AppCompatActivity {
     EditText points;
     EditText userpassword, price;
     DatePickerDialog picker;
-    java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.ENGLISH);
+    java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.ENGLISH);
 
     private Bitmap bitmap;
     private Bitmap bitmap2;
@@ -200,9 +205,14 @@ public class Edit_offer extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editporfileback editprofilenew = new editporfileback(c);
-                editprofilenew.execute();
-
+                try {
+                    if(validate()) {
+                        editporfileback editprofilenew = new editporfileback(c);
+                        editprofilenew.execute();
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 /*submitediteprofile(name,email,phone,age, gender,encoded_string,sharedpreferences.getInt("Id",0),password);*/
             }
         });
@@ -370,6 +380,7 @@ public class Edit_offer extends AppCompatActivity {
             loading.dismiss();
             Toast.makeText(getApplicationContext(),"Edit Success",Toast.LENGTH_LONG).show();
             Intent inoz = new Intent(Edit_offer.this,Merchant_Branch_ManageOffer.class);
+            inoz.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(inoz);
             try {
 
@@ -400,6 +411,143 @@ public class Edit_offer extends AppCompatActivity {
                 Toast.makeText(getApplication(),e.getMessage(), Toast.LENGTH_LONG).show();
 
             }
+        }
+    }
+
+
+    public boolean validate() throws ParseException {
+        boolean valid = true;
+        String money = price.getText().toString();
+        if(username.getText().toString().matches("")||username.length()>32){
+            username.setError("Please Enter Valid Name");
+            valid=false;
+        }else if(!username.getText().toString().matches("[a-zA-Z ]+"))
+        {
+            username.requestFocus();
+            username.setError("ENTER ONLY ALPHABETICAL CHARACTER");
+            valid=false;
+        }
+
+        if(formatter.parse(to.getText().toString()).before(formatter.parse(from.getText().toString()))){
+            // Toast.makeText(Merchant_add_offer.this, "Nooo " , Toast.LENGTH_LONG).show();
+            final android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(
+                    Edit_offer.this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Date Validation");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("start date must be before end date");
+
+            // Setting Icon to Dialog
+            alertDialog.setIcon(R.drawable.error);
+
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+            valid=false;
+        }
+
+        if(imageView.getDrawable() == null){
+            final android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(
+                    Edit_offer.this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Offer Image");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("your customers wish to provide an Image for this offer");
+
+            // Setting Icon to Dialog
+            alertDialog.setIcon(R.drawable.error);
+
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+            valid = false;
+        }
+
+        if (price.getText().toString().matches("") || price.length()>4) {
+            price.requestFocus();
+            price.setError("Enter a valid price");
+            valid = false;
+        }
+
+      /*  if(image.matches("")){
+            Toast.makeText(Merchant_add_offer.this, "no image selected !!" , Toast.LENGTH_LONG).show();
+
+            valid=false;
+        }*/
+       /* if(formatter.parse(from.getText().toString()).after(formatter.parse(to.getText().toString()))){
+          //  Toast.makeText(Merchant_add_offer.this, "Dates is unvalid " , Toast.LENGTH_LONG).show();
+            AlertDialog alertDialog = new AlertDialog.Builder(
+                    Merchant_add_offer.this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Alert Dialog");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("Welcome to AndroidHive.info");
+
+            // Setting Icon to Dialog
+           // alertDialog.setIcon(R.drawable.tick);
+
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+            valid=false;
+        }*/
+
+        return valid;
+    }
+
+
+    public class InputFilterMinMax implements InputFilter {
+        private int min, max;
+
+        public InputFilterMinMax(int min, int max) {
+            this.min = min;
+            this.max = max;
+        }
+
+        public InputFilterMinMax(String min, String max) {
+            this.min = Integer.parseInt(min);
+            this.max = Integer.parseInt(max);
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            try {
+                int input = Integer.parseInt(dest.toString() + source.toString());
+                if (isInRange(min, max, input))
+                    return null;
+            } catch (NumberFormatException nfe) { }
+            return "";
+        }
+
+        private boolean isInRange(int a, int b, int c) {
+            return b > a ? c >= a && c <= b : c >= b && c <= a;
         }
     }
 }

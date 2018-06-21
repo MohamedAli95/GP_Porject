@@ -379,10 +379,10 @@ TextView mkan;
             braphone.setError("phone is required");
             valid=false;
         }
-        if(!isValidPhone(phone)){
+  /*      if(!isValidPhone(phone)){
             braphone.setError("Phone Number must be 11 numbers");
             valid=false;
-        }
+        }*/
         if(mkan.getText().toString().matches("")){
             mkan.setError("Selecting Location is required");
             valid=false;
@@ -390,7 +390,7 @@ TextView mkan;
         return valid;
     }
 
-    public static boolean isValidPhone(String phone)
+   /* public static boolean isValidPhone(String phone)
     {
         String expression = "\\d{3}\\d{8}";
         CharSequence inputString = phone;
@@ -404,5 +404,5 @@ TextView mkan;
             return false;
         }
     }
-
+*/
 }
