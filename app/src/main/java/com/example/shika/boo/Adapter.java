@@ -66,10 +66,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
             }
         });
-        if(app.getPlaceimage().isEmpty())
-           Picasso.get().load(R.drawable.placeholder).error(R.drawable.placeholder).into(holder.imageView);
-        else
-            Picasso.get().load(app.getPlaceimage()).error(R.drawable.placeholder).into(holder.imageView);
+
+        Picasso.get().load(app.getPlaceimage()).into(holder.imageView);
         holder.nameTextView.setText(app.getName());
         holder.ratingTextView.setText(String.valueOf(app.getRating()));
 

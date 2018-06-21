@@ -33,7 +33,7 @@
                     android:id="@+id/linearLayout1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
+                    android:background="#FF6C1D8C"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
@@ -187,7 +187,7 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginBottom="15dp"
                         android:layout_marginTop="30dp"
-                        android:background="@color/colorPrimary"
+                        android:background="#FF6C1D8C"
                         android:fontFamily="sans-serif-medium"
                         android:text="Sign Up"
                         android:textColor="@color/white" />

@@ -31,7 +31,7 @@
                     android:id="@+id/linearLayout1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
+                    android:background="#FF6C1D8C"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
@@ -78,7 +78,7 @@
                         android:id="@+id/imageView_userIcon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@color/colorPrimary"
+                        android:background="#FF6C1D8C"
                         android:padding="8dp"
                         android:src="@drawable/img_user"
                         android:tint="@color/white" />
@@ -111,7 +111,7 @@
                         android:id="@+id/imageView_passwordIcon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@color/colorPrimary"
+                        android:background="#FF6C1D8C"
                         android:padding="8dp"
                         android:src="@drawable/img_authentication"
                         android:tint="@color/white" />
@@ -140,12 +140,7 @@
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="10dp">
 
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Remember Me"
-                        android:textColor="@color/textColor" />
+
 
                     <Button
                         android:id="@+id/merchantforgotpassword"
@@ -169,7 +164,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/relativeLayout3"
                     android:layout_marginTop="11dp"
-                    android:background="@color/colorPrimary"
+                    android:background="#FF6C1D8C"
                     android:fontFamily="sans-serif-medium"
                     android:onClick="login"
                     android:text="SIGN IN"
@@ -184,7 +179,7 @@
                     android:layout_alignTop="@+id/button_signin"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="55dp"
-                    android:background="@color/colorPrimary"
+                    android:background="#FF6C1D8C"
                     android:fontFamily="sans-serif-medium"
                     android:onClick="regerster"
                     android:text="SIGN UP"
@@ -201,6 +196,7 @@
                     android:layerType="software"
                     android:src="@drawable/dash" />
 
+
                 <TextView
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
@@ -208,10 +204,9 @@
                     android:layout_below="@id/imageView2"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="Or Login with"
+                    android:text=""
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
-
 
             </RelativeLayout>
         </android.support.v7.widget.CardView>

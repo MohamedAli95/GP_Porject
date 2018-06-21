@@ -20,7 +20,7 @@ public class AfterBegin extends AppCompatActivity {
             startActivity(too);
         }
         else if(sharedpreferences.getBoolean("place logged in",false)){
-            Intent too = new Intent(this, Merchant_Home.class);
+            Intent too = new Intent(this, SecondHome.class);
             startActivity(too);
         }
         super.onCreate(savedInstanceState);

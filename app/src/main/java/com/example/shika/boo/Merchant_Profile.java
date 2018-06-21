@@ -236,10 +236,7 @@ public class Merchant_Profile extends AppCompatActivity {
 
 
 
-    public void branch_trans(View view){
-        Intent ba = new Intent(this,BranchActivity.class);
-        startActivity(ba);
-    }
+
 /*
     private void setupAdapter() {
         List<App> apps = getApps();
@@ -287,8 +284,8 @@ public class Merchant_Profile extends AppCompatActivity {
 
                                         branch3object.getString("Branch_name"),
                                         branch3object.getString("Branch_image"),
-                                        branch3object.getString("Branch_name"),
-                                        branch3object.getInt("Branch_id"),
+                                        branch3object.getString("Address"),
+                                        branch3object.getInt("Branch_phone"),
                                         branch3object.getInt("Place_id")
 
 

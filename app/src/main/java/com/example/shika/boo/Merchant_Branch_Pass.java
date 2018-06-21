@@ -42,7 +42,7 @@ public class Merchant_Branch_Pass extends AppCompatActivity {
     StringRequest request ;
     RequestQueue requestQueue ;
     String branchid="";
-    private static  final String loginBranchesURL ="http://gp.sendiancrm.com/offerall/loginBranch.php";
+    private static  final String loginBranchesURL ="http://gp.sendiancrm.com/offerall/loginbranchreal.php";
 
 
     @Override

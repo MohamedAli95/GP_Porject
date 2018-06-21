@@ -12,48 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/scroll"
+        <org.eazegraph.lib.charts.PieChart
+            android:id="@+id/piechart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:focusableInTouchMode="true"
-                >
-
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerview_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/br"
-                    android:background="#94471768"
-                    android:text="Branch Rewards"
-                    android:textColor="#f9f052"
-                    android:textAllCaps="true"
-                    android:textSize="21dp"
-                    android:padding="8dp"
-                    android:layout_gravity="center"/>
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+            android:layout_height="300dp"
+            android:padding="8dp"
+            app:egLegendTextSize="18sp"
+            app:egUsePieRotation="true"
+            android:layout_alignParentTop="true"
+            app:egValueTextSize="36sp"
+            android:layout_marginBottom="80dp"
+            android:layout_marginTop="90dp"
+            >
+        </org.eazegraph.lib.charts.PieChart>
 
         <android.support.design.widget.NavigationView
             android:id="@+id/navigation_viewz"

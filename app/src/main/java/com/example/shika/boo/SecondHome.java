@@ -91,13 +91,13 @@ public class SecondHome extends AppCompatActivity implements NavigationView.OnNa
     StringRequest request ;
     RequestQueue requestQueue ;
     List<Integer> apps;
-
+SharedPreferences sharedpreferences;
 
     int placeId;
 
     int ones = 0;
     int zeroes= 0;
-
+  int branches = 0 ;
     private static  final String listOfBranchesURL = "http://gp.sendiancrm.com/offerall/Place_profile.php";
     private static  final String listOfBranchesURL2 = "http://gp.sendiancrm.com/offerall/showListOfBranches.php";
 
@@ -164,12 +164,12 @@ title = (TextView) header.findViewById(R.id.headertx);
 
                             ones = Collections.frequency(apps, 1);
                             zeroes = Collections.frequency(apps, 0);
-
+                            branches = apps.size();
                             PieChart mPieChart = (PieChart) findViewById(R.id.piechart);
 
                             mPieChart.addPieSlice(new PieModel("Branches with Reward System", ones, Color.parseColor("#FE6DA8")));
                             mPieChart.addPieSlice(new PieModel("Branches without Reward System", zeroes, Color.parseColor("#56B7F1")));
-                            //     mPieChart.addPieSlice(new PieModel("Work", 35, Color.parseColor("#CDA67F")));
+                                mPieChart.addPieSlice(new PieModel("All Branches", branches, Color.parseColor("#CDA67F")));
                             //     mPieChart.addPieSlice(new PieModel("Eating", 9, Color.parseColor("#FED70E")));
 
                             mPieChart.startAnimation();
@@ -304,6 +304,16 @@ title = (TextView) header.findViewById(R.id.headertx);
         else if(id == R.id.pf){
             x = new Intent(this, Merchant_Profile.class);
             startActivity(x);}
+        else if(id == R.id.lo) {
+            sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.clear();
+            editor.commit();
+            x = new Intent(this, AfterBegin.class);
+            x.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(x);
+        }
        /* else if(id == R.id.likes){
             x = new Intent(this, SavedOffersFragment.class);
             startActivity(x);}

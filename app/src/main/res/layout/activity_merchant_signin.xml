@@ -138,12 +138,6 @@
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="10dp">
 
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Remember Me"
-                        android:textColor="@color/textColor" />
 
                     <Button
                         android:layout_width="wrap_content"
@@ -203,7 +197,7 @@
                     android:layout_below="@id/imageView2"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="Or Login with"
+                    android:text=""
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
 

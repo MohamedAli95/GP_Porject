@@ -8,5 +8,9 @@
     <item android:id="@+id/pf" android:title="Profile" android:icon="@drawable/sidepro" android:tint="#8e44ad"/>
     <item android:id="@+id/brlist" android:title="Manage Rewards" android:icon="@drawable/home" android:tint="#8e44ad"/>
 
-
+    <item
+        android:id="@+id/lo"
+        android:icon="@drawable/logi"
+        android:tint="@color/colorPrimary"
+        android:title="Log out" />
 </menu>

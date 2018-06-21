@@ -146,7 +146,7 @@
         <activity
             android:name=".Merchant_Reward_main"
             android:label="Rewards System"
-            android:parentActivityName=".Merchant_Home" />
+            android:parentActivityName=".SecondHome_Branch" />
         <activity
             android:name=".Merchant_points"
             android:label="Points System"
@@ -165,7 +165,9 @@
             android:name=".Merchant_After_menu"
             android:label="Manage Menus"
             android:parentActivityName=".Merchant_Home" />
-        <activity android:name=".Merchant_Upload_menu" />
+        <activity android:name=".Merchant_Upload_menu"
+            android:label="Upload Menu"
+            android:parentActivityName=".Merchant_After_menu"    />
         <activity
             android:name=".MerchantMenu"
             android:label="Your Menus"
@@ -189,11 +191,11 @@
         <activity
             android:name=".Merchant_Branch_Profile"
             android:label="Branch Profile"
-            android:parentActivityName=".Merchant_Branch_Home" />
+            android:parentActivityName=".SecondHome_Branch" />
         <activity
             android:name=".Merchant_Offers"
             android:label="Offers"
-            android:parentActivityName=".Merchant_Branch_Home" />
+            android:parentActivityName=".Merchant_Branch_ManageOffer" />
         <activity
             android:name=".Merchant_Branches_list"
             android:label="Branches"
@@ -205,7 +207,7 @@
         <activity
             android:name=".Merchant_Branch_ManageOffer"
             android:label="Manage Offers"
-            android:parentActivityName=".Merchant_Branch_Home" />
+            android:parentActivityName=".SecondHome_Branch" />
         <activity
             android:name=".Merchant_Branch_AddPoints"
             android:label="Add Points"
