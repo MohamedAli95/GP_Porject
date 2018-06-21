@@ -106,7 +106,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
 
         }
         createLocationRequest();
-        btn = (Button) findViewById(R.id.popup);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
@@ -136,34 +135,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
         }
 
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                listItems = new String[]{"Minimum than 1 KM", "Minimum than 2 KM", "Minimum than 5 KM", "Minimum than 10 KM", "Minimum than 20 KM"};
-                AlertDialog.Builder mbuilder = new AlertDialog.Builder(MapsActivity.this);
-                mbuilder.setTitle("Radius");
-                mbuilder.setIcon(R.drawable.radi);
-                int checkeditem;
-                mbuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //  dialogInterface.dismiss();
-                    }
-                });
-                mbuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                mbuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                AlertDialog mDialog = mbuilder.create();
-                mDialog.show();
-            }
-
-        });
 
 
 
